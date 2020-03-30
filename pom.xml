@@ -163,7 +163,7 @@
                 <executions>
                     <execution>
                         <configuration>
-                            <mainClass>com.mainacad.AppRunner</mainClass>
+                            <mainClass>ua.i.mail100.AppRunner</mainClass>
                             <attachToBuild>true</attachToBuild>
                             <filename>
                                 MyApp.jar

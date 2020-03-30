@@ -11,7 +11,7 @@
     <h3> ${message} </h3>
 </c:if>
 
-<h2>Hello, ${user.firstName} ${user.lastName}!!!</h2>
+<h2>Hello, ${user.name} ${user.lastName}!!!</h2>
 <br>
 <br>
 

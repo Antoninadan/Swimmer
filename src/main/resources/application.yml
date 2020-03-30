@@ -8,7 +8,7 @@ spring:
       suffix: .jsp
       prefix: /WEB-INF/jsp/
   datasource:
-    url: jdbc:postgresql://localhost:5433/spring
+    url: jdbc:postgresql://localhost:5433/swimmer
     username: "postgres"
     password: "postgresql"
     hikari:

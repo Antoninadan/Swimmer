@@ -15,7 +15,7 @@
     <br>
     <input type="password" size="30" name="pass" required/>
     <br>
-    <input type="text" size="30" name="firstName" />
+    <input type="text" size="30" name="name" />
     <br>
     <input type="text" size="30" name="lastName" />
     <br>
