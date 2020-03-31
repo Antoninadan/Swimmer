@@ -23,10 +23,10 @@ public class Distance extends BaseEntity{
     private Event event;
 
     @ManyToOne(targetEntity = DistanceType.class)
-    private Event distanceType;
+    private DistanceType distanceType;
 
 @ManyToOne(targetEntity = AgeDistanceType.class)
-    private Event ageDistanceType;
+    private AgeDistanceType ageDistanceType;
 
     @Column(name = "length_in_meters")
     private Integer lengthInMeters;
@@ -38,7 +38,7 @@ public class Distance extends BaseEntity{
     @Column(name = "comment")
     private String comment;
 
-    public Distance(Integer id, Event event, Event distanceType, Event ageDistanceType, Integer lengthInMeters, Long date, String comment) {
+    public Distance(Integer id, Event event, DistanceType distanceType, AgeDistanceType ageDistanceType, Integer lengthInMeters, Long date, String comment) {
         super(id);
         this.event = event;
         this.distanceType = distanceType;

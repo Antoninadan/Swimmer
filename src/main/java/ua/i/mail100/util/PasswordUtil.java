@@ -8,12 +8,12 @@ public class PasswordUtil {
 
     public static final String KEY = "ghfgf";
 
-    public static String encodePassword(String pass) {
-        return KEY + DigestUtils.md5Hex(pass.getBytes());
+    public static String encodePassword(String password) {
+        return KEY + DigestUtils.md5Hex(password.getBytes());
     }
 
-    public static boolean isAnable(String passInDB, String inputPass){
-        String encodedInputPass = encodePassword(inputPass);
-        return encodedInputPass.equals(passInDB);
+    public static boolean isCorrectPassword(String comparativeEncodedPassword, String inputClearPassword){
+        String encodedInputPass = encodePassword(inputClearPassword);
+        return encodedInputPass.equals(comparativeEncodedPassword);
     }
 }
