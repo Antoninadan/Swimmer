@@ -28,6 +28,7 @@ public class UserService {
 
     public User save(User user) {
         if (user.getId() == null && userDAO.getFirstByLogin(user.getLogin()) == null) {
+            user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
             return userDAO.save(user);
         }
         return null;
@@ -35,6 +36,7 @@ public class UserService {
 
     public User update(User user) {
         if (user.getId() != null && userDAO.getOne(user.getId()) != null) {
+            user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
             return userDAO.save(user);
         }
         return null;

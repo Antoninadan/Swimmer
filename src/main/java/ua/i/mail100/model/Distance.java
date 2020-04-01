@@ -17,15 +17,15 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "distances")
-public class Distance extends BaseEntity{
+public class Distance extends BaseEntity {
 
     @ManyToOne(targetEntity = Event.class)
     private Event event;
 
-    @ManyToOne(targetEntity = DistanceType.class)
+    @Column(name = "distance_type")
     private DistanceType distanceType;
 
-@ManyToOne(targetEntity = AgeDistanceType.class)
+    @Column(name = "age_distance_type")
     private AgeDistanceType ageDistanceType;
 
     @Column(name = "length_in_meters")
