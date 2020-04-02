@@ -57,3 +57,5 @@ public class UserController {
         return new ResponseEntity(user, HttpStatus.OK);
     }
 }
+
+// TODO UserController should return dto

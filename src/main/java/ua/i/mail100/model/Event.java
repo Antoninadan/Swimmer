@@ -29,7 +29,7 @@ public class Event extends BaseEntity {
     @Column(name = "data_from")
     private Long dateFrom;
 
-      @Column(name = "data_to")
+    @Column(name = "data_to")
     private Long dateTo;
 
     @ManyToOne(targetEntity = Country.class)
