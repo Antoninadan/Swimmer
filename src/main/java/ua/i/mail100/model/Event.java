@@ -24,7 +24,7 @@ public class Event extends BaseEntity {
     private String organizer;
 
     @Column(name = "name")
-    private Integer name;
+    private String name;
 
     @Column(name = "data_from")
     private Long dateFrom;
@@ -44,7 +44,7 @@ public class Event extends BaseEntity {
     @Column(name = "comment")
     private String comment;
 
-    public Event(Integer id, Franchise franchise, String organizer, Integer name, Long dateFrom, Long dateTo, Country country, String venue, String url, String comment) {
+    public Event(Integer id, Franchise franchise, String organizer, String name, Long dateFrom, Long dateTo, Country country, String venue, String url, String comment) {
         super(id);
         this.franchise = franchise;
         this.organizer = organizer;

@@ -18,7 +18,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "distances")
 public class Distance extends BaseEntity {
-
     @ManyToOne(targetEntity = Event.class)
     private Event event;
 
