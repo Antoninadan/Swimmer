@@ -25,12 +25,14 @@ public class MapperEventUtil {
     public Event toObject(EventDTO eventDTO) {
         Event event = new Event();
         event.setId(eventDTO.getId());
-        event.setFranchise(franchiseService.getById(eventDTO.getFranchiseId()));
+        event.setFranchise(eventDTO.getFranchiseId() != null ?
+                franchiseService.getById(eventDTO.getFranchiseId()) : null);
         event.setOrganizer(eventDTO.getOrganizer());
         event.setName(eventDTO.getName());
         event.setDateFrom(eventDTO.getDateFrom());
         event.setDateTo(eventDTO.getDateTo());
-        event.setCountry(countryService.getById(eventDTO.getCountryId()));
+        event.setCountry(eventDTO.getCountryId() != null ?
+                countryService.getById(eventDTO.getCountryId()) : null);
         event.setVenue(eventDTO.getVenue());
         event.setUrl(eventDTO.getUrl());
         event.setComment(eventDTO.getComment());
@@ -49,12 +51,12 @@ public class MapperEventUtil {
     public EventDTO toDTO(Event event) {
         EventDTO eventDTO = new EventDTO();
         eventDTO.setId(event.getId());
-        eventDTO.setFranchiseId(event.getFranchise().getId());
+        eventDTO.setFranchiseId(event.getFranchise() != null ? event.getFranchise().getId() : null);
         eventDTO.setOrganizer(event.getOrganizer());
         eventDTO.setName(event.getName());
         eventDTO.setDateFrom(event.getDateFrom());
         eventDTO.setDateTo(event.getDateTo());
-        eventDTO.setCountryId(event.getCountry().getId());
+        eventDTO.setCountryId(event.getCountry() != null ? event.getCountry().getId() : null);
         eventDTO.setVenue(event.getVenue());
         eventDTO.setUrl(event.getUrl());
         eventDTO.setComment(event.getComment());
@@ -69,57 +71,4 @@ public class MapperEventUtil {
         }
         return orderDTOs;
     }
-
-//    public OrderDTO toOrderDTOFromOrder(Order order) {
-//        OrderDTO orderDTO = new OrderDTO();
-//        orderDTO.setId(order.getId());
-//        orderDTO.setItemId(order.getItem().getId());
-//        orderDTO.setCartId(order.getCart().getId());
-//        orderDTO.setAmount(order.getAmount());
-//        orderDTO.setItemName(order.getItem().getName());
-//        orderDTO.setItemPrice(order.getItem().getPrice());
-//        return orderDTO;
-//
-//    }
-//
-//
-//    public String jsonOrderDTOSimpleFormat(Order order) {
-//        OrderDTO orderDTO = toOrderDTOFromOrder(order);
-//        return "{" + System.lineSeparator() +
-//                "  \"" + "id" + "\" : " + orderDTO.getId() + "," + System.lineSeparator() +
-//                "  \"" + "itemId" + "\" : " + orderDTO.getItemId() + "," + System.lineSeparator() +
-//                "  \"" + "cartId" + "\" : " + orderDTO.getCartId() + "," + System.lineSeparator() +
-//                "  \"" + "amount" + "\" : " + orderDTO.getAmount() + System.lineSeparator() +
-//                "}";
-//    }
-//
-//    public String jsonOrderDTOSimpleFormatList(List<Order> orders) {
-//        List<String> list = new ArrayList<>();
-//        for (Order each : orders) {
-//            String string = System.lineSeparator() + jsonOrderDTOSimpleFormat(each);
-//            list.add(string);
-//        }
-//        return list.toString();
-//    }
-//
-//    public String jsonOrderDTOItemFormat(Order order) {
-//        OrderDTO orderDTO = toOrderDTOFromOrder(order);
-//        return "{" + System.lineSeparator() +
-//                "  \"" + "id" + "\" : " + orderDTO.getId() + "," + System.lineSeparator() +
-//                "  \"" + "itemId" + "\" : " + orderDTO.getItemId() + "," + System.lineSeparator() +
-//                "  \"" + "cartId" + "\" : " + orderDTO.getCartId() + "," + System.lineSeparator() +
-//                "  \"" + "amount" + "\" : " + orderDTO.getAmount() + System.lineSeparator() +
-//                "  \"" + "itemName" + "\" : " + orderDTO.getItemName() + System.lineSeparator() +
-//                "  \"" + "itemPrice" + "\" : " + orderDTO.getItemPrice() + System.lineSeparator() +
-//                "}";
-//    }
-//
-//    public String jsonOrderDTOItemFormatList(List<Order> orders) {
-//        List<String> list = new ArrayList<>();
-//        for (Order each : orders) {
-//            String string = System.lineSeparator() + jsonOrderDTOItemFormat(each);
-//            list.add(string);
-//        }
-//        return list.toString();
-//    }
 }

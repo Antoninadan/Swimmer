@@ -3,7 +3,9 @@ package ua.i.mail100.controller.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.i.mail100.model.AgeDistanceType;
 import ua.i.mail100.model.Distance;
+import ua.i.mail100.model.DistanceType;
 import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.EventService;
 import ua.i.mail100.service.FranchiseService;
@@ -20,28 +22,17 @@ public class MapperDistanceUtil {
     @Autowired
     ObjectMapper objectMapper;
 
-    private Integer id;
-    private Integer eventId;
-    private String distanceType;
-    private String ageDistanceType;
-    private Long date;
-    private String comment;
-
-
     public Distance toObject(DistanceDTO distanceDTO) {
         Distance distance = new Distance();
         distance.setId(distanceDTO.getId());
-        distance.setEvent(eventService.getById(eventDTO.getEventId()));
-
-
-
-        distance.setOrganizer(distanceDTO.getOrganizer());
-        distance.setName(distanceDTO.getName());
-        distance.setDateFrom(distanceDTO.getDateFrom());
-        distance.setDateTo(distanceDTO.getDateTo());
-        distance.setCountry(countryService.getById(distanceDTO.getCountryId()));
-        distance.setVenue(distanceDTO.getVenue());
-        distance.setUrl(distanceDTO.getUrl());
+        distance.setEvent(distanceDTO.getEventId() != null ?
+                eventService.getById(distanceDTO.getEventId()) : null);
+        distance.setDistanceType(distanceDTO.getDistanceType() != null ?
+                DistanceType.valueOf(distanceDTO.getDistanceType()) : null);
+        distance.setAgeDistanceType(distanceDTO.getAgeDistanceType() != null ?
+                AgeDistanceType.valueOf(distanceDTO.getAgeDistanceType()) : null);
+        distance.setLengthInMeters(distanceDTO.getLengthInMeters());
+        distance.setDate(distanceDTO.getDate());
         distance.setComment(distanceDTO.getComment());
         return distance;
     }
@@ -58,26 +49,24 @@ public class MapperDistanceUtil {
     public DistanceDTO toDTO(Distance distance) {
         DistanceDTO distanceDTO = new DistanceDTO();
         distanceDTO.setId(distance.getId());
-        distanceDTO.setFranchiseId(distance.getFranchise().getId());
-        distanceDTO.setOrganizer(distance.getOrganizer());
-        distanceDTO.setName(distance.getName());
-        distanceDTO.setDateFrom(distance.getDateFrom());
-        distanceDTO.setDateTo(distance.getDateTo());
-        distanceDTO.setCountryId(distance.getCountry().getId());
-        distanceDTO.setVenue(distance.getVenue());
-        distanceDTO.setUrl(distance.getUrl());
+        distanceDTO.setEventId(distance.getEvent() != null ?
+                distance.getEvent().getId() : null);
+        distanceDTO.setDistanceType(distance.getDistanceType() != null ?
+                distance.getDistanceType().toString() : null);
+        distanceDTO.setAgeDistanceType(distance.getAgeDistanceType() != null ?
+                distance.getAgeDistanceType().toString() : null);
+        distanceDTO.setLengthInMeters(distance.getLengthInMeters());
+        distanceDTO.setDate(distance.getDate());
         distanceDTO.setComment(distance.getComment());
         return distanceDTO;
     }
 
-    public List<DistanceDTO> toDTOList(List<Distance> events) {
-        List<DistanceDTO> orderDTOs = new ArrayList<>();
-        for (Distance each : events) {
+    public List<DistanceDTO> toDTOList(List<Distance> distances) {
+        List<DistanceDTO> distanceDTOs = new ArrayList<>();
+        for (Distance each : distances) {
             DistanceDTO distanceDTO = toDTO(each);
-            orderDTOs.add(distanceDTO);
+            distanceDTOs.add(distanceDTO);
         }
-        return orderDTOs;
+        return distanceDTOs;
     }
-
-
 }

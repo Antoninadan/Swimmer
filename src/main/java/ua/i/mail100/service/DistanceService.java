@@ -2,9 +2,7 @@ package ua.i.mail100.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.i.mail100.dao.CountryDAO;
 import ua.i.mail100.dao.DistanceDAO;
-import ua.i.mail100.dao.FranchiseDAO;
 import ua.i.mail100.model.Distance;
 
 import java.util.List;
@@ -14,12 +12,6 @@ import java.util.Optional;
 public class DistanceService {
     @Autowired
     DistanceDAO distanceDAO;
-
-    @Autowired
-    FranchiseDAO franchiseDAO;
-
-    @Autowired
-    CountryDAO countryDAO;
 
     public Distance getById(Integer id) {
         Optional<Distance> distance = distanceDAO.findById(id);
