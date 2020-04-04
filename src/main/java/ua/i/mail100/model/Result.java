@@ -17,13 +17,11 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "results")
-public class Result extends BaseEntity{
-
+public class Result extends BaseEntity {
     @ManyToOne(targetEntity = Distance.class)
     private Distance distance;
 
-
-@ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User user;
 
     @Column(name = "time_in_seconds")

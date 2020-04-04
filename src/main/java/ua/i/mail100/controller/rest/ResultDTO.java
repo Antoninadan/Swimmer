@@ -11,11 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResultDTO {
     private Integer id;
-    private Integer eventId;
-    private String distanceType;
-    private String ageDistanceType;
-    private Integer lengthInMeters;
-    private Long date;
+    private Integer distanceId;
+    private Integer userId;
+    private Integer timeInSeconds;
+    private Long lastEditDate;
     private String comment;
 }
+
 
