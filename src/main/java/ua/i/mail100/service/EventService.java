@@ -9,10 +9,12 @@ import ua.i.mail100.dao.UserDAO;
 import ua.i.mail100.model.Country;
 import ua.i.mail100.model.Franchise;
 import ua.i.mail100.model.Event;
+import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.util.PasswordUtil;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,23 +39,42 @@ public class EventService {
 
     public Event save(Event event) {
         if (event.getId() == null) {
+            Long now = new Date().getTime();
+            event.setCreateDate(now);
+            event.setModifyDate(now);
+            event.setRecordStatus(RecordStatus.ACTIVE);
             return eventDAO.save(event);
         }
         return null;
     }
 
     public Event update(Event event) {
-        if (event.getId() != null && eventDAO.getOne(event.getId()) != null) {
-            return eventDAO.save(event);
+        Integer eventId = event.getId();
+        if (eventId != null) {
+            Event savedBeforeEvent = eventDAO.getOne(eventId);
+            if (savedBeforeEvent != null) {
+                Long now = new Date().getTime();
+                event.setCreateDate(savedBeforeEvent.getCreateDate());
+                event.setModifyDate(now);
+                RecordStatus recordStatus = savedBeforeEvent.getRecordStatus();
+                if (recordStatus == RecordStatus.ACTIVE) {
+                    event.setRecordStatus(RecordStatus.ACTIVE);
+                    return eventDAO.save(event);
+                }
+                return null;
+            }
+            return null;
         }
         return null;
     }
 
+    // todo
     public void delete(Event event) {
         eventDAO.delete(event);
     }
 
-    public List<Event> getAll() {
-        return eventDAO.findAll();
+    public List<Event> getAll(Long modifyDate) {
+        if (modifyDate == null) modifyDate = 0L;
+        return eventDAO.getAll(modifyDate);
     }
 }

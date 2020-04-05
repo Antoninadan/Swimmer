@@ -42,4 +42,8 @@ public class DistanceService {
     public List<Distance> getAll() {
         return distanceDAO.findAll();
     }
+
+    public List<Distance> getAllByEvent(Integer eventId, int recordStatus) {
+        return distanceDAO.getAllByEvent(eventId, recordStatus);
+    }
 }

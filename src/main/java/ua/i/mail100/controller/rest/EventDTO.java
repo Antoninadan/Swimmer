@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -19,6 +21,7 @@ public class EventDTO extends BaseEntityDTO{
     private String venue;
     private String url;
     private String comment;
+    private List<DistanceDTO> distances;
 
     public EventDTO(Integer id, Integer franchiseId, String organizer, String name, Long dateFrom, Long dateTo,
                     Integer countryId, String venue, String url, String comment,

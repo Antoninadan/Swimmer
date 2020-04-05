@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.i.mail100.model.Event;
+import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.service.EventService;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -46,19 +48,20 @@ public class EventController {
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 
-    @GetMapping({"", "{id}"})
-    public ResponseEntity getEvent(@PathVariable(required = false) Integer id) {
-        if (id != null) {
-            Event event = eventService.getById(id);
-            if (event == null) {
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
-            }
-            EventDTO resultDTO = mapperEventUtil.toDTO(event);
-            return new ResponseEntity(resultDTO, HttpStatus.OK);
-        } else {
-            List<Event> events = eventService.getAll();
-            List<EventDTO> eventDTOS = mapperEventUtil.toDTOList(events);
-            return new ResponseEntity(eventDTOS, HttpStatus.OK);
+    @GetMapping("by-id/{id}")
+    public ResponseEntity getEvent(@PathVariable Integer id) {
+        Event event = eventService.getById(id);
+        if (event == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+        EventDTO resultDTO = mapperEventUtil.toDTO(event);
+        return new ResponseEntity(resultDTO, HttpStatus.OK);
+    }
+
+    @GetMapping({"", "{modifyDate}"})
+    public ResponseEntity getAll(@PathVariable(required = false) Long modifyDate) {
+        List<Event> events = eventService.getAll(modifyDate);
+        List<EventDTO> eventDTOS = mapperEventUtil.toDTOList(events);
+        return new ResponseEntity(eventDTOS, HttpStatus.OK);
     }
 }

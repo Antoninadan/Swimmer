@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ua.i.mail100.model.Event;
 import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.service.CountryService;
+import ua.i.mail100.service.DistanceService;
 import ua.i.mail100.service.FranchiseService;
 
 import java.io.IOException;
@@ -23,6 +24,12 @@ public class MapperEventUtil {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    MapperDistanceUtil mapperDistanceUtil;
+
+    @Autowired
+    DistanceService distanceService;
+
     public Event toObject(EventDTO eventDTO) {
         Event event = new Event();
         event.setId(eventDTO.getId());
@@ -37,9 +44,6 @@ public class MapperEventUtil {
         event.setVenue(eventDTO.getVenue());
         event.setUrl(eventDTO.getUrl());
         event.setComment(eventDTO.getComment());
-        event.setCreateDate(eventDTO.getCreateDate());
-        event.setModifyDate(eventDTO.getModifyDate());
-        event.setRecordStatus(RecordStatus.valueOf(eventDTO.getRecordStatus()));
         return event;
     }
 
@@ -67,6 +71,9 @@ public class MapperEventUtil {
         eventDTO.setCreateDate(event.getCreateDate());
         eventDTO.setModifyDate(event.getModifyDate());
         eventDTO.setRecordStatus(event.getRecordStatus().toString());
+        eventDTO.setDistances(event.getId() != null ?
+                mapperDistanceUtil.toDTOList(distanceService.getAllByEvent(event.getId(),
+                        RecordStatus.ACTIVE.ordinal())) : null);
         return eventDTO;
     }
 
