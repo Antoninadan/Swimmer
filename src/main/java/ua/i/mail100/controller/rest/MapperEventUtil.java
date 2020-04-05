@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.i.mail100.model.Event;
+import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.FranchiseService;
 
@@ -36,6 +37,9 @@ public class MapperEventUtil {
         event.setVenue(eventDTO.getVenue());
         event.setUrl(eventDTO.getUrl());
         event.setComment(eventDTO.getComment());
+        event.setCreateDate(eventDTO.getCreateDate());
+        event.setModifyDate(eventDTO.getModifyDate());
+        event.setRecordStatus(RecordStatus.valueOf(eventDTO.getRecordStatus()));
         return event;
     }
 
@@ -60,6 +64,9 @@ public class MapperEventUtil {
         eventDTO.setVenue(event.getVenue());
         eventDTO.setUrl(event.getUrl());
         eventDTO.setComment(event.getComment());
+        eventDTO.setCreateDate(event.getCreateDate());
+        eventDTO.setModifyDate(event.getModifyDate());
+        eventDTO.setRecordStatus(event.getRecordStatus().toString());
         return eventDTO;
     }
 

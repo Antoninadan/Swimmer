@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ua.i.mail100.model.AgeDistanceType;
 import ua.i.mail100.model.Distance;
 import ua.i.mail100.model.DistanceType;
+import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.EventService;
 import ua.i.mail100.service.FranchiseService;
@@ -34,6 +35,9 @@ public class MapperDistanceUtil {
         distance.setLengthInMeters(distanceDTO.getLengthInMeters());
         distance.setDate(distanceDTO.getDate());
         distance.setComment(distanceDTO.getComment());
+        distance.setCreateDate(distanceDTO.getCreateDate());
+        distance.setModifyDate(distanceDTO.getModifyDate());
+        distance.setRecordStatus(RecordStatus.valueOf(distanceDTO.getRecordStatus()));
         return distance;
     }
 
@@ -58,6 +62,9 @@ public class MapperDistanceUtil {
         distanceDTO.setLengthInMeters(distance.getLengthInMeters());
         distanceDTO.setDate(distance.getDate());
         distanceDTO.setComment(distance.getComment());
+        distanceDTO.setCreateDate(distance.getCreateDate());
+        distanceDTO.setModifyDate(distance.getModifyDate());
+        distanceDTO.setRecordStatus(distance.getRecordStatus().toString());
         return distanceDTO;
     }
 

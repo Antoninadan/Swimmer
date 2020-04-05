@@ -4,24 +4,29 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ua.i.mail100.model.AgeDistanceType;
-import ua.i.mail100.model.DistanceType;
-import ua.i.mail100.model.Event;
-
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DistanceDTO {
-    private Integer id;
+public class DistanceDTO extends BaseEntityDTO {
     private Integer eventId;
     private String distanceType;
     private String ageDistanceType;
     private Integer lengthInMeters;
     private Long date;
     private String comment;
+
+    public DistanceDTO(Integer id, Integer eventId, String distanceType, String ageDistanceType,
+                       Integer lengthInMeters, Long date, String comment,
+                       Long createDate, Long modifyDate, String recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
+        this.eventId = eventId;
+        this.distanceType = distanceType;
+        this.ageDistanceType = ageDistanceType;
+        this.lengthInMeters = lengthInMeters;
+        this.date = date;
+        this.comment = comment;
+    }
 }
 

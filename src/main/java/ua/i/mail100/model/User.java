@@ -30,17 +30,15 @@ public class User extends BaseEntity{
     @Column(name = "status")
     private UserStatus status;
 
-    @Column(name = "lastEditDate")
-    private Long lastEditDate;
-
-    public User(Integer id, String login, String password, String name, Sex sex, Long birthDate, UserStatus status, Long lastEditDate) {
-        super(id);
+    public User(Integer id, String login, String password, String name, Sex sex,
+                Long birthDate, UserStatus status,
+                Long createDate, Long modifyDate, RecordStatus recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
         this.login = login;
         this.password = password;
         this.name = name;
         this.sex = sex;
         this.birthDate = birthDate;
         this.status = status;
-        this.lastEditDate = lastEditDate;
     }
 }

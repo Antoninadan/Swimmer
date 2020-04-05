@@ -44,8 +44,10 @@ public class Event extends BaseEntity {
     @Column(name = "comment")
     private String comment;
 
-    public Event(Integer id, Franchise franchise, String organizer, String name, Long dateFrom, Long dateTo, Country country, String venue, String url, String comment) {
-        super(id);
+    public Event(Integer id, Franchise franchise, String organizer, String name, Long dateFrom,
+                 Long dateTo, Country country, String venue, String url, String comment,
+                 Long createDate, Long modifyDate, RecordStatus recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
         this.franchise = franchise;
         this.organizer = organizer;
         this.name = name;

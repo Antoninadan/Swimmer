@@ -30,15 +30,16 @@ public class Distance extends BaseEntity {
     @Column(name = "length_in_meters")
     private Integer lengthInMeters;
 
-
     @Column(name = "date")
     private Long date;
 
     @Column(name = "comment")
     private String comment;
 
-    public Distance(Integer id, Event event, DistanceType distanceType, AgeDistanceType ageDistanceType, Integer lengthInMeters, Long date, String comment) {
-        super(id);
+    public Distance(Integer id, Event event, DistanceType distanceType, AgeDistanceType ageDistanceType,
+                    Integer lengthInMeters, Long date, String comment,
+                    Long createDate, Long modifyDate, RecordStatus recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
         this.event = event;
         this.distanceType = distanceType;
         this.ageDistanceType = ageDistanceType;

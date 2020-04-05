@@ -9,13 +9,20 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResultDTO {
-    private Integer id;
+public class ResultDTO extends BaseEntityDTO {
     private Integer distanceId;
     private Integer userId;
     private Integer timeInSeconds;
-    private Long lastEditDate;
     private String comment;
+
+    public ResultDTO(Integer id, Integer distanceId, Integer userId, Integer timeInSeconds, String comment,
+                     Long createDate, Long modifyDate, String recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
+        this.distanceId = distanceId;
+        this.userId = userId;
+        this.timeInSeconds = timeInSeconds;
+        this.comment = comment;
+    }
 }
 
 

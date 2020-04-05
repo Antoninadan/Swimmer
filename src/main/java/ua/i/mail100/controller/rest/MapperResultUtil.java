@@ -3,6 +3,7 @@ package ua.i.mail100.controller.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.model.Result;
 import ua.i.mail100.service.DistanceService;
 import ua.i.mail100.service.ResultService;
@@ -34,8 +35,10 @@ public class MapperResultUtil {
         result.setUser(resultDTO.getUserId() != null ?
                 userService.getById(resultDTO.getUserId()) : null);
         result.setTimeInSeconds(resultDTO.getTimeInSeconds());
-        result.setLastEditDate(resultDTO.getLastEditDate());
         result.setComment(resultDTO.getComment());
+        result.setCreateDate(resultDTO.getCreateDate());
+        result.setModifyDate(resultDTO.getModifyDate());
+        result.setRecordStatus(RecordStatus.valueOf(resultDTO.getRecordStatus()));
         return result;
     }
 
@@ -56,8 +59,10 @@ public class MapperResultUtil {
         resultDTO.setUserId(result.getUser() != null ?
                 result.getUser().getId() : null);
         resultDTO.setTimeInSeconds(result.getTimeInSeconds());
-        resultDTO.setLastEditDate(result.getLastEditDate());
         resultDTO.setComment(result.getComment());
+        resultDTO.setCreateDate(result.getCreateDate());
+        resultDTO.setModifyDate(result.getModifyDate());
+        resultDTO.setRecordStatus(result.getRecordStatus().toString());
         return resultDTO;
     }
 

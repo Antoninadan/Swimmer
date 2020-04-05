@@ -20,8 +20,8 @@ public class Country extends BaseEntity {
     @Column(name = "name")
     private String name;
 
-    public Country(Integer id, String name) {
-        super(id);
+    public Country(Integer id, String name, Long createDate, Long modifyDate, RecordStatus recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
         this.name = name;
     }
 }

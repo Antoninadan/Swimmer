@@ -9,12 +9,20 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
-    private Integer id;
+public class UserDTO extends BaseEntityDTO{
     private String login;
     private String name;
     private String sex;
     private String birthDate;
     private String status;
-    private String lastEditDate;
+
+    public UserDTO(Integer id, String login, String name, String sex, String birthDate, String status,
+                   Long createDate, Long modifyDate, String recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
+        this.login = login;
+        this.name = name;
+        this.sex = sex;
+        this.birthDate = birthDate;
+        this.status = status;
+    }
 }

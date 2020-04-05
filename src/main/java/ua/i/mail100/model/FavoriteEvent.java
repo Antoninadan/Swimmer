@@ -25,8 +25,9 @@ public class FavoriteEvent extends BaseEntity{
     @ManyToOne(targetEntity = User.class)
     private User user;
 
-    public FavoriteEvent(Integer id, Event event, User user) {
-        super(id);
+    public FavoriteEvent(Integer id, Event event, User user,
+                         Long createDate, Long modifyDate, RecordStatus recordStatus) {
+        super(id, createDate, modifyDate, recordStatus);
         this.event = event;
         this.user = user;
     }

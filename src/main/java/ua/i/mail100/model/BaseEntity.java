@@ -15,4 +15,13 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+
+    @Column(name = "create_date", nullable = false)
+    private Long createDate;
+
+    @Column(name = "modify_date", nullable = false)
+    private Long modifyDate;
+
+    @Column(name = "record_status", nullable = false)
+    private RecordStatus recordStatus;
 }
