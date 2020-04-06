@@ -2,6 +2,7 @@ package ua.i.mail100.controller.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import ua.i.mail100.service.EventService;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("event")
@@ -24,7 +26,7 @@ public class EventController {
     @Autowired
     MapperEventUtil mapperEventUtil;
 
-    @PutMapping
+    @PutMapping("save")
     public ResponseEntity save(@RequestBody String requestBody) {
         EventDTO eventDTO = mapperEventUtil.toDTO(requestBody);
         Event event = mapperEventUtil.toObject(eventDTO);
@@ -36,10 +38,27 @@ public class EventController {
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("update")
     public ResponseEntity update(@RequestBody String requestBody) {
         EventDTO eventDTO = mapperEventUtil.toDTO(requestBody);
         Event event = mapperEventUtil.toObject(eventDTO);
+        Event updatedEvent = eventService.update(event);
+        if (updatedEvent == null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        EventDTO resultDTO = mapperEventUtil.toDTO(updatedEvent);
+        return new ResponseEntity(resultDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("soft-delete")
+    public ResponseEntity softDelete(@RequestBody String requestBody) {
+        Map<String, Object> map = new JacksonJsonParser().parseMap(requestBody);
+        Integer id = (Integer) (map.get("id"));
+        Event event = eventService.getById(id);
+        if (event == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        event.setRecordStatus(RecordStatus.DELETED);
         Event updatedEvent = eventService.update(event);
         if (updatedEvent == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -58,7 +77,7 @@ public class EventController {
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 
-    @GetMapping({"", "{modifyDate}"})
+    @GetMapping({"all/", "all/{modifyDate}"})
     public ResponseEntity getAll(@PathVariable(required = false) Long modifyDate) {
         List<Event> events = eventService.getAll(modifyDate);
         List<EventDTO> eventDTOS = mapperEventUtil.toDTOList(events);

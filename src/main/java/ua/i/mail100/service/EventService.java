@@ -51,17 +51,13 @@ public class EventService {
     public Event update(Event event) {
         Integer eventId = event.getId();
         if (eventId != null) {
-            Event savedBeforeEvent = eventDAO.getOne(eventId);
-            if (savedBeforeEvent != null) {
+            Event savedEarlierEvent = eventDAO.getOne(eventId);
+            if (savedEarlierEvent != null) {
                 Long now = new Date().getTime();
-                event.setCreateDate(savedBeforeEvent.getCreateDate());
+                event.setRecordStatus(savedEarlierEvent.getRecordStatus());
+                event.setCreateDate(savedEarlierEvent.getCreateDate());
                 event.setModifyDate(now);
-                RecordStatus recordStatus = savedBeforeEvent.getRecordStatus();
-                if (recordStatus == RecordStatus.ACTIVE) {
-                    event.setRecordStatus(RecordStatus.ACTIVE);
-                    return eventDAO.save(event);
-                }
-                return null;
+                return eventDAO.save(event);
             }
             return null;
         }

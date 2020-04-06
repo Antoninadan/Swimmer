@@ -7,8 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.i.mail100.model.Franchise;
+import ua.i.mail100.model.Franchise;
 import ua.i.mail100.service.FileService;
 import ua.i.mail100.service.FranchiseService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("franchise")
@@ -18,7 +21,10 @@ public class FranchiseController {
     @Autowired
     FranchiseService franchiseService;
 
-    @PutMapping
+    @Autowired
+    MapperFranchiseUtil mapperFranchiseUtil;
+
+    @PutMapping("save")
     public ResponseEntity save(@RequestBody Franchise franchise) {
         Franchise savedCountry = franchiseService.save(franchise);
         if (savedCountry == null) {
@@ -27,7 +33,7 @@ public class FranchiseController {
         return new ResponseEntity(franchise, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("update")
     public ResponseEntity update(@RequestBody Franchise franchise) {
         Franchise updatedUser = franchiseService.update(franchise);
         if (updatedUser == null) {
@@ -37,7 +43,7 @@ public class FranchiseController {
     }
 
 
-    @GetMapping("{id}")
+    @GetMapping("by-id/{id}")
     public ResponseEntity getFranchise(@PathVariable Integer id) {
         Franchise franchise = franchiseService.getById(id);
         if (franchise == null) {
@@ -45,4 +51,26 @@ public class FranchiseController {
         }
         return new ResponseEntity(franchise, HttpStatus.OK);
     }
+    
+    @GetMapping({"all/", "all/{modifyDate}"})
+    public ResponseEntity getAll(@PathVariable(required = false) Long modifyDate) {
+        List<Franchise> franchises = franchiseService.getAll(modifyDate);
+        List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);
+        return new ResponseEntity(franchiseDTOS, HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteById(@PathVariable Integer id) {
+        try {
+            franchiseService.deleteById(id);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(String.format("Wrong id = %d", id));
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+    }
 }
+
+
+// TODO now working
