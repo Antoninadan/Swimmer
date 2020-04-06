@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.i.mail100.dto.ResultDTO;
+import ua.i.mail100.mapper.MapperResultUtil;
 import ua.i.mail100.model.Result;
 import ua.i.mail100.service.ResultService;
 

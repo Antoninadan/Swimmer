@@ -6,9 +6,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.i.mail100.dto.FranchiseDTO;
+import ua.i.mail100.mapper.MapperFranchiseUtil;
 import ua.i.mail100.model.Franchise;
-import ua.i.mail100.model.Franchise;
-import ua.i.mail100.service.FileService;
 import ua.i.mail100.service.FranchiseService;
 
 import java.util.List;
@@ -71,6 +71,3 @@ public class FranchiseController {
         }
     }
 }
-
-
-// TODO now working

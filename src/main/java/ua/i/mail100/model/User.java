@@ -24,14 +24,14 @@ public class User extends BaseEntity{
     @Column(name = "sex")
     private Sex sex;
 
-    @Column(name = "birthDate")
+    @Column(name = "birth_date")
     private Long birthDate;
 
     @Column(name = "status")
-    private UserStatus status;
+    private UserStatus userStatus;
 
     public User(Integer id, String login, String password, String name, Sex sex,
-                Long birthDate, UserStatus status,
+                Long birthDate, UserStatus userStatus,
                 Long createDate, Long modifyDate, RecordStatus recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.login = login;
@@ -39,6 +39,6 @@ public class User extends BaseEntity{
         this.name = name;
         this.sex = sex;
         this.birthDate = birthDate;
-        this.status = status;
+        this.userStatus = userStatus;
     }
 }

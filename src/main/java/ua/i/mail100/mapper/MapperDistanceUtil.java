@@ -1,15 +1,14 @@
-package ua.i.mail100.controller.rest;
+package ua.i.mail100.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ua.i.mail100.dto.DistanceDTO;
 import ua.i.mail100.model.AgeDistanceType;
 import ua.i.mail100.model.Distance;
 import ua.i.mail100.model.DistanceType;
 import ua.i.mail100.model.RecordStatus;
-import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.EventService;
-import ua.i.mail100.service.FranchiseService;
 
 import java.io.IOException;
 import java.util.ArrayList;

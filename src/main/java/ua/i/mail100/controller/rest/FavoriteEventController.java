@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.i.mail100.dto.FavoriteEventDTO;
+import ua.i.mail100.mapper.MapperFavoriteEventUtil;
 import ua.i.mail100.model.FavoriteEvent;
 import ua.i.mail100.service.FavoriteEventService;
 

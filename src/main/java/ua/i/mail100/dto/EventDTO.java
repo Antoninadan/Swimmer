@@ -1,4 +1,4 @@
-package ua.i.mail100.controller.rest;
+package ua.i.mail100.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EventDTO extends BaseEntityDTO{
+public class EventDTO extends BaseEntityDTO {
     private Integer franchiseId;
     private String organizer;
     private String name;

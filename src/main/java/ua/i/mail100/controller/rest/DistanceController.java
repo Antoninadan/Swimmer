@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ua.i.mail100.dto.DistanceDTO;
+import ua.i.mail100.mapper.MapperDistanceUtil;
 import ua.i.mail100.model.Distance;
 import ua.i.mail100.service.DistanceService;
 

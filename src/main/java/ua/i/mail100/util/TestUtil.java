@@ -40,7 +40,6 @@ public class TestUtil {
 //        Franchise franchise = new Franchise(1, "fran",null,11L, 12L, RecordStatus.ACTIVE);
 //        Country country = new Country(1, "countr", 11L, 12L, RecordStatus.ACTIVE);
 //
-////        MapperEventUtil2 mapperEventUtil2 = new MapperEventUtil2();
 //        MapperEventUtil mapperEventUtil2 = new MapperEventUtil();
 //
 //        EventDTO eventDTO11 = new EventDTO(1, franchise.getId(), "orga", "name",

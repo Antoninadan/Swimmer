@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.i.mail100.dao.FranchiseDAO;
 import ua.i.mail100.model.Franchise;
-import ua.i.mail100.model.Franchise;
 import ua.i.mail100.model.RecordStatus;
 
 import java.util.Date;
@@ -52,11 +51,7 @@ public class FranchiseService {
         return null;
     }
 
-    public void delete(Franchise franchise) {
-        franchiseDAO.delete(franchise);
-    }
-
-    private boolean noFranchiseWithSameName(Franchise franchise) {
+   private boolean noFranchiseWithSameName(Franchise franchise) {
         if (franchiseDAO.getFirstByName(franchise.getName()) == null)
             return true;
         else return false;

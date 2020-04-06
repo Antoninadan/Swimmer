@@ -1,4 +1,4 @@
-package ua.i.mail100.controller.rest;
+package ua.i.mail100.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

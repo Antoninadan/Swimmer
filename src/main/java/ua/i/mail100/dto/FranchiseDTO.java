@@ -1,4 +1,4 @@
-package ua.i.mail100.controller.rest;
+package ua.i.mail100.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FranchiseDTO extends BaseEntityDTO{
+public class FranchiseDTO extends BaseEntityDTO {
     private String name;
     private Byte[] logo;
 
