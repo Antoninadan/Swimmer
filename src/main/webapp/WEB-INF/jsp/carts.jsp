@@ -12,13 +12,13 @@
 	<table>
 		<tr>
 			<th>id</th>
-			<th>status</th>
+			<th>userStatus</th>
 		</tr>
 		<c:forEach items="${cartCollection}" var="cart">
 			<form action="/cart/open" method="post">
 			<tr>
 				<td><c:out value="${cart.id}" /></td>
-				<td><c:out value="${cart.status}" /></td>
+				<td><c:out value="${cart.userStatus}" /></td>
 				<td><input hidden="true" name="userId" value="${user.id}">
 				</td>
 				<td><input hidden="true" name="cartId" value="${cart.id}">

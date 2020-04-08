@@ -27,7 +27,7 @@ public class User extends BaseEntity{
     @Column(name = "birth_date")
     private Long birthDate;
 
-    @Column(name = "status")
+    @Column(name = "user_status", nullable = false)
     private UserStatus userStatus;
 
     public User(Integer id, String login, String password, String name, Sex sex,

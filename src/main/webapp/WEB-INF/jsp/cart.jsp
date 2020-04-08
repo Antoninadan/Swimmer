@@ -9,11 +9,11 @@
 
 <h2>
     Cart, id =
-    <c:out value="${cart.id} ${cart.status}"/>
+    <c:out value="${cart.id} ${cart.userStatus}"/>
 </h2>
 
 <!-- Button "To be closed" -->
-<c:if test="${cart.status == 'OPEN'}">
+<c:if test="${cart.userStatus == 'OPEN'}">
     <form action="/cart/do-cart-to-be-closed" method="post">
         <input hidden="true" name="userId" value="${user.id}">
         <input hidden="true" name="cartId" value="${cart.id}">
@@ -22,7 +22,7 @@
 </c:if>
 
 <!-- Button "Closed" -->
-<c:if test="${cart.status == 'TO_BE_CLOSED'}">
+<c:if test="${cart.userStatus == 'TO_BE_CLOSED'}">
     <form action="/cart/do-cart-closed" method="post">
         <input hidden="true" name="userId" value="${user.id}">
         <input hidden="true" name="cartId" value="${cart.id}">

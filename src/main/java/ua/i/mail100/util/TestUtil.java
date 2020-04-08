@@ -5,6 +5,7 @@ import org.apache.tomcat.util.security.MD5Encoder;
 import ua.i.mail100.controller.rest.*;
 import ua.i.mail100.model.*;
 import ua.i.mail100.service.FileService;
+import ua.i.mail100.service.MailService;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -50,9 +51,12 @@ public class TestUtil {
 //                1L, 2L, country, "ven", "url", "come", 11L,11L, RecordStatus.ACTIVE);
 //        EventDTO eventDTO10 = mapperEventUtil.toDTO(event10);
 //        System.out.println("eventDTO10 = " + eventDTO10);
+//
+//        Long now = new Date().getTime();
+//        System.out.println(now);
 
-        Long now = new Date().getTime();
-        System.out.println(now);
+        MailService mailService = new MailService();
+        mailService.sendMail(      "antonina.danilova2@gmail.com", "subj", "text");
 
     }
 }

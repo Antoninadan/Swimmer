@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.i.mail100.dao.UserDAO;
 import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.model.User;
+import ua.i.mail100.model.UserStatus;
 import ua.i.mail100.util.PasswordUtil;
 
 import java.util.Date;
@@ -28,9 +29,11 @@ public class UserService {
         return user.get();
     }
 
+    // todo check mail
     public User save(User user) {
-        if (user.getId() == null && noUserWithSameLogin(user)) {
+        if (user.getId() == null && noUserWithSameLogin(user.getLogin())) {
             user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+            user.setUserStatus(UserStatus.ACTIVE);
             Long now = new Date().getTime();
             user.setCreateDate(now);
             user.setModifyDate(now);
@@ -44,8 +47,9 @@ public class UserService {
         Integer userId = user.getId();
         if (userId != null) {
             User savedEarlierUser = userDAO.getOne(userId);
-            if (savedEarlierUser != null & noUserWithSameLogin(user)) {
+            if (savedEarlierUser != null & noUserWithSameLogin(user.getLogin())) {
                 user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+                user.setUserStatus(savedEarlierUser.getUserStatus());
                 Long now = new Date().getTime();
                 user.setRecordStatus(savedEarlierUser.getRecordStatus());
                 user.setCreateDate(savedEarlierUser.getCreateDate());
@@ -57,8 +61,8 @@ public class UserService {
         return null;
     }
 
-    private boolean noUserWithSameLogin(User user) {
-        if (userDAO.getFirstByLogin(user.getLogin()) == null)
+    public boolean noUserWithSameLogin(String string) {
+        if (userDAO.getFirstByLogin(string) == null)
             return true;
         return false;
     }

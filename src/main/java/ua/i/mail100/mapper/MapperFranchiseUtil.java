@@ -44,12 +44,12 @@ public class MapperFranchiseUtil {
     }
 
     public List<FranchiseDTO> toDTOList(List<Franchise> franchises) {
-        List<FranchiseDTO> orderDTOs = new ArrayList<>();
+        List<FranchiseDTO> franchiseDTOs = new ArrayList<>();
         for (Franchise each : franchises) {
             FranchiseDTO franchiseDTO = toDTO(each);
-            orderDTOs.add(franchiseDTO);
+            franchiseDTOs.add(franchiseDTO);
         }
-        return orderDTOs;
+        return franchiseDTOs;
     }
 
 }
