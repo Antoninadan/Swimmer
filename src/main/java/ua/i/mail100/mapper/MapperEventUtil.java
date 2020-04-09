@@ -73,8 +73,7 @@ public class MapperEventUtil {
         eventDTO.setModifyDate(event.getModifyDate());
         eventDTO.setRecordStatus(event.getRecordStatus().toString());
         eventDTO.setDistances(event.getId() != null ?
-                mapperDistanceUtil.toDTOList(distanceService.getAllByEvent(event.getId(),
-                        RecordStatus.ACTIVE.ordinal())) : null);
+                mapperDistanceUtil.toDTOList(distanceService.getAllByEvent(event.getId())) : null);
         return eventDTO;
     }
 

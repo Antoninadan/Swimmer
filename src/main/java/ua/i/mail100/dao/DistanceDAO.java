@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface DistanceDAO extends JpaRepository<Distance, Integer> {
-    @Query(nativeQuery = true, value = "SELECT * FROM distances WHERE event_id = :eventId " +
-            "and record_status = :recordStatus")
-    List<Distance> getAllByEvent(@Param("eventId") Integer eventId, @Param("recordStatus") int recordStatus);
+    @Query(nativeQuery = true, value = "SELECT * FROM distances " +
+            "WHERE event_id = :eventId ")
+    List<Distance> getAllByEvent(@Param("eventId") Integer eventId);
 }

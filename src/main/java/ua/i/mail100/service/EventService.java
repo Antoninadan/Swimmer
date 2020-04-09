@@ -63,8 +63,8 @@ public class EventService {
         eventDAO.delete(event);
     }
 
-    public List<Event> getAll(Long modifyDate) {
+    public List<Event> getAllModifiedAfter(Long modifyDate) {
         if (modifyDate == null) modifyDate = 0L;
-        return eventDAO.getAll(modifyDate);
+        return eventDAO.getAllModifiedAfter(modifyDate);
     }
 }

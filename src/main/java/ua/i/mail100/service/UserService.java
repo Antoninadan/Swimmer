@@ -21,14 +21,13 @@ public class UserService {
     }
 
     public User getById(Integer id) {
-       Optional<User> user = userDAO.findById(id);
+        Optional<User> user = userDAO.findById(id);
         if (user.isEmpty()) {
             return null;
         }
         return user.get();
     }
 
-    // todo check mail
     public User save(User user) {
         if (user.getId() == null && noUserWithSameLogin(user.getLogin())) {
             user.setPassword(EncodeUtil.encode(user.getPassword()));
@@ -66,11 +65,19 @@ public class UserService {
         return false;
     }
 
-    public void deleteById (Integer id) {
+    public void deleteById(Integer id) {
         userDAO.deleteById(id);
     }
 
     public int updateUserStatus(User user, UserStatus userStatus) {
-       return userDAO.updateUserStatus(user.getId(), userStatus.ordinal());
+        return userDAO.updateUserStatus(user.getId(), userStatus.ordinal());
+    }
+
+    public boolean isUserAvailability(User user) {
+        UserStatus userStatus = user.getUserStatus();
+        RecordStatus recordStatus = user.getRecordStatus();
+        if (userStatus == UserStatus.ACTIVE && recordStatus == RecordStatus.ACTIVE)
+            return true;
+        return false;
     }
 }

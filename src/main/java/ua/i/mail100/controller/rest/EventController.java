@@ -79,8 +79,8 @@ public class EventController {
     }
 
     @GetMapping({"all/", "all/{modifyDate}"})
-    public ResponseEntity getAll(@PathVariable(required = false) Long modifyDate) {
-        List<Event> events = eventService.getAll(modifyDate);
+    public ResponseEntity getAllModifiedAfter(@PathVariable(required = false) Long modifyDate) {
+        List<Event> events = eventService.getAllModifiedAfter(modifyDate);
         List<EventDTO> eventDTOS = mapperEventUtil.toDTOList(events);
         return new ResponseEntity(eventDTOS, HttpStatus.OK);
     }

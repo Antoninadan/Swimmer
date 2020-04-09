@@ -34,9 +34,6 @@ public class MapperDistanceUtil {
         distance.setLengthInMeters(distanceDTO.getLengthInMeters());
         distance.setDate(distanceDTO.getDate());
         distance.setComment(distanceDTO.getComment());
-        distance.setCreateDate(distanceDTO.getCreateDate());
-        distance.setModifyDate(distanceDTO.getModifyDate());
-        distance.setRecordStatus(RecordStatus.valueOf(distanceDTO.getRecordStatus()));
         return distance;
     }
 

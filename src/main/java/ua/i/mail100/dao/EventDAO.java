@@ -12,6 +12,11 @@ import java.util.List;
 
 @Repository
 public interface EventDAO extends JpaRepository<Event, Integer> {
-    @Query(nativeQuery = true, value = "SELECT * FROM events WHERE modify_date >= :modifyDate")
-    List<Event> getAll(@Param("modifyDate") Long modifyDate);
+    @Query(nativeQuery = true, value = "SELECT e.* FROM events e WHERE e.modify_date >= :modifyDate " +
+            "UNION " +
+            "SELECT e.* FROM distances d " +
+            "JOIN events e ON e.id = d.event_id " +
+            "WHERE d.modify_date >= :modifyDate")
+    List<Event> getAllModifiedAfter(@Param("modifyDate") Long modifyDate);
 }
+

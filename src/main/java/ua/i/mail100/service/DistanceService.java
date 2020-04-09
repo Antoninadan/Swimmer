@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.i.mail100.dao.DistanceDAO;
 import ua.i.mail100.model.Distance;
+import ua.i.mail100.model.RecordStatus;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,14 +25,27 @@ public class DistanceService {
 
     public Distance save(Distance distance) {
         if (distance.getId() == null) {
+            Long now = new Date().getTime();
+            distance.setCreateDate(now);
+            distance.setModifyDate(now);
+            distance.setRecordStatus(RecordStatus.ACTIVE);
             return distanceDAO.save(distance);
         }
         return null;
     }
 
     public Distance update(Distance distance) {
-        if (distance.getId() != null && distanceDAO.getOne(distance.getId()) != null) {
-            return distanceDAO.save(distance);
+        Integer distanceId = distance.getId();
+        if (distanceId != null) {
+            Distance savedEarlierDistance = distanceDAO.getOne(distanceId);
+            if (savedEarlierDistance != null) {
+                Long now = new Date().getTime();
+                distance.setRecordStatus(savedEarlierDistance.getRecordStatus());
+                distance.setCreateDate(savedEarlierDistance.getCreateDate());
+                distance.setModifyDate(now);
+                return distanceDAO.save(distance);
+            }
+            return null;
         }
         return null;
     }
@@ -43,7 +58,7 @@ public class DistanceService {
         return distanceDAO.findAll();
     }
 
-    public List<Distance> getAllByEvent(Integer eventId, int recordStatus) {
-        return distanceDAO.getAllByEvent(eventId, recordStatus);
+    public List<Distance> getAllByEvent(Integer distanceId) {
+        return distanceDAO.getAllByEvent(distanceId);
     }
 }

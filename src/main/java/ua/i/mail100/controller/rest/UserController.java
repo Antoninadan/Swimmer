@@ -50,6 +50,9 @@ public class UserController {
     public ResponseEntity update(@RequestBody String requestBody) {
         UserDTO userDTO = mapperUserUtil.toDTO(requestBody);
         User user = mapperUserUtil.toObject(userDTO);
+        if (userService.isUserAvailability(user) == false ){
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
         User updatedUser = userService.update(user);
         if (updatedUser == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -68,7 +71,6 @@ public class UserController {
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 
-    // todo
     @PostMapping("auth")
     public ResponseEntity getByLoginAndPassword(@RequestBody String body) {
         Map<String, Object> map = new JacksonJsonParser().parseMap(body);
@@ -76,7 +78,8 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity(HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity(user, HttpStatus.OK);
+        UserSecurityDTO resultDTO = mapperUserUtil.toDTO(user);
+        return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 
     @GetMapping("unique/{login}")
@@ -111,4 +114,4 @@ public class UserController {
 }
 
 // todo role?
-// todo check email
+// todo secirity all requests
