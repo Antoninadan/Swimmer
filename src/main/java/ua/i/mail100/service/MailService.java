@@ -1,15 +1,20 @@
 package ua.i.mail100.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.i.mail100.config.MailConfig;
+import ua.i.mail100.util.EncodeUtil;
 
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+@Service
 public class MailService {
-    MailConfig mailConfig = new MailConfig();
+
+    @Autowired
+    MailConfig mailConfig;
 
     public void sendMail(String to, String subject, String text) {
         Properties properties = System.getProperties();
@@ -24,7 +29,6 @@ public class MailService {
                         return new PasswordAuthentication(mailConfig.username, mailConfig.password);
                     }
                 });
-
         try {
             MimeMessage message = new MimeMessage(session); // email message
             message.setFrom(new InternetAddress(mailConfig.from)); // setting header fields

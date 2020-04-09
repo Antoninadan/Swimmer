@@ -10,7 +10,7 @@ import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.model.Sex;
 import ua.i.mail100.model.User;
 import ua.i.mail100.model.UserStatus;
-import ua.i.mail100.util.PasswordUtil;
+import ua.i.mail100.util.EncodeUtil;
 
 import java.util.Optional;
 
@@ -31,13 +31,13 @@ class UserServiceTest {
     void getByLoginAndPassword() {
         User user = new User(1, "testLogin", "testPassword", "testName",
                 Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
-        when(userDAO.getFirstByLoginAndPassword("testLogin", PasswordUtil.encodePassword("testPassword"))).
+        when(userDAO.getFirstByLoginAndPassword("testLogin", EncodeUtil.encode("testPassword"))).
                 thenReturn(user);
 
         User savedUser = userService.getByLoginAndPassword("testLogin", "testPassword");
         assertEquals("testName", savedUser.getName());
         verify(userDAO, times(1)).
-                getFirstByLoginAndPassword("testLogin", PasswordUtil.encodePassword("testPassword"));
+                getFirstByLoginAndPassword("testLogin", EncodeUtil.encode("testPassword"));
     }
 
     @Test
@@ -69,7 +69,7 @@ class UserServiceTest {
                 Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
         User userToSave = new User(null, "testLogin", "testPassword", "testName",
                 Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
-        userToSave.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+        userToSave.setPassword(EncodeUtil.encode(user.getPassword()));
         userToSave.setId(1);
         when(userDAO.save(user)).thenReturn(userToSave);
 

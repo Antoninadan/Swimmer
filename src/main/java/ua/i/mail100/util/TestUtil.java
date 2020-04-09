@@ -2,15 +2,23 @@ package ua.i.mail100.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tomcat.util.security.MD5Encoder;
+import org.springframework.beans.factory.annotation.Autowired;
+import ua.i.mail100.config.MailConfig;
 import ua.i.mail100.controller.rest.*;
 import ua.i.mail100.model.*;
 import ua.i.mail100.service.FileService;
 import ua.i.mail100.service.MailService;
+import ua.i.mail100.service.UserService;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TestUtil {
+
+
     public static void main(String[] args) {
 //        byte[] bytes = FileService.getBytesFromFile("D://", "oceanman.png");
 //        String str = "[";
@@ -55,8 +63,13 @@ public class TestUtil {
 //        Long now = new Date().getTime();
 //        System.out.println(now);
 
-        MailService mailService = new MailService();
-        mailService.sendMail(      "antonina.danilova2@gmail.com", "subj", "text");
+//        MailService mailService = new MailService();
+//        mailService.sendMail(      "antonina.danilova2@gmail.com", "subj", "text");
+
+//        UserService userService = new UserService();
+//            User user = userService.getById(1);
+
+        System.out.println("UserStatus.NEW.ordinal() = " + UserStatus.ACTIVE.ordinal());
 
     }
 }

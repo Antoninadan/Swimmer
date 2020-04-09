@@ -6,7 +6,7 @@ import ua.i.mail100.dao.UserDAO;
 import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.model.User;
 import ua.i.mail100.model.UserStatus;
-import ua.i.mail100.util.PasswordUtil;
+import ua.i.mail100.util.EncodeUtil;
 
 import java.util.Date;
 import java.util.Optional;
@@ -16,9 +16,8 @@ public class UserService {
     @Autowired
     UserDAO userDAO;
 
-
     public User getByLoginAndPassword(String login, String password) {
-        return userDAO.getFirstByLoginAndPassword(login, PasswordUtil.encodePassword(password));
+        return userDAO.getFirstByLoginAndPassword(login, EncodeUtil.encode(password));
     }
 
     public User getById(Integer id) {
@@ -32,8 +31,8 @@ public class UserService {
     // todo check mail
     public User save(User user) {
         if (user.getId() == null && noUserWithSameLogin(user.getLogin())) {
-            user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
-            user.setUserStatus(UserStatus.ACTIVE);
+            user.setPassword(EncodeUtil.encode(user.getPassword()));
+            user.setUserStatus(UserStatus.NEW);
             Long now = new Date().getTime();
             user.setCreateDate(now);
             user.setModifyDate(now);
@@ -48,7 +47,7 @@ public class UserService {
         if (userId != null) {
             User savedEarlierUser = userDAO.getOne(userId);
             if (savedEarlierUser != null & noUserWithSameLogin(user.getLogin())) {
-                user.setPassword(PasswordUtil.encodePassword(user.getPassword()));
+                user.setPassword(EncodeUtil.encode(user.getPassword()));
                 user.setUserStatus(savedEarlierUser.getUserStatus());
                 Long now = new Date().getTime();
                 user.setRecordStatus(savedEarlierUser.getRecordStatus());
@@ -71,4 +70,7 @@ public class UserService {
         userDAO.deleteById(id);
     }
 
+    public int updateUserStatus(User user, UserStatus userStatus) {
+       return userDAO.updateUserStatus(user.getId(), userStatus.ordinal());
+    }
 }

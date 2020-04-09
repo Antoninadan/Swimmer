@@ -5,15 +5,9 @@ import org.springframework.stereotype.Service;
 import ua.i.mail100.dao.CountryDAO;
 import ua.i.mail100.dao.EventDAO;
 import ua.i.mail100.dao.FranchiseDAO;
-import ua.i.mail100.dao.UserDAO;
-import ua.i.mail100.model.Country;
-import ua.i.mail100.model.Franchise;
 import ua.i.mail100.model.Event;
 import ua.i.mail100.model.RecordStatus;
-import ua.i.mail100.util.PasswordUtil;
 
-import javax.persistence.Column;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
