@@ -14,11 +14,11 @@ public class DistanceDTO extends BaseEntityDTO {
     private String distanceType;
     private String ageDistanceType;
     private Integer lengthInMeters;
-    private Long date;
+    private String date;
     private String comment;
 
     public DistanceDTO(Integer id, Integer eventId, String distanceType, String ageDistanceType,
-                       Integer lengthInMeters, Long date, String comment,
+                       Integer lengthInMeters, String date, String comment,
                        Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.eventId = eventId;

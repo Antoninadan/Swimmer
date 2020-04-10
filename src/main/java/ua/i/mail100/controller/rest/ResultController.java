@@ -8,8 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.i.mail100.dto.ResultDTO;
 import ua.i.mail100.mapper.MapperResultUtil;
+import ua.i.mail100.model.Distance;
 import ua.i.mail100.model.Result;
+import ua.i.mail100.model.User;
+import ua.i.mail100.service.DistanceService;
 import ua.i.mail100.service.ResultService;
+import ua.i.mail100.service.UserService;
 
 import java.util.List;
 
@@ -22,12 +26,36 @@ public class ResultController {
     ResultService resultService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
+    DistanceService distanceService;
+
+    @Autowired
     MapperResultUtil mapperResultUtil;
 
     @PutMapping
     public ResponseEntity save(@RequestBody String requestBody) {
         ResultDTO resultDTO = mapperResultUtil.toDTO(requestBody);
         Result result = mapperResultUtil.toObject(resultDTO);
+        if (!resultService.isResultComplete(result)) {
+            return new ResponseEntity("not complete result data", HttpStatus.BAD_REQUEST);
+        }
+        Distance distance = result.getDistance();
+        if (!distanceService.isDistanceAvailable(distance)){
+            return new ResponseEntity("event or distance is deleted", HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.getById(result.getUser().getId());
+        if (user == null) {
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+        if (!userService.isUserAvailability(user)){
+            return new ResponseEntity(HttpStatus.FORBIDDEN);
+        }
+
+
+
         Result savedResult = resultService.save(result);
         if (savedResult == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -36,6 +64,7 @@ public class ResultController {
         return new ResponseEntity(sevedResultDTO, HttpStatus.OK);
     }
 
+    // todo
     @PostMapping
     public ResponseEntity update(@RequestBody String requestBody) {
         ResultDTO resultDTO = mapperResultUtil.toDTO(requestBody);
@@ -48,6 +77,7 @@ public class ResultController {
         return new ResponseEntity(sevedResultDTO, HttpStatus.OK);
     }
 
+    //todo
     @GetMapping({"", "{id}"})
     public ResponseEntity getResult(@PathVariable(required = false) Integer id) {
         if (id != null) {

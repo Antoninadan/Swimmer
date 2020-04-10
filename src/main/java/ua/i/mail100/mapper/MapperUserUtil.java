@@ -7,6 +7,7 @@ import ua.i.mail100.dto.UserDTO;
 import ua.i.mail100.dto.UserSecurityDTO;
 import ua.i.mail100.model.Sex;
 import ua.i.mail100.model.User;
+import ua.i.mail100.service.DateService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ public class MapperUserUtil {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    DateService dateService;
+
     public User toObject(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
@@ -25,7 +29,7 @@ public class MapperUserUtil {
         user.setName(userDTO.getName());
         user.setSex(userDTO.getSex() != null ?
                 Sex.valueOf(userDTO.getSex()) : null);
-        user.setBirthDate(userDTO.getBirthDate());
+        user.setBirthDate(dateService.parse(userDTO.getBirthDate()));
         return user;
     }
 
@@ -45,7 +49,7 @@ public class MapperUserUtil {
         userSecurityDTO.setName(user.getName());
         userSecurityDTO.setSex(user.getSex() != null ?
                 user.getSex().toString() : null);
-        userSecurityDTO.setBirthDate(user.getBirthDate());
+        userSecurityDTO.setBirthDate(dateService.toString(user.getBirthDate()));
         userSecurityDTO.setCreateDate(user.getCreateDate());
         userSecurityDTO.setModifyDate(user.getModifyDate());
         userSecurityDTO.setRecordStatus(user.getRecordStatus().toString());

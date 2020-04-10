@@ -7,6 +7,7 @@ import ua.i.mail100.dto.EventDTO;
 import ua.i.mail100.model.Event;
 import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.service.CountryService;
+import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.DistanceService;
 import ua.i.mail100.service.FranchiseService;
 
@@ -31,6 +32,9 @@ public class MapperEventUtil {
     @Autowired
     DistanceService distanceService;
 
+    @Autowired
+    DateService dateService;
+
     public Event toObject(EventDTO eventDTO) {
         Event event = new Event();
         event.setId(eventDTO.getId());
@@ -38,8 +42,8 @@ public class MapperEventUtil {
                 franchiseService.getById(eventDTO.getFranchiseId()) : null);
         event.setOrganizer(eventDTO.getOrganizer());
         event.setName(eventDTO.getName());
-        event.setDateFrom(eventDTO.getDateFrom());
-        event.setDateTo(eventDTO.getDateTo());
+        event.setDateFrom(dateService.parse(eventDTO.getDateFrom()));
+        event.setDateTo(dateService.parse(eventDTO.getDateTo()));
         event.setCountry(eventDTO.getCountryId() != null ?
                 countryService.getById(eventDTO.getCountryId()) : null);
         event.setVenue(eventDTO.getVenue());
@@ -63,8 +67,8 @@ public class MapperEventUtil {
         eventDTO.setFranchiseId(event.getFranchise() != null ? event.getFranchise().getId() : null);
         eventDTO.setOrganizer(event.getOrganizer());
         eventDTO.setName(event.getName());
-        eventDTO.setDateFrom(event.getDateFrom());
-        eventDTO.setDateTo(event.getDateTo());
+        eventDTO.setDateFrom(dateService.toString(event.getDateFrom()));
+        eventDTO.setDateTo(dateService.toString(event.getDateTo()));
         eventDTO.setCountryId(event.getCountry() != null ? event.getCountry().getId() : null);
         eventDTO.setVenue(event.getVenue());
         eventDTO.setUrl(event.getUrl());

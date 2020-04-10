@@ -37,9 +37,6 @@ public class MapperResultUtil {
                 userService.getById(resultDTO.getUserId()) : null);
         result.setTimeInSeconds(resultDTO.getTimeInSeconds());
         result.setComment(resultDTO.getComment());
-        result.setCreateDate(resultDTO.getCreateDate());
-        result.setModifyDate(resultDTO.getModifyDate());
-        result.setRecordStatus(RecordStatus.valueOf(resultDTO.getRecordStatus()));
         return result;
     }
 

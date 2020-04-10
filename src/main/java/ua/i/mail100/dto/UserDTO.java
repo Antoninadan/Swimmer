@@ -14,9 +14,9 @@ public class UserDTO extends BaseEntityDTO {
     private String password;
     private String name;
     private String sex;
-    private Long birthDate;
+    private String birthDate;
 
-    public UserDTO(Integer id, String login, String password, String name, String sex, Long birthDate,
+    public UserDTO(Integer id, String login, String password, String name, String sex, String birthDate,
                    Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.login = login;

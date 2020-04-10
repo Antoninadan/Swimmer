@@ -13,9 +13,9 @@ public class UserSecurityDTO extends BaseEntityDTO {
     private String login;
     private String name;
     private String sex;
-    private Long birthDate;
+    private String birthDate;
 
-    public UserSecurityDTO(Integer id, String login, String name, String sex, Long birthDate,
+    public UserSecurityDTO(Integer id, String login, String name, String sex, String birthDate,
                            Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.login = login;

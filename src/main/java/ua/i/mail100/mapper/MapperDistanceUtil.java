@@ -8,6 +8,7 @@ import ua.i.mail100.model.AgeDistanceType;
 import ua.i.mail100.model.Distance;
 import ua.i.mail100.model.DistanceType;
 import ua.i.mail100.model.RecordStatus;
+import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.EventService;
 
 import java.io.IOException;
@@ -22,6 +23,9 @@ public class MapperDistanceUtil {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    DateService dateService;
+
     public Distance toObject(DistanceDTO distanceDTO) {
         Distance distance = new Distance();
         distance.setId(distanceDTO.getId());
@@ -32,7 +36,7 @@ public class MapperDistanceUtil {
         distance.setAgeDistanceType(distanceDTO.getAgeDistanceType() != null ?
                 AgeDistanceType.valueOf(distanceDTO.getAgeDistanceType()) : null);
         distance.setLengthInMeters(distanceDTO.getLengthInMeters());
-        distance.setDate(distanceDTO.getDate());
+        distance.setDate(dateService.parse(distanceDTO.getDate()));
         distance.setComment(distanceDTO.getComment());
         return distance;
     }
@@ -56,7 +60,7 @@ public class MapperDistanceUtil {
         distanceDTO.setAgeDistanceType(distance.getAgeDistanceType() != null ?
                 distance.getAgeDistanceType().toString() : null);
         distanceDTO.setLengthInMeters(distance.getLengthInMeters());
-        distanceDTO.setDate(distance.getDate());
+        distanceDTO.setDate(dateService.toString(distance.getDate()));
         distanceDTO.setComment(distance.getComment());
         distanceDTO.setCreateDate(distance.getCreateDate());
         distanceDTO.setModifyDate(distance.getModifyDate());

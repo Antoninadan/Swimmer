@@ -12,6 +12,7 @@ import ua.i.mail100.model.User;
 import ua.i.mail100.model.UserStatus;
 import ua.i.mail100.util.EncodeUtil;
 
+import java.util.Date;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ class UserServiceTest {
     @Test
     void getByLoginAndPassword() {
         User user = new User(1, "testLogin", "testPassword", "testName",
-                Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
+                Sex.FEMALE, new Date(), UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
         when(userDAO.getFirstByLoginAndPassword("testLogin", EncodeUtil.encode("testPassword"))).
                 thenReturn(user);
 
@@ -43,7 +44,7 @@ class UserServiceTest {
     @Test
     void getById() {
         User user = new User(1, "testLogin", "testPassword", "testName",
-                Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
+                Sex.FEMALE, new Date(), UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
         Optional<User> userOptimal = Optional.of(user);
         when(userDAO.findById(1)).thenReturn(userOptimal);
 
@@ -66,9 +67,9 @@ class UserServiceTest {
     @Test
     void save() {
         User user = new User(null, "testLogin", "testPassword", "testName",
-                Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
+                Sex.FEMALE, new Date(), UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
         User userToSave = new User(null, "testLogin", "testPassword", "testName",
-                Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
+                Sex.FEMALE, new Date(), UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
         userToSave.setPassword(EncodeUtil.encode(user.getPassword()));
         userToSave.setId(1);
         when(userDAO.save(user)).thenReturn(userToSave);
@@ -81,7 +82,7 @@ class UserServiceTest {
     @Test
     void saveNotNullId() {
         User user = new User(1, "testLogin", "testPassword", "testName",
-                Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
+                Sex.FEMALE, new Date(), UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
 
         User savedUser = userService.save(user);
         assertEquals(null, savedUser);
@@ -90,7 +91,7 @@ class UserServiceTest {
     @Test
     void saveNullLogin() {
         User user = new User(1, null, "testPassword", "testName",
-                Sex.FEMALE, 4525463L, UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
+                Sex.FEMALE, new Date(), UserStatus.ACTIVE, 5655464L, 11L, RecordStatus.ACTIVE);
 
         User savedUser = userService.save(user);
         assertEquals(null, savedUser);

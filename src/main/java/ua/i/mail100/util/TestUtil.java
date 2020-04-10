@@ -13,8 +13,13 @@ import ua.i.mail100.service.UserService;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TestUtil {
 
@@ -69,7 +74,63 @@ public class TestUtil {
 //        UserService userService = new UserService();
 //            User user = userService.getById(1);
 
-        System.out.println("UserStatus.NEW.ordinal() = " + UserStatus.ACTIVE.ordinal());
+//        Calendar calendar222 = new GregorianCalendar(1990, 09, 09);
+//
+//        calendar.get()
 
+
+
+        String strToDate = "2020-04-12";
+        Date date =  dateParse(strToDate);
+
+        Date now = new Date();
+        now.compareTo(date);
+
+        System.out.println(now.compareTo(date));
+
+
+
+//        Calendar calendar = new GregorianCalendar();
+//        calendar.
+
+
+
+//        LocalDate today = LocalDate.now();
+//        LocalDate other = LocalDate.ofEpochDay(date.getTime());
+//
+//        Period p = Period.between(today, other);
+//        System.out.println("p = " + p);
+
+//        String strToDate = "1900-01-01";
+//        Date date =  dateParse(strToDate);
+//
+//        String strToDate2 = "1960-01-01";
+//        Date date2 =  dateParse(strToDate);
+//        System.out.println("date = " + date.getTime());
+//        System.out.println("date2 = " + date2.getTime());
+//
+//        System.out.println(date2.getTime()>date.getTime());
+//
+//
+//        System.out.println("date = " + date);
+
+
+
+
+
+
+    }
+
+
+    public static Date dateParse(String str) {
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
+
+
+        Date parsingDate = null;
+        try {
+            parsingDate = ft.parse(str);
+        }catch (ParseException e) {
+        }
+        return parsingDate;
     }
 }

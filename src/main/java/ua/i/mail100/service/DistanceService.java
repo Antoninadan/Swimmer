@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.i.mail100.dao.DistanceDAO;
 import ua.i.mail100.model.Distance;
+import ua.i.mail100.model.Event;
 import ua.i.mail100.model.RecordStatus;
 
 import java.util.Date;
@@ -61,4 +62,30 @@ public class DistanceService {
     public List<Distance> getAllByEvent(Integer distanceId) {
         return distanceDAO.getAllByEvent(distanceId);
     }
+
+    public boolean isDistanceAvailable(Distance distance){
+        RecordStatus distanceRecordStatus = distance.getRecordStatus();
+        if (distanceRecordStatus != RecordStatus.ACTIVE)
+            return false;
+        Event event = distance.getEvent();
+        RecordStatus eventRecordStatus = event.getRecordStatus();
+        if (eventRecordStatus != RecordStatus.ACTIVE)
+            return false;
+        return true;
+    }
+
+    public boolean isDistanceDateHasCome(Distance distance){
+//        Long distanceDate = distance.getDate();
+//        Long now = new Date().getTime();
+//
+//        if (distanceRecordStatus != RecordStatus.ACTIVE)
+//            return false;
+//        Event event = distance.getEvent();
+//        RecordStatus eventRecordStatus = event.getRecordStatus();
+//        if (eventRecordStatus != RecordStatus.ACTIVE)
+//            return false;
+        return true;
+    }
+
+
 }

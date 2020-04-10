@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -27,10 +28,10 @@ public class Event extends BaseEntity {
     private String name;
 
     @Column(name = "data_from")
-    private Long dateFrom;
+    private Date dateFrom;
 
     @Column(name = "data_to")
-    private Long dateTo;
+    private Date dateTo;
 
     @ManyToOne(targetEntity = Country.class)
     private Country country;
@@ -44,8 +45,8 @@ public class Event extends BaseEntity {
     @Column(name = "comment")
     private String comment;
 
-    public Event(Integer id, Franchise franchise, String organizer, String name, Long dateFrom,
-                 Long dateTo, Country country, String venue, String url, String comment,
+    public Event(Integer id, Franchise franchise, String organizer, String name, Date dateFrom,
+                 Date dateTo, Country country, String venue, String url, String comment,
                  Long createDate, Long modifyDate, RecordStatus recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.franchise = franchise;

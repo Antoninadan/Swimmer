@@ -15,15 +15,15 @@ public class EventDTO extends BaseEntityDTO {
     private Integer franchiseId;
     private String organizer;
     private String name;
-    private Long dateFrom;
-    private Long dateTo;
+    private String dateFrom;
+    private String dateTo;
     private Integer countryId;
     private String venue;
     private String url;
     private String comment;
     private List<DistanceDTO> distances;
 
-    public EventDTO(Integer id, Integer franchiseId, String organizer, String name, Long dateFrom, Long dateTo,
+    public EventDTO(Integer id, Integer franchiseId, String organizer, String name, String dateFrom, String dateTo,
                     Integer countryId, String venue, String url, String comment,
                     Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);

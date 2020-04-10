@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Setter
 @Getter
@@ -31,13 +32,13 @@ public class Distance extends BaseEntity {
     private Integer lengthInMeters;
 
     @Column(name = "date")
-    private Long date;
+    private Date date;
 
     @Column(name = "comment")
     private String comment;
 
     public Distance(Integer id, Event event, DistanceType distanceType, AgeDistanceType ageDistanceType,
-                    Integer lengthInMeters, Long date, String comment,
+                    Integer lengthInMeters, Date date, String comment,
                     Long createDate, Long modifyDate, RecordStatus recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.event = event;

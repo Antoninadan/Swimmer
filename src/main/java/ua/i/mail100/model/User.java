@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -25,13 +26,13 @@ public class User extends BaseEntity{
     private Sex sex;
 
     @Column(name = "birth_date")
-    private Long birthDate;
+    private Date birthDate;
 
     @Column(name = "user_status", nullable = false)
     private UserStatus userStatus;
 
     public User(Integer id, String login, String password, String name, Sex sex,
-                Long birthDate, UserStatus userStatus,
+                Date birthDate, UserStatus userStatus,
                 Long createDate, Long modifyDate, RecordStatus recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.login = login;
