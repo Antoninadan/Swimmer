@@ -75,16 +75,9 @@ public class DistanceService {
     }
 
     public boolean isDistanceDateHasCome(Distance distance){
-//        Long distanceDate = distance.getDate();
-//        Long now = new Date().getTime();
-//
-//        if (distanceRecordStatus != RecordStatus.ACTIVE)
-//            return false;
-//        Event event = distance.getEvent();
-//        RecordStatus eventRecordStatus = event.getRecordStatus();
-//        if (eventRecordStatus != RecordStatus.ACTIVE)
-//            return false;
-        return true;
+        Date distanceDate = distance.getDate();
+        Date now = new Date();
+        return now.after(distanceDate);
     }
 
 

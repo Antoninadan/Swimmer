@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.i.mail100.dto.ResultDTO;
-import ua.i.mail100.model.RecordStatus;
 import ua.i.mail100.model.Result;
 import ua.i.mail100.service.DistanceService;
 import ua.i.mail100.service.ResultService;
@@ -37,6 +36,20 @@ public class MapperResultUtil {
                 userService.getById(resultDTO.getUserId()) : null);
         result.setTimeInSeconds(resultDTO.getTimeInSeconds());
         result.setComment(resultDTO.getComment());
+        return result;
+    }
+
+    public Result toObjectForUpdate(ResultDTO resultDTO) {
+        Result result = new Result();
+        Integer id = resultDTO.getId();
+        result.setId(id);
+        result.setTimeInSeconds(resultDTO.getTimeInSeconds());
+        result.setComment(resultDTO.getComment());
+
+        Result savedEarlierResult = resultService.getById(id);
+        result.setDistance(savedEarlierResult.getDistance());
+        result.setUser(savedEarlierResult.getUser());
+        result.setRecordStatus(savedEarlierResult.getRecordStatus());
         return result;
     }
 

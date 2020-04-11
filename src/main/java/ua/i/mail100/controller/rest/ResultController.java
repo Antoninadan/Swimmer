@@ -38,43 +38,54 @@ public class ResultController {
     public ResponseEntity save(@RequestBody String requestBody) {
         ResultDTO resultDTO = mapperResultUtil.toDTO(requestBody);
         Result result = mapperResultUtil.toObject(resultDTO);
-        if (!resultService.isResultComplete(result)) {
+        if (!resultService.isResultComplete(result))
             return new ResponseEntity("not complete result data", HttpStatus.BAD_REQUEST);
-        }
         Distance distance = result.getDistance();
-        if (!distanceService.isDistanceAvailable(distance)){
+        if (!distanceService.isDistanceAvailable(distance))
             return new ResponseEntity("event or distance is deleted", HttpStatus.BAD_REQUEST);
-        }
+        if (!distanceService.isDistanceDateHasCome(distance))
+            return new ResponseEntity("distance has not come", HttpStatus.BAD_REQUEST);
 
         User user = userService.getById(result.getUser().getId());
-        if (user == null) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-        if (!userService.isUserAvailability(user)){
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
-
+        if (user == null)
+            return new ResponseEntity("user not found", HttpStatus.BAD_REQUEST);
+        if (!userService.isUserAvailability(user))
+            return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
 
 
         Result savedResult = resultService.save(result);
-        if (savedResult == null) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
-        ResultDTO sevedResultDTO = mapperResultUtil.toDTO(savedResult);
-        return new ResponseEntity(sevedResultDTO, HttpStatus.OK);
+        if (savedResult == null)
+            return new ResponseEntity("result not saved", HttpStatus.BAD_REQUEST);
+        ResultDTO savedResultDTO = mapperResultUtil.toDTO(savedResult);
+        return new ResponseEntity(savedResultDTO, HttpStatus.OK);
     }
 
-    // todo
     @PostMapping
     public ResponseEntity update(@RequestBody String requestBody) {
         ResultDTO resultDTO = mapperResultUtil.toDTO(requestBody);
-        Result result = mapperResultUtil.toObject(resultDTO);
+        Result result = mapperResultUtil.toObjectForUpdate(resultDTO);
+        if (!resultService.isResultAvailable(result))
+            return new ResponseEntity("result not available", HttpStatus.BAD_REQUEST);
+        if (!resultService.isResultComplete(result))
+            return new ResponseEntity("not complete result data", HttpStatus.BAD_REQUEST);
+        Distance distance = result.getDistance();
+        if (!distanceService.isDistanceAvailable(distance))
+            return new ResponseEntity("event or distance is deleted", HttpStatus.BAD_REQUEST);
+        if (!distanceService.isDistanceDateHasCome(distance))
+            return new ResponseEntity("distance has not come", HttpStatus.BAD_REQUEST);
+
+        User user = userService.getById(result.getUser().getId());
+        if (user == null)
+            return new ResponseEntity("user not found", HttpStatus.BAD_REQUEST);
+        if (!userService.isUserAvailability(user))
+            return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
+
         Result updatedResult = resultService.update(result);
         if (updatedResult == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        ResultDTO sevedResultDTO = mapperResultUtil.toDTO(updatedResult);
-        return new ResponseEntity(sevedResultDTO, HttpStatus.OK);
+        ResultDTO savedResultDTO = mapperResultUtil.toDTO(updatedResult);
+        return new ResponseEntity(savedResultDTO, HttpStatus.OK);
     }
 
     //todo

@@ -61,11 +61,17 @@ public class ResultService {
         return resultDAO.findAll();
     }
 
-
     public boolean isResultComplete(Result result) {
         if (result.getUser() == null) return false;
         if (result.getDistance() == null) return false;
         if (result.getTimeInSeconds() == null) return false;
+        return true;
+    }
+
+    public boolean isResultAvailable(Result result){
+        RecordStatus resultRecordStatus = result.getRecordStatus();
+        if (resultRecordStatus != RecordStatus.ACTIVE)
+            return false;
         return true;
     }
 }

@@ -84,6 +84,7 @@ public class TestUtil {
         Date date =  dateParse(strToDate);
 
         Date now = new Date();
+        System.out.println(now.before(date));
         now.compareTo(date);
 
         System.out.println(now.compareTo(date));
