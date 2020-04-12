@@ -62,19 +62,9 @@ public class UserService {
         System.out.println(user);
         Integer userId = user.getId();
         if (userId != null) {
-//            User savedEarlierUser = userDAO.getOne(userId);
-//            System.out.println(savedEarlierUser);
-//            if (savedEarlierUser != null) {
-//                user.setPassword(EncodeUtil.encode(user.getPassword()));
-//                user.setUserStatus(savedEarlierUser.getUserStatus());
-                Long now = new Date().getTime();
-//                user.setRecordStatus(savedEarlierUser.getRecordStatus());
-//                user.setCreateDate(savedEarlierUser.getCreateDate());
-                user.setModifyDate(now);
-//                User saved = userDAO.save(user);
-//                System.out.println("saved = " + saved);
-                return userDAO.save(user);
-
+            Long now = new Date().getTime();
+            user.setModifyDate(now);
+            return userDAO.save(user);
         }
         return null;
     }
@@ -102,7 +92,7 @@ public class UserService {
     }
 
     public boolean isUserExists(User user) {
-        if(user == null) return false;
+        if (user == null) return false;
 
         Integer id = user.getId();
         if (id == null) return false;
@@ -114,7 +104,7 @@ public class UserService {
 
     public User saveRecoveryPasswordAndSendMail(User user) {
         String newPassword = Integer.toString(RandomUtil.randomFixedLength(8));
-        user.setPassword(newPassword);
+        user.setPassword(EncodeUtil.encode(newPassword));
         sendMailPasswordRecovery(user, newPassword);
         User updatedUser = update(user);
         return updatedUser;

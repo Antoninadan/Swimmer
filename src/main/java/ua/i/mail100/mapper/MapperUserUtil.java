@@ -9,6 +9,7 @@ import ua.i.mail100.model.Sex;
 import ua.i.mail100.model.User;
 import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.UserService;
+import ua.i.mail100.util.EncodeUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,15 +62,15 @@ public class MapperUserUtil {
         User user = new User();
         Integer id = userDTO.getId();
         user.setId(id);
-        user.setPassword(userDTO.getPassword());
+        String password = userDTO.getPassword();
+        user.setPassword(EncodeUtil.encode(password));
         if(!userService.isUserExists(user)) return null;
 
         User savedEarlierUser = userService.getById(id);
-        user.setName(userDTO.getName());
+        user.setName(savedEarlierUser.getName());
         user.setLogin(savedEarlierUser.getLogin());
-        user.setSex(userDTO.getSex() != null ?
-                Sex.valueOf(userDTO.getSex()) : null);
-        user.setBirthDate(dateService.parse(userDTO.getBirthDate()));
+        user.setSex(savedEarlierUser.getSex());
+        user.setBirthDate(savedEarlierUser.getBirthDate());
         user.setUserStatus(savedEarlierUser.getUserStatus());
         user.setRecordStatus(savedEarlierUser.getRecordStatus());
         user.setModifyDate(savedEarlierUser.getModifyDate());

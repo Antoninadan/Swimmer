@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MailConfig {
+    private static final String LINE_SEP = System.getProperty("line.separator");
+
     public final String username = "antonina.danilova2@gmail.com";
     public final String password = "ujuoznasghtqlqlk";
     public final String from = "antonina.danilova2@gmail.com";
@@ -20,8 +22,8 @@ public class MailConfig {
     public final String textMailWithCode = "Your code is: ";
 
     public final String subjectMailPasswordRecovery = "SWIMMER: Get recovery password";
-    public final String textMailPasswordRecovery = "Your password is: %s.\nChange this password for" +
-            "your security!";
+    public final String textMailPasswordRecovery = "Your password is: %s." + LINE_SEP +
+            "Change this password for your security!";
 
 
 

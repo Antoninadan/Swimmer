@@ -8,12 +8,12 @@
 <body>
 <h2><c:out value="${message}" default="Please, input your login-password!"/></h2>
 <br>
-<a href="/registration">REGISTER NEW USER</a>
+<%--<a href="/registration">REGISTER NEW USER</a>--%>
 <br>
 <form action="/user/auth" method="post">
     <input type="text" size="30" name="login" required/>
     <br>
-    <input type="password" size="30" name="pass" required/>
+    <input type="password" size="30" name="password" required/>
     <br>
     <input type="submit" value="LOGIN"/>
 </form>

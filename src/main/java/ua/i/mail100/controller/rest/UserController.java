@@ -62,7 +62,7 @@ public class UserController {
     @PostMapping("update-password")
     public ResponseEntity updatePassword(@RequestBody String requestBody) {
         UserDTO userDTO = mapperUserUtil.toDTO(requestBody);
-        User user = mapperUserUtil.toObjectForUpdate(userDTO);
+        User user = mapperUserUtil.toObjectForUpdatePassword(userDTO);
         if(!userService.isUserExists(user))
             return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
         if (!userService.isUserAvailability(user))
@@ -78,7 +78,7 @@ public class UserController {
     public ResponseEntity getUser(@PathVariable Integer id) {
         User user = userService.getById(id);
         if (user == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
         }
         UserSecurityDTO resultDTO = mapperUserUtil.toDTO(user);
         return new ResponseEntity(resultDTO, HttpStatus.OK);
@@ -89,7 +89,7 @@ public class UserController {
         Map<String, Object> map = new JacksonJsonParser().parseMap(body);
         User user = userService.getByLoginAndPassword((String) map.get("login"), (String) map.get("password"));
         if (user == null) {
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
+            return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
         }
         UserSecurityDTO resultDTO = mapperUserUtil.toDTO(user);
         return new ResponseEntity(resultDTO, HttpStatus.OK);
@@ -104,7 +104,7 @@ public class UserController {
     public ResponseEntity sendCode(@PathVariable Integer id) {
         User user = userService.getById(id);
         if (user == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("user not available", HttpStatus.NOT_FOUND);
         }
         userCodeService.saveCodeAndSendMailWithCode(user);
         return new ResponseEntity(HttpStatus.OK);
@@ -114,7 +114,7 @@ public class UserController {
     public ResponseEntity sendCode(@PathVariable("id") Integer id, @PathVariable("code") String code) {
         User user = userService.getById(id);
         if (user == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("user not available", HttpStatus.NOT_FOUND);
         }
         boolean result = userCodeService.checkCode(user, code);
         if (result) {
@@ -127,7 +127,7 @@ public class UserController {
     public ResponseEntity recoveryPassword(@PathVariable("login") String login) {
         User user = userService.getByLogin(login);
         if (user == null) {
-            return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("user not available",  HttpStatus.NOT_FOUND);
         }
         if (!userService.isUserAvailability(user)){
             return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
