@@ -42,4 +42,14 @@ public class User extends BaseEntity{
         this.birthDate = birthDate;
         this.userStatus = userStatus;
     }
+
+    @Override
+    public String toString() {
+        return "login: " + login + " " +
+               "password: " + password + " "+
+                userStatus + " "+
+                this.getCreateDate()+ " " +
+                this.getModifyDate() + " " +
+                this.getRecordStatus();
+    }
 }

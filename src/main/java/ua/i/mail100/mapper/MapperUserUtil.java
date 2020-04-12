@@ -8,6 +8,7 @@ import ua.i.mail100.dto.UserSecurityDTO;
 import ua.i.mail100.model.Sex;
 import ua.i.mail100.model.User;
 import ua.i.mail100.service.DateService;
+import ua.i.mail100.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ public class MapperUserUtil {
     @Autowired
     DateService dateService;
 
+    @Autowired
+    UserService userService;
+
     public User toObject(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
@@ -33,6 +37,46 @@ public class MapperUserUtil {
         return user;
     }
 
+    public User toObjectForUpdate(UserDTO userDTO) {
+        User user = new User();
+        Integer id = userDTO.getId();
+        user.setId(id);
+        user.setName(userDTO.getName());
+        user.setSex(userDTO.getSex() != null ?
+                Sex.valueOf(userDTO.getSex()) : null);
+        user.setBirthDate(dateService.parse(userDTO.getBirthDate()));
+        if(!userService.isUserExists(user)) return null;
+
+        User savedEarlierUser = userService.getById(id);
+        user.setLogin(savedEarlierUser.getLogin());
+        user.setPassword(savedEarlierUser.getPassword());
+        user.setUserStatus(savedEarlierUser.getUserStatus());
+        user.setRecordStatus(savedEarlierUser.getRecordStatus());
+        user.setModifyDate(savedEarlierUser.getModifyDate());
+        user.setCreateDate(savedEarlierUser.getCreateDate());
+        return user;
+    }
+
+    public User toObjectForUpdatePassword(UserDTO userDTO) {
+        User user = new User();
+        Integer id = userDTO.getId();
+        user.setId(id);
+        user.setPassword(userDTO.getPassword());
+        if(!userService.isUserExists(user)) return null;
+
+        User savedEarlierUser = userService.getById(id);
+        user.setName(userDTO.getName());
+        user.setLogin(savedEarlierUser.getLogin());
+        user.setSex(userDTO.getSex() != null ?
+                Sex.valueOf(userDTO.getSex()) : null);
+        user.setBirthDate(dateService.parse(userDTO.getBirthDate()));
+        user.setUserStatus(savedEarlierUser.getUserStatus());
+        user.setRecordStatus(savedEarlierUser.getRecordStatus());
+        user.setModifyDate(savedEarlierUser.getModifyDate());
+        user.setCreateDate(savedEarlierUser.getCreateDate());
+        return user;
+    }
+    
     public UserDTO toDTO(String request) {
         try {
             return objectMapper.readValue(request, UserDTO.class);

@@ -79,7 +79,7 @@ public class UserCodeService {
         return null;
     }
 
-    public void sendMailWithCode(User user) {
+    public void saveCodeAndSendMailWithCode(User user) {
         UserCode userCode = getByUser(user);
         UserCode savedUserCode = new UserCode();
 
@@ -89,11 +89,12 @@ public class UserCodeService {
             savedUserCode = save(userCode);
         } else savedUserCode = update(userCode);
 
-        String to = user.getLogin();
         String code = savedUserCode.getCode();
+
+        String to = user.getLogin();
+        String subject = mailConfig.subjectMailWithCode;
         String text = mailConfig.textMailWithCode + code;
-        mailService.sendMail(to, mailConfig.subjectMailWithCode, text);
+
+        mailService.sendMail(to, subject, text);
     }
-
-
 }

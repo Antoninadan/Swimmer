@@ -16,8 +16,12 @@ public class MailConfig {
     public final Integer durationCodeInSec = 60;
     public final Integer numberCodeDigits = 5;
 
-    public final String subjectMailWithCode = "Get SWIMMER code";
+    public final String subjectMailWithCode = "SWIMMER: Get activation code";
     public final String textMailWithCode = "Your code is: ";
+
+    public final String subjectMailPasswordRecovery = "SWIMMER: Get recovery password";
+    public final String textMailPasswordRecovery = "Your password is: %s.\nChange this password for" +
+            "your security!";
 
 
 

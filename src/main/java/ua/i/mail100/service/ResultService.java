@@ -74,4 +74,13 @@ public class ResultService {
             return false;
         return true;
     }
+
+    public List<Result> getAllByUserAndDistanceAndModifiedAfter(Integer userId, Integer distanceId,
+                                                                 Long modifyDate){
+        if (modifyDate == null) modifyDate = 0L;
+        if (distanceId == null) return resultDAO.getAllForUserAndModifiedAfter(userId, modifyDate);
+        return resultDAO.getAllForUserAndDistanceAndModifiedAfter(userId, distanceId, modifyDate);
+
+
+    }
 }

@@ -7,11 +7,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.i.mail100.dto.EventDTO;
 import ua.i.mail100.dto.UserDTO;
 import ua.i.mail100.dto.UserSecurityDTO;
 import ua.i.mail100.mapper.MapperUserUtil;
-import ua.i.mail100.model.Event;
 import ua.i.mail100.model.User;
 import ua.i.mail100.model.UserStatus;
 import ua.i.mail100.service.UserCodeService;
@@ -39,7 +37,7 @@ public class UserController {
         User user = mapperUserUtil.toObject(userDTO);
         User savedUser = userService.save(user);
         if (savedUser == null) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity("user not saved", HttpStatus.BAD_REQUEST);
         }
         UserSecurityDTO resultDTO = mapperUserUtil.toDTO(savedUser);
         return new ResponseEntity(resultDTO, HttpStatus.OK);
@@ -49,14 +47,29 @@ public class UserController {
     @PostMapping("update")
     public ResponseEntity update(@RequestBody String requestBody) {
         UserDTO userDTO = mapperUserUtil.toDTO(requestBody);
-        User user = mapperUserUtil.toObject(userDTO);
-        if (userService.isUserAvailability(user) == false ){
-            return new ResponseEntity(HttpStatus.FORBIDDEN);
-        }
+        User user = mapperUserUtil.toObjectForUpdate(userDTO);
+        if(!userService.isUserExists(user))
+            return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
+        if (!userService.isUserAvailability(user))
+            return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
         User updatedUser = userService.update(user);
-        if (updatedUser == null) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-        }
+        if (updatedUser == null)
+            return new ResponseEntity("user not updated", HttpStatus.BAD_REQUEST);
+        UserSecurityDTO resultDTO = mapperUserUtil.toDTO(updatedUser);
+        return new ResponseEntity(resultDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("update-password")
+    public ResponseEntity updatePassword(@RequestBody String requestBody) {
+        UserDTO userDTO = mapperUserUtil.toDTO(requestBody);
+        User user = mapperUserUtil.toObjectForUpdate(userDTO);
+        if(!userService.isUserExists(user))
+            return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
+        if (!userService.isUserAvailability(user))
+            return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
+        User updatedUser = userService.update(user);
+        if (updatedUser == null)
+            return new ResponseEntity("user not updated", HttpStatus.BAD_REQUEST);
         UserSecurityDTO resultDTO = mapperUserUtil.toDTO(updatedUser);
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
@@ -93,7 +106,7 @@ public class UserController {
         if (user == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        userCodeService.sendMailWithCode(user);
+        userCodeService.saveCodeAndSendMailWithCode(user);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -110,8 +123,23 @@ public class UserController {
         return new ResponseEntity(userCodeService.checkCode(user, code), HttpStatus.OK);
     }
 
+    @GetMapping("recovery-password/{login}")
+    public ResponseEntity recoveryPassword(@PathVariable("login") String login) {
+        User user = userService.getByLogin(login);
+        if (user == null) {
+            return new ResponseEntity("user not found", HttpStatus.NOT_FOUND);
+        }
+        if (!userService.isUserAvailability(user)){
+            return new ResponseEntity("user not available", HttpStatus.FORBIDDEN);
+        }
 
+        User updatedUser = userService.saveRecoveryPasswordAndSendMail(user);
+        if (updatedUser == null) {
+            return new ResponseEntity("user not updated", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
 
 // todo role?
-// todo secirity all requests
+// todo secirity all requests?

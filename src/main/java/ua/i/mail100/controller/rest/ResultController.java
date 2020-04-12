@@ -34,7 +34,7 @@ public class ResultController {
     @Autowired
     MapperResultUtil mapperResultUtil;
 
-    @PutMapping
+    @PutMapping("save")
     public ResponseEntity save(@RequestBody String requestBody) {
         ResultDTO resultDTO = mapperResultUtil.toDTO(requestBody);
         Result result = mapperResultUtil.toObject(resultDTO);
@@ -60,7 +60,7 @@ public class ResultController {
         return new ResponseEntity(savedResultDTO, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("update")
     public ResponseEntity update(@RequestBody String requestBody) {
         ResultDTO resultDTO = mapperResultUtil.toDTO(requestBody);
         Result result = mapperResultUtil.toObjectForUpdate(resultDTO);
@@ -88,20 +88,34 @@ public class ResultController {
         return new ResponseEntity(savedResultDTO, HttpStatus.OK);
     }
 
-    //todo
-    @GetMapping({"", "{id}"})
-    public ResponseEntity getResult(@PathVariable(required = false) Integer id) {
-        if (id != null) {
-            Result result = resultService.getById(id);
-            if (result == null) {
-                return new ResponseEntity(HttpStatus.NOT_FOUND);
-            }
-            ResultDTO resultDTO = mapperResultUtil.toDTO(result);
-            return new ResponseEntity(resultDTO, HttpStatus.OK);
-        } else {
-            List<Result> results = resultService.getAll();
-            List<ResultDTO> resultDTOS = mapperResultUtil.toDTOList(results);
-            return new ResponseEntity(resultDTOS, HttpStatus.OK);
+
+    @GetMapping("by-id/{id}")
+    public ResponseEntity getResult(@PathVariable Integer id) {
+        Result result = resultService.getById(id);
+        if (result == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
+        ResultDTO resultDTO = mapperResultUtil.toDTO(result);
+        return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
+
+    @GetMapping("all/{userId}/{distanceId}")
+    public ResponseEntity getAllByDistance(@PathVariable Integer userId,
+                                           @PathVariable Integer distanceId) {
+        List<Result> results = resultService.getAllByUserAndDistanceAndModifiedAfter(userId, distanceId, null);
+        List<ResultDTO> resultDTOS = mapperResultUtil.toDTOList(results);
+        return new ResponseEntity(resultDTOS, HttpStatus.OK);
+    }
+
+    @GetMapping({"all/{userId}", "all/{userId}/{distanceId}/{modifyDate}"})
+    public ResponseEntity getAllByDistanceAndModifiedAfter(@PathVariable Integer userId,
+                                                           @PathVariable(required = false) Integer distanceId,
+                                                           @PathVariable(required = false) Long modifyDate) {
+        List<Result> results = resultService.getAllByUserAndDistanceAndModifiedAfter(userId, distanceId,
+                modifyDate);
+        List<ResultDTO> resultDTOS = mapperResultUtil.toDTOList(results);
+        return new ResponseEntity(resultDTOS, HttpStatus.OK);
+    }
+
+
 }
