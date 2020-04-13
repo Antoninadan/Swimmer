@@ -17,9 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class TestUtil {
 
@@ -34,104 +32,21 @@ public class TestUtil {
 //        System.out.println("str = " + str);
 
 
-//        MapperDistanceUtil mapperDistanceUtil = new MapperDistanceUtil();
-//        Distance distance = new Distance(null, null, null,
-//                null, null, null, null, 11L,11L, RecordStatus.ACTIVE);
-//        DistanceDTO distanceDTO = mapperDistanceUtil.toDTO(distance);
-//        DistanceDTO distanceDTO2 = new DistanceDTO();
-//        Distance distance2 = mapperDistanceUtil.toObject(distanceDTO2);
+
+//        EnumComboboxModel sexs = new EnumComboboxModel();
 //
-//
-//        MapperEventUtil mapperEventUtil = new MapperEventUtil();
-//        Event event = new Event(null, null, null, null,
-//                null, null, null, null, null, null, 11L,11L, RecordStatus.ACTIVE);
-//        EventDTO eventDTO = mapperEventUtil.toDTO(event);
-//        EventDTO eventDTO2 = new EventDTO();
-//        Event event2 = mapperEventUtil.toObject(eventDTO2);
-//
-//
-        //
-//        Franchise franchise = new Franchise(1, "fran",null,11L, 12L, RecordStatus.ACTIVE);
-//        Country country = new Country(1, "countr", 11L, 12L, RecordStatus.ACTIVE);
-//
-//        MapperEventUtil mapperEventUtil2 = new MapperEventUtil();
-//
-//        EventDTO eventDTO11 = new EventDTO(1, franchise.getId(), "orga", "name",
-//                1L, 2L, 1, "ven", "url", "come", 11L,11L, "ACTIVE");
-//        Event event11 = mapperEventUtil2.toObject(eventDTO11);
-
-//        Event event10 = new Event(1, franchise, "orga", "name",
-//                1L, 2L, country, "ven", "url", "come", 11L,11L, RecordStatus.ACTIVE);
-//        EventDTO eventDTO10 = mapperEventUtil.toDTO(event10);
-//        System.out.println("eventDTO10 = " + eventDTO10);
-//
-//        Long now = new Date().getTime();
-//        System.out.println(now);
-
-//        MailService mailService = new MailService();
-//        mailService.sendMail(      "antonina.danilova2@gmail.com", "subj", "text");
-
-//        UserService userService = new UserService();
-//            User user = userService.getById(1);
-
-//        Calendar calendar222 = new GregorianCalendar(1990, 09, 09);
-//
-//        calendar.get()
+//        Enum<Sex> sexEnum =  new Enum<Sex>() {
+//            @Override
+//            public String toString() {
+//                return super.toString();
+//            }
+//        }
 
 
 
-        String strToDate = "2020-04-12";
-        Date date =  dateParse(strToDate);
-
-        Date now = new Date();
-        System.out.println(now.before(date));
-        now.compareTo(date);
-
-        System.out.println(now.compareTo(date));
+        List sexList = Arrays.asList(Sex.values());
+        System.out.println("sexList = " + sexList);
 
 
-
-//        Calendar calendar = new GregorianCalendar();
-//        calendar.
-
-
-
-//        LocalDate today = LocalDate.now();
-//        LocalDate other = LocalDate.ofEpochDay(date.getTime());
-//
-//        Period p = Period.between(today, other);
-//        System.out.println("p = " + p);
-
-//        String strToDate = "1900-01-01";
-//        Date date =  dateParse(strToDate);
-//
-//        String strToDate2 = "1960-01-01";
-//        Date date2 =  dateParse(strToDate);
-//        System.out.println("date = " + date.getTime());
-//        System.out.println("date2 = " + date2.getTime());
-//
-//        System.out.println(date2.getTime()>date.getTime());
-//
-//
-//        System.out.println("date = " + date);
-
-
-
-
-
-
-    }
-
-
-    public static Date dateParse(String str) {
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
-
-
-        Date parsingDate = null;
-        try {
-            parsingDate = ft.parse(str);
-        }catch (ParseException e) {
-        }
-        return parsingDate;
     }
 }

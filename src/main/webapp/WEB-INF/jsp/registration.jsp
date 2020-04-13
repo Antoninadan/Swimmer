@@ -10,12 +10,21 @@
 <br>
 <a href="/">GO BACK</a>
 <br>
-<form action="/user" method="put">
-    <input type="text" size="30" name="login" required/>
+<form action="/user/save" method="post">
+    Login: <input type="text" size="30" name="login" required/>
     <br>
-    <input type="password" size="30" name="password" required/>
+    Password: <input type="password" size="30" name="password" required/>
     <br>
-    <input type="text" size="30" name="name" />
+    Name: <input type="text" size="30" name="name" required/>
+    <br>
+    Sex:
+    <select name="sex">
+        <c:forEach items="${sexList}" var="sex">
+            <option value="${sex}">${sex}</option>
+        </c:forEach>
+    </select>
+    <br>
+    Birth date: <input type="text" size="30" name="birth_date" required/>
     <br>
     <input type="submit" value="REGISTER"/>
 </form>
