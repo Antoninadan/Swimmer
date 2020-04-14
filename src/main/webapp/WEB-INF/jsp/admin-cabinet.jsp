@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Logined Page</title>
+    <title>Admin cabinet</title>
 </head>
 <body>
 
@@ -16,7 +16,17 @@
 <br>
 
 
+<form action="/country/open" method="get">
+    <input name="userId" value="${user.id}" hidden>
+    <input type="submit" value="Open countries">
+</form>
 
+<br>
+<a href="/franchises">Franchises</a>
+<br>
+<a href="/events">Counties</a>
+<br>
+<a href="/distances">Counties</a>
 
 </body>
 </html>

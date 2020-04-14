@@ -102,6 +102,18 @@ public class UserService {
         return true;
     }
 
+    public User getIfUserExistsAndAvailable(Integer userId) {
+        if (userId == null) return null;
+
+        User findedUser = getById(userId);
+        if (findedUser == null) return null;
+
+        if (!isUserAvailability(findedUser)) return null;
+
+        return getById(userId);
+    }
+
+
     public User saveRecoveryPasswordAndSendMail(User user) {
         String newPassword = Integer.toString(RandomUtil.randomFixedLength(8));
         user.setPassword(EncodeUtil.encode(newPassword));
