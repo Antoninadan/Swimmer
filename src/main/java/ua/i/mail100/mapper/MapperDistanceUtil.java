@@ -13,6 +13,7 @@ import ua.i.mail100.service.EventService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -69,6 +70,7 @@ public class MapperDistanceUtil {
     }
 
     public List<DistanceDTO> toDTOList(List<Distance> distances) {
+        Collections.sort(distances);
         List<DistanceDTO> distanceDTOs = new ArrayList<>();
         for (Distance each : distances) {
             DistanceDTO distanceDTO = toDTO(each);

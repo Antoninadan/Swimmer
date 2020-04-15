@@ -13,6 +13,7 @@ import ua.i.mail100.service.FranchiseService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -82,6 +83,7 @@ public class MapperEventUtil {
     }
 
     public List<EventDTO> toDTOList(List<Event> events) {
+        Collections.sort(events);
         List<EventDTO> orderDTOs = new ArrayList<>();
         for (Event each : events) {
             EventDTO eventDTO = toDTO(each);

@@ -51,9 +51,11 @@ public class CountryService {
         return null;
     }
     
-    private boolean noCountryWithSameName(Country country) {
-        if (countryDAO.getFirstByName(country.getName()) == null)
-            return true;
+    public boolean noCountryWithSameName(Country country) {
+        Integer thisId = country.getId();
+        Country countryWithSameName = countryDAO.getFirstByName(country.getName());
+        if (countryWithSameName == null) return true;
+        if (thisId == countryWithSameName.getId()) return true;
         return false;
     }
 

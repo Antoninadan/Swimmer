@@ -16,7 +16,7 @@
 <br>
 
 
-<form action="/country/open" method="get">
+<form action="/country/open-all" method="get">
     <input name="userId" value="${user.id}" hidden>
     <input type="submit" value="Open countries">
 </form>

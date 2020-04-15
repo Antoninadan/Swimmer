@@ -9,6 +9,7 @@ import ua.i.mail100.model.RecordStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -45,6 +46,7 @@ public class MapperBaseEntityUtil {
     }
 
     public List<BaseEntityDTO> toDTOList(List<BaseEntity> baseEntitys) {
+        Collections.sort(baseEntitys);
         List<BaseEntityDTO> baseEntityDTOS = new ArrayList<>();
         for (BaseEntity each : baseEntitys) {
             BaseEntityDTO baseEntityDTO = toDTO(each);

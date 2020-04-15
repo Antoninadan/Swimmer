@@ -13,6 +13,7 @@ import ua.i.mail100.util.EncodeUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -102,6 +103,7 @@ public class MapperUserUtil {
     }
 
     public List<UserSecurityDTO> toDTOList(List<User> users) {
+        Collections.sort(users);
         List<UserSecurityDTO> userSecurityDTOs = new ArrayList<>();
         for (User each : users) {
             UserSecurityDTO userSecurityDTO = toDTO(each);

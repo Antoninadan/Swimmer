@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public class BaseEntity {
+public class BaseEntity implements Comparable<BaseEntity>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -24,4 +24,9 @@ public class BaseEntity {
 
     @Column(name = "record_status", nullable = false)
     private RecordStatus recordStatus;
+
+    @Override
+    public int compareTo(BaseEntity baseEntity) {
+        return this.id.compareTo(baseEntity.id);
+    }
 }

@@ -8,6 +8,7 @@ import ua.i.mail100.model.Franchise;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -44,6 +45,7 @@ public class MapperFranchiseUtil {
     }
 
     public List<FranchiseDTO> toDTOList(List<Franchise> franchises) {
+        Collections.sort(franchises);
         List<FranchiseDTO> franchiseDTOs = new ArrayList<>();
         for (Franchise each : franchises) {
             FranchiseDTO franchiseDTO = toDTO(each);

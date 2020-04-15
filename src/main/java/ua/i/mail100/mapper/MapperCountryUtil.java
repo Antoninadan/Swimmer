@@ -4,14 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.i.mail100.dto.CountryDTO;
-import ua.i.mail100.model.AgeDistanceType;
-import ua.i.mail100.model.Distance;
-import ua.i.mail100.model.DistanceType;
-import ua.i.mail100.model.Country;
+import ua.i.mail100.model.*;
 import ua.i.mail100.service.EventService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -45,12 +44,14 @@ public class MapperCountryUtil {
         return countryDTO;
     }
 
-    public List<CountryDTO> toDTOList(List<Country> countrys) {
-        List<CountryDTO> orderDTOs = new ArrayList<>();
-        for (Country each : countrys) {
+    public List<CountryDTO> toDTOList(List<Country> countries) {
+        Collections.sort(countries);
+
+        List<CountryDTO> countryDTOs = new ArrayList<>();
+        for (Country each : countries) {
             CountryDTO countryDTO = toDTO(each);
-            orderDTOs.add(countryDTO);
+            countryDTOs.add(countryDTO);
         }
-        return orderDTOs;
+        return countryDTOs;
     }
 }

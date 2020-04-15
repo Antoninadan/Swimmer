@@ -11,6 +11,7 @@ import ua.i.mail100.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -60,6 +61,7 @@ public class MapperFavoriteEventUtil {
     }
 
     public List<FavoriteEventDTO> toDTOList(List<FavoriteEvent> favoriteEvents) {
+        Collections.sort(favoriteEvents);
         List<FavoriteEventDTO> favoriteEventDTOs = new ArrayList<>();
         for (FavoriteEvent each : favoriteEvents) {
             FavoriteEventDTO favoriteEventDTO = toDTO(each);

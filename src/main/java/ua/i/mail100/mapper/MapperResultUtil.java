@@ -11,6 +11,7 @@ import ua.i.mail100.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -78,6 +79,7 @@ public class MapperResultUtil {
     }
 
     public List<ResultDTO> toDTOList(List<Result> results) {
+        Collections.sort(results);
         List<ResultDTO> resultDTOs = new ArrayList<>();
         for (Result each : results) {
             ResultDTO resultDTO = toDTO(each);
