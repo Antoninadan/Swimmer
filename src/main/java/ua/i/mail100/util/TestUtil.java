@@ -10,10 +10,7 @@ import ua.i.mail100.service.FileService;
 import ua.i.mail100.service.MailService;
 import ua.i.mail100.service.UserService;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,13 +22,17 @@ public class TestUtil {
 
 
     public static void main(String[] args) {
-//        byte[] bytes = FileService.getBytesFromFile("D://", "oceanman.png");
-//        String str = "[";
-//        for (byte b:bytes) {
-//            str += "\"" + b + "\",";
-//        }
-//
-//        System.out.println("str = " + str);
+        byte[] bytes = FileService.getBytesFromFile("D://", "oceanman.png");
+        String str = "[";
+        for (byte b:bytes) {
+            str += "\"" + b + "\",";
+        }
+
+        System.out.println("str = " + str);
+
+        File f = writeBytesToFile(bytes, "oceanman33.png");
+
+//        <img src="${pageContext.request.contextPath}/images/1.jpg"/>
 
 
 //        EnumComboboxModel sexs = new EnumComboboxModel();
@@ -52,6 +53,17 @@ public class TestUtil {
 //        }
 
 
+    }
+
+    public static FileOutputStream writeBytesToFile(byte[] bytes, String fileName) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
+            fileOutputStream.write(bytes);
+            fileOutputStream.flush();
+            return fileOutputStream;
+        } catch (IOException e) {
+            e.printStackTrace();
+        return null;
+        }
     }
 
     public static void httpRequest() throws IOException {

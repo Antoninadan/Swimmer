@@ -6,23 +6,21 @@
     <title>Admin cabinet</title>
 </head>
 <body>
-
+<h1>Hello, ${user.name}!</h1>
 <c:if test="${message != null}">
-    <h3> ${message} </h3>
+    <h3 style="color:red;"> ${message} </h3>
 </c:if>
-
-<h2>Hello, ${user.name}!</h2>
 <br>
 <br>
-
-
 <form action="/country/open-all" method="get">
     <input name="userId" value="${user.id}" hidden>
     <input type="submit" value="Open countries">
 </form>
-
 <br>
-<a href="/franchises">Franchises</a>
+<form action="/franchise/open-all" method="get">
+    <input name="userId" value="${user.id}" hidden>
+    <input type="submit" value="Open franchises">
+</form>
 <br>
 <a href="/events">Counties</a>
 <br>

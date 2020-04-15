@@ -6,7 +6,10 @@
     <title>Registration Page</title>
 </head>
 <body>
-<h2><c:out value="${message}" default="Country create form!"/></h2>
+<h1>Create new country</h1>
+<c:if test="${message != null}">
+    <h3 style="color:red;"> ${message} </h3>
+</c:if>
 <br>
 <br>
 <form action="/country/save" method="post">

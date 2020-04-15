@@ -92,7 +92,8 @@ public class JspCountryController {
                        @RequestParam(value = "name") String name) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
 
-        Country country = new Country(null, name, null, null, null);
+        Country country = new Country(null, name,
+                null, null, null);
         if (!countryService.noCountryWithSameName(country)) {
             model.addAttribute("message", "Name not unique!");
             return "country-save";
@@ -122,9 +123,7 @@ public class JspCountryController {
         return "countries";
     }
 
-    public boolean countryCheckAndMake(Model model, String countryId) {
-        Integer countryIdSelected = Integer.valueOf(countryId);
-        Country country = countryService.getById(countryIdSelected);
+    public boolean countryCheckAndMake(Model model, Country country) {
         if (country != null) {
             CountryDTO countryDTO = mapperCountryUtil.toDTO(country);
             model.addAttribute("country", countryDTO);
@@ -135,15 +134,10 @@ public class JspCountryController {
         }
     }
 
-    public boolean countryCheckAndMake(Model model, Country country) {
-        if (country != null) {
-            CountryDTO countryDTO = mapperCountryUtil.toDTO(country);
-            model.addAttribute("country", countryDTO);
-            return true;
-        } else {
-            model.addAttribute("message", "Record are wrong!");
-            return false;
-        }
+    public boolean countryCheckAndMake(Model model, String countryId) {
+        Integer countryIdSelected = Integer.valueOf(countryId);
+        Country country = countryService.getById(countryIdSelected);
+        return countryCheckAndMake(model, country);
     }
 
     public void countriesMake(Model model) {

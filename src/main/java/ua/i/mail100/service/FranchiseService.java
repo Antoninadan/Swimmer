@@ -51,10 +51,12 @@ public class FranchiseService {
         return null;
     }
 
-   private boolean noFranchiseWithSameName(Franchise franchise) {
-        if (franchiseDAO.getFirstByName(franchise.getName()) == null)
-            return true;
-        else return false;
+   public boolean noFranchiseWithSameName(Franchise franchise) {
+       Integer thisId = franchise.getId();
+       Franchise franchiseWithSameName = franchiseDAO.getFirstByName(franchise.getName());
+       if (franchiseWithSameName == null) return true;
+       if (thisId == franchiseWithSameName.getId()) return true;
+       return false;
     }
 
     public List<Franchise> getAll(Long modifyDate) {

@@ -6,10 +6,11 @@
     <title>Country Page</title>
 </head>
 <body>
-<h2>Country edit form</h2>
+<h1>Country edit form</h1>
 <c:if test="${message != null}">
-    <h3> ${message} </h3>
+    <h3 style="color:red;"> ${message} </h3>
 </c:if>
+<br>
 <br>
 <form action="/country/delete" method="post">
     <input hidden="true" name="userId" value="${user.id}">

@@ -3,12 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Carts</title>
+    <title>Countries</title>
 </head>
 <body>
-<h2><c:out value="${message}"/></h2>
-<br>
-<h2>Countries:</h2>
+<h1>Countries:</h1>
+<c:if test="${message != null}">
+    <h3 style="color:red;"> ${message} </h3>
+</c:if>
 
 <!-- New country -->
 <form action="/country/open-for-save" method="get">
