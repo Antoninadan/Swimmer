@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ua.i.mail100.dto.CountryDTO;
 import ua.i.mail100.dto.UserSecurityDTO;
 import ua.i.mail100.mapper.MapperCountryUtil;
@@ -19,6 +16,7 @@ import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.UserService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Controller
@@ -60,11 +58,18 @@ public class JspCountryController {
         return "country-edit";
     }
 
-    @PostMapping("edit")
-    public String edit(Model model,
-                       @RequestParam(value = "userId") String userId,
-                       @RequestParam(value = "countryId") String countryId,
-                       @RequestParam(value = "name") String name) {
+    @GetMapping("open-for-save")
+    public String openForEdit(Model model,
+                              @RequestParam(value = "userId") String userId) {
+        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
+        return "country-save";
+    }
+
+    @PostMapping("update")
+    public String update(Model model,
+                         @RequestParam(value = "userId") String userId,
+                         @RequestParam(value = "countryId") String countryId,
+                         @RequestParam(value = "name") String name) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
         if (!countryCheckAndMake(model, countryId)) return "countries";
         Country country = countryService.getById(Integer.valueOf(countryId));
@@ -82,6 +87,44 @@ public class JspCountryController {
             return "country-edit";
         }
     }
+
+    @PostMapping("save")
+    public String save(Model model,
+                       @RequestParam(value = "userId") String userId,
+                       @RequestParam(value = "name") String name) {
+        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
+        Country country = new Country(null, name, null, null, null);
+        if (!countryService.noCountryWithSameName(country)) {
+            model.addAttribute("message", "Country name not unique!");
+            return "country-edit";
+        }
+        Country savedCountry = countryService.save(country);
+        if (savedCountry != null) {
+            countriesMake(model);
+            return "countries";
+        } else {
+            model.addAttribute("message", "Country not saved!");
+            return "country-edit";
+        }
+    }
+
+    @PostMapping("delete")
+    public String delete(Model model,
+                         @RequestParam(value = "userId") String userId,
+                         @RequestParam(value = "countryId") String countryId) {
+        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
+        if (!countryCheckAndMake(model, countryId)) return "countries";
+        try {
+            countryService.deleteById(Integer.valueOf(countryId));
+        } catch (Exception e) {
+            model.addAttribute("message", "Country not deleted!");
+            e.printStackTrace();
+            return "country-edit";
+        }
+        countriesMake(model);
+        return "countries";
+    }
+
 
     public boolean countryCheckAndMake(Model model, String countryId) {
         Integer countryIdSelected = Integer.valueOf(countryId);
