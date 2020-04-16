@@ -12,6 +12,9 @@ import java.util.List;
 public interface FranchiseDAO extends JpaRepository<Franchise, Integer> {
     Franchise getFirstByName(String name);
 
+    @Query(nativeQuery = true, value = "select * from franchises where trim(lower(name)) = trim(lower(:name))")
+    Franchise getFirstByNameTrimAndCaseIgnore(@Param("name") String name);
+
     @Query(nativeQuery = true, value = "SELECT * FROM franchises WHERE modify_date >= :modifyDate")
     List<Franchise> getAll(@Param("modifyDate") Long modifyDate);
 }

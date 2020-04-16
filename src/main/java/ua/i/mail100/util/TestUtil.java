@@ -24,13 +24,15 @@ public class TestUtil {
     public static void main(String[] args) {
         byte[] bytes = FileService.getBytesFromFile("D://", "oceanman.png");
         String str = "[";
-        for (byte b:bytes) {
+        for (byte b : bytes) {
             str += "\"" + b + "\",";
         }
 
         System.out.println("str = " + str);
 
-        File f = writeBytesToFile(bytes, "oceanman33.png");
+
+        byte[] bytes1 = new byte[Integer.MAX_VALUE];
+
 
 //        <img src="${pageContext.request.contextPath}/images/1.jpg"/>
 
@@ -45,7 +47,6 @@ public class TestUtil {
 //        }
 
 
-
 //        try {
 //            httpRequest();
 //        } catch (IOException e) {
@@ -55,6 +56,17 @@ public class TestUtil {
 
     }
 
+    public static void getFileFromUrl() {
+        try {
+            URL url = new URL("file://c:/Perl");
+//            writeBytesToFile(System.out.println(url.toString()), "");
+            System.out.println(url.toString());
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
     public static FileOutputStream writeBytesToFile(byte[] bytes, String fileName) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
             fileOutputStream.write(bytes);
@@ -62,7 +74,7 @@ public class TestUtil {
             return fileOutputStream;
         } catch (IOException e) {
             e.printStackTrace();
-        return null;
+            return null;
         }
     }
 

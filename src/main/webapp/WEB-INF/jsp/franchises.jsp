@@ -19,13 +19,13 @@
     <input type="submit" value="Add franchise">
 </form>
 
-<img src="${pageContext.request.contextPath}/files/oceanman2.png"/>
+<img src="${pageContext.request.contextPath}/images/oceanman.jpg"/>
 
-<script>
-var img = new Image();
-img.src = "/files/oceanman2.png";
-document.getElementById('display').appendChild(img);
-</script>
+<%--<script>--%>
+<%--var img = new Image();--%>
+<%--img.src = "/images/oceanman33.png";--%>
+<%--document.getElementById('display').appendChild(img);--%>
+<%--</script>--%>
 
 <!-- Table of franchises  -->
 <table border="1">

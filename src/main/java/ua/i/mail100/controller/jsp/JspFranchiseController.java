@@ -59,6 +59,7 @@ public class JspFranchiseController {
         return "franchise-edit";
     }
 
+    // TODO
     @GetMapping("logo")
     public String getLogo(Model model,
                               @RequestParam(value = "userId") String userId,
@@ -66,17 +67,6 @@ public class JspFranchiseController {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
         if (!franchiseCheckAndMake(model, franchiseId)) return "franchises";
         return "franchise-edit";
-    }
-
-    public static FileOutputStream writeBytesToFile(byte[] bytes, String fileName) {
-        try (FileOutputStream fileOutputStream = new FileOutputStream(fileName)) {
-            fileOutputStream.write(bytes);
-            fileOutputStream.flush();
-            return fileOutputStream;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
 
@@ -92,7 +82,7 @@ public class JspFranchiseController {
                          @RequestParam(value = "userId") String userId,
                          @RequestParam(value = "franchiseId") String franchiseId,
                          @RequestParam(value = "name") String name,
-                         @RequestParam(value = "logo") String logo) {
+                         @RequestParam(value = "logo", required = false) String logo) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
         if (!franchiseCheckAndMake(model, franchiseId)) return "franchises";
 
@@ -113,7 +103,8 @@ public class JspFranchiseController {
     @PostMapping("save")
     public String save(Model model,
                        @RequestParam(value = "userId") String userId,
-                       @RequestParam(value = "name") String name) {
+                       @RequestParam(value = "name") String name,
+                       @RequestParam(value = "logo", required = false) String logo) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
 
         Franchise franchise = new Franchise(null, name, null,
@@ -170,6 +161,3 @@ public class JspFranchiseController {
         model.addAttribute("franchises", franchiseDTOS);
     }
 }
-
-// TODO normal date control
-// TODO check login unique

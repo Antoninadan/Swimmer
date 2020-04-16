@@ -53,7 +53,7 @@ public class FranchiseService {
 
    public boolean noFranchiseWithSameName(Franchise franchise) {
        Integer thisId = franchise.getId();
-       Franchise franchiseWithSameName = franchiseDAO.getFirstByName(franchise.getName());
+       Franchise franchiseWithSameName = franchiseDAO.getFirstByNameTrimAndCaseIgnore(franchise.getName());
        if (franchiseWithSameName == null) return true;
        if (thisId == franchiseWithSameName.getId()) return true;
        return false;

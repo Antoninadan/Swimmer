@@ -11,20 +11,24 @@
 <a href="/">GO BACK</a>
 <br>
 <form action="/user/save" method="post">
-    Login: <input type="text" size="30" name="login" required/>
+    <label for="login">Login:</label>
+    <input type="text" id="login" size="30" name="login" required/>
     <br>
-    Password: <input type="password" size="30" name="password" required/>
+    <label for="password">Password:</label>
+    <input type="password" id="password" size="30" name="password" required/>
     <br>
-    Name: <input type="text" size="30" name="name" required/>
+    <label for="name">Name:</label>
+    <input type="text" id="name" size="30" name="name" required/>
     <br>
-    Sex:
-    <select name="sex">
+    <label for="sex">Sex:</label>
+    <select name="sex" id="sex">
         <c:forEach items="${sexList}" var="sex">
             <option value="${sex}">${sex}</option>
         </c:forEach>
     </select>
     <br>
-    Birth date: <input type="text" size="30" name="birth_date" required/>
+    <label for="birthdate">Birth date:</label>
+    <input type="date" id="birthdate" name="birth_date" min="1920-01-01" max = "2020-01-01"r equired/>
     <br>
     <input type="submit" value="REGISTER"/>
 </form>
