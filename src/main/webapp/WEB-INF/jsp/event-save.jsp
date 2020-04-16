@@ -3,30 +3,48 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Registration Page</title>
+    <title>Event create Page</title>
 </head>
 <body>
-<h1>Create new country</h1>
+<h1>Create new event</h1>
 <c:if test="${message != null}">
     <h3 style="color:red;"> ${message} </h3>
 </c:if>
 <br>
 <br>
-<form action="/country/save" method="post">
-    Name: <input type="text" size="30" name="name" required value="${country.name}"/>
+<form action="/event/save" method="post">
+    <label for="franchise">Franchise:</label>
+    <select name="franchise" id="franchise">
+        <c:forEach items="${franchiseList}" var="franchise">
+            <option value="${franchise.id}">${franchise.name}---record ${franchise.recordStatus}</option>
+        </c:forEach>
+    </select>
     <br>
+    <label for="organizer">Organizer:</label>
+    <input type="text" id="organizer" size="30" name="name" required value="${event.name}" required/>
+    <br>
+    <label for="name">Name:</label>
+    <input type="text" id="name" size="30" name="name" required value="${event.name}" required/>
+    <br>
+    <label for="datefrom">Date from:</label>
+    <input type="date" id="datefrom" name="date_from" min="2020-01-01" required/>
+    <br>
+    <label for="dateto">Date to:</label>
+    <input type="date" id="dateto" name="date_to" min="2020-01-01" required/>
+    <br>
+
+
     <input hidden="true" name="userId" value="${user.id}">
-    <input hidden="true" name="countryId" value="${country.id}">
     <input type="submit" value="Save"/>
 </form>
 
 <br>
 <br>
 <br>
-<!-- Back to countries -->
-<form action="/country/open-all" method="get">
+<!-- Back to events -->
+<form action="/event/open-all" method="get">
     <input hidden="true" name="userId" value="${user.id}">
-    <input type="submit" value="Back to countries">
+    <input type="submit" value="Back to events">
 </form>
 <br>
 <br>

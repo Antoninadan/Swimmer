@@ -28,7 +28,7 @@
     </select>
     <br>
     <label for="birthdate">Birth date:</label>
-    <input type="date" id="birthdate" name="birth_date" min="1920-01-01" max = "2020-01-01"r equired/>
+    <input type="date" id="birthdate" name="birth_date" min="1920-01-01" max = "2020-01-01" required/>
     <br>
     <input type="submit" value="REGISTER"/>
 </form>

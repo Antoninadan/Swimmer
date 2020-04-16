@@ -8,14 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.i.mail100.dto.EventDTO;
+import ua.i.mail100.dto.FranchiseDTO;
 import ua.i.mail100.mapper.MapperEventUtil;
+import ua.i.mail100.mapper.MapperFranchiseUtil;
 import ua.i.mail100.mapper.MapperUserUtil;
 import ua.i.mail100.model.Event;
+import ua.i.mail100.model.Franchise;
 import ua.i.mail100.presenter.EventPresenter;
 import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.EventService;
+import ua.i.mail100.service.FranchiseService;
 import ua.i.mail100.service.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,6 +34,9 @@ public class JspEventController {
     EventService eventService;
 
     @Autowired
+    FranchiseService franchiseService;
+
+    @Autowired
     JspService jspService;
 
     @Autowired
@@ -36,6 +44,9 @@ public class JspEventController {
 
     @Autowired
     MapperEventUtil mapperEventUtil;
+
+    @Autowired
+    MapperFranchiseUtil mapperFranchiseUtil;
 
     @Autowired
     DateService dateService;
@@ -61,6 +72,9 @@ public class JspEventController {
     public String openForEdit(Model model,
                               @RequestParam(value = "userId") String userId) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
+        List<Franchise> franchises = franchiseService.getAll(0L);
+        List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);
+        model.addAttribute("franchiseList", franchiseDTOS);
         return "event-save";
     }
 
