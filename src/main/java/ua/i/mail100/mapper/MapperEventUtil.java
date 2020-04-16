@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ua.i.mail100.dto.EventDTO;
 import ua.i.mail100.model.Event;
 import ua.i.mail100.model.RecordStatus;
+import ua.i.mail100.presenter.EventPresenter;
 import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.DistanceService;
@@ -90,5 +91,35 @@ public class MapperEventUtil {
             orderDTOs.add(eventDTO);
         }
         return orderDTOs;
+    }
+
+    public EventPresenter toPresenter(Event event) {
+        EventPresenter eventPresenter = new EventPresenter();
+        eventPresenter.setId(event.getId());
+        eventPresenter.setFranchise(event.getFranchise() != null ? event.getFranchise().getName() : null);
+        eventPresenter.setOrganizer(event.getOrganizer());
+        eventPresenter.setName(event.getName());
+        eventPresenter.setDateFrom(dateService.toString(event.getDateFrom()));
+        eventPresenter.setDateTo(dateService.toString(event.getDateTo()));
+        eventPresenter.setCountry(event.getCountry() != null ? event.getCountry().getName() : null);
+        eventPresenter.setVenue(event.getVenue());
+        eventPresenter.setUrl(event.getUrl());
+        eventPresenter.setComment(event.getComment());
+        eventPresenter.setCreateDate(event.getCreateDate());
+        eventPresenter.setModifyDate(event.getModifyDate());
+        eventPresenter.setRecordStatus(event.getRecordStatus().toString());
+//        eventPresenter.setDistances(event.getId() != null ?
+//                mapperDistanceUtil.toDTOList(distanceService.getAllByEvent(event.getId())) : null);
+        return eventPresenter;
+    }
+
+    public List<EventPresenter> toPresenterList(List<Event> events) {
+        Collections.sort(events);
+        List<EventPresenter> eventPresenters = new ArrayList<>();
+        for (Event each : events) {
+            EventPresenter eventPresenter = toPresenter(each);
+            eventPresenters.add(eventPresenter);
+        }
+        return eventPresenters;
     }
 }

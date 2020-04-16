@@ -14,6 +14,9 @@ import java.util.List;
 public interface CountryDAO extends JpaRepository<Country, Integer> {
     Country getFirstByName(String name);
 
+    @Query(nativeQuery = true, value = "select * from countries where trim(lower(name)) = trim(lower(:name))")
+    Country getFirstByNameTrimAndCaseIgnore(@Param("name") String name);
+
     @Query(nativeQuery = true, value = "SELECT * FROM countries WHERE modify_date >= :modifyDate")
     List<Country> getAll(@Param("modifyDate") Long modifyDate);
 }

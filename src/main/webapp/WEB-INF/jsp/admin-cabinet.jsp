@@ -22,9 +22,11 @@
     <input type="submit" value="Open franchises">
 </form>
 <br>
-<a href="/events">Counties</a>
-<br>
-<a href="/distances">Counties</a>
+<form action="/event/open-all" method="get">
+    <input name="userId" value="${user.id}" hidden>
+    <input type="submit" value="Open events">
+</form>
+
 
 </body>
 </html>

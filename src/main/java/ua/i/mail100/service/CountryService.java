@@ -53,7 +53,7 @@ public class CountryService {
     
     public boolean noCountryWithSameName(Country country) {
         Integer thisId = country.getId();
-        Country countryWithSameName = countryDAO.getFirstByName(country.getName());
+        Country countryWithSameName = countryDAO.getFirstByNameTrimAndCaseIgnore(country.getName());
         if (countryWithSameName == null) return true;
         if (thisId == countryWithSameName.getId()) return true;
         return false;
