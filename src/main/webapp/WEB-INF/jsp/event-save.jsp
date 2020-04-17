@@ -21,10 +21,10 @@
     </select>
     <br>
     <label for="organizer">Organizer:</label>
-    <input type="text" id="organizer" size="30" name="name" required value="${event.name}" required/>
+    <input type="text" id="organizer" size="30" name="organizer" value="${event.organizer}" required/>
     <br>
     <label for="name">Name:</label>
-    <input type="text" id="name" size="30" name="name" required value="${event.name}" required/>
+    <input type="text" id="name" size="30" name="name" value="${event.name}" required/>
     <br>
     <label for="datefrom">Date from:</label>
     <input type="date" id="datefrom" name="date_from" min="2020-01-01" required/>
@@ -32,7 +32,21 @@
     <label for="dateto">Date to:</label>
     <input type="date" id="dateto" name="date_to" min="2020-01-01" required/>
     <br>
-
+    <label for="country">Country:</label>
+    <select name="country" id="country">
+        <c:forEach items="${countryList}" var="country">
+            <option value="${country.id}">${country.name}---record ${country.recordStatus}</option>
+        </c:forEach>
+    </select>
+    <br>
+    <label for="venue">Venue:</label>
+    <input type="text" id="venue" size="30" name="venue" value="${event.venue}" required/>
+    <br>
+    <label for="url">Url:</label>
+    <input type="text" id="url" size="30" name="url" value="${event.url}"/>
+    <br>
+    <label for="comment">Comment:</label>
+    <input type="text" id="comment" size="30" name="comment" value="${event.comment}"/>
 
     <input hidden="true" name="userId" value="${user.id}">
     <input type="submit" value="Save"/>

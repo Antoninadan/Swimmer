@@ -146,6 +146,3 @@ public class JspCountryController {
         model.addAttribute("countries", countryDTOS);
     }
 }
-
-// TODO normal date control
-// TODO check login unique

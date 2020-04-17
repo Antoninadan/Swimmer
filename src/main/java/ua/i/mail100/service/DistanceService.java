@@ -59,8 +59,8 @@ public class DistanceService {
         return distanceDAO.findAll();
     }
 
-    public List<Distance> getAllByEvent(Integer distanceId) {
-        return distanceDAO.getAllByEvent(distanceId);
+    public List<Distance> getAllByEvent(Integer eventId) {
+        return distanceDAO.getAllByEvent(eventId);
     }
 
     public boolean isDistanceAvailable(Distance distance){

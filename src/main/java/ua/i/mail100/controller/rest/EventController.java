@@ -59,12 +59,12 @@ public class EventController {
         if (event == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        event.setRecordStatus(RecordStatus.DELETED);
-        Event updatedEvent = eventService.update(event);
-        if (updatedEvent == null) {
+
+        Event softDeletedEvent = eventService.softDelete(event);
+        if (softDeletedEvent == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        EventDTO resultDTO = mapperEventUtil.toDTO(updatedEvent);
+        EventDTO resultDTO = mapperEventUtil.toDTO(softDeletedEvent);
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 

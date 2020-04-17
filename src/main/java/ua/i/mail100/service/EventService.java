@@ -58,9 +58,25 @@ public class EventService {
         return null;
     }
 
-    // todo
     public void delete(Event event) {
         eventDAO.delete(event);
+    }
+
+    public void delete(Integer eventId) {
+        eventDAO.deleteById(eventId);
+    }
+
+    public Event softDelete(Event event) {
+        event.setRecordStatus(RecordStatus.DELETED);
+        return update(event);
+    }
+
+    public Event softDelete(Integer eventId) {
+        if (eventId != null) {
+            Event event = eventDAO.getOne(eventId);
+            return softDelete(event);
+        }
+        return null;
     }
 
     public List<Event> getAllModifiedAfter(Long modifyDate) {

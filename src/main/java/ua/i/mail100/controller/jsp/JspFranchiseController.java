@@ -59,7 +59,7 @@ public class JspFranchiseController {
         return "franchise-edit";
     }
 
-    // TODO
+    // TODO logo functionality
     @GetMapping("logo")
     public String getLogo(Model model,
                               @RequestParam(value = "userId") String userId,

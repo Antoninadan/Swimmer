@@ -83,5 +83,5 @@ public class JspUserController {
     }
 }
 
-// TODO normal date control
+
 // TODO check login unique
