@@ -35,30 +35,60 @@
         <th>record status</th>
     </tr>
     <c:forEach items="${events}" var="event">
-        <form action="/event/open-for-edit" method="get">
+        <tr>
+            <td><c:out value="${event.id}"/></td>
+            <td><c:out value="${event.franchise}"/></td>
+            <td><c:out value="${event.organizer}"/></td>
+            <td><c:out value="${event.name}"/></td>
+            <td><c:out value="${event.dateFrom}"/></td>
+            <td><c:out value="${event.dateTo}"/></td>
+            <td><c:out value="${event.country}"/></td>
+            <td><c:out value="${event.venue}"/></td>
+            <td><c:out value="${event.url}"/></td>
+            <td><c:out value="${event.comment}"/></td>
+            <td><c:out value="${event.createDate}"/></td>
+            <td><c:out value="${event.modifyDate}"/></td>
+            <td><c:out value="${event.recordStatus}"/></td>
+            <td><input hidden="true" name="userId" value="${user.id}">
+            </td>
+            <td><input hidden="true" name="eventId" value="${event.id}">
+            </td>
+            <td>
+                <form action="/event/open-for-edit" method="get">
+                    <input hidden="true" name="userId" value="${user.id}">
+                    <input hidden="true" name="eventId" value="${event.id}">
+                    <input type="submit" value="Edit">
+                </form>
+            </td>
+            <td>
+                <form action="/event/delete" method="post">
+                    <input hidden="true" name="userId" value="${user.id}">
+                    <input hidden="true" name="eventId" value="${event.id}">
+                    <form action="/Config?pg=FIBiller&amp;cmd=delete">
+                        <input type="submit" value="Delete"
+                               onclick="return confirm('Are you sure you want to PERMANENTLY delete?')"/>
+                    </form>
+                </form>
+            </td>
+            <td>
+                <form action="/event/soft-delete" method="post">
+                    <input hidden="true" name="userId" value="${user.id}">
+                    <input hidden="true" name="eventId" value="${event.id}">
+                    <form action="/Config?pg=FIBiller&amp;cmd=delete">
+                        <input type="submit" value="SOFT delete"
+                               onclick="return confirm('Are you sure you want to SOFT delete?')"/>
+                    </form>
+                </form>
+            </td>
+            <td>
+                <form action="/distance/open-all" method="get">
+                    <input hidden="true" name="userId" value="${user.id}">
+                    <input hidden="true" name="eventId" value="${event.id}">
+                    <input type="submit" value="Distances">
+                </form>
+            </td>
 
-                <tr>
-                    <td><c:out value="${event.id}"/></td>
-                    <td><c:out value="${event.franchise}"/></td>
-                    <td><c:out value="${event.organizer}"/></td>
-                    <td><c:out value="${event.name}"/></td>
-                    <td><c:out value="${event.dateFrom}"/></td>
-                    <td><c:out value="${event.dateTo}"/></td>
-                    <td><c:out value="${event.country}"/></td>
-                    <td><c:out value="${event.venue}"/></td>
-                    <td><c:out value="${event.url}"/></td>
-                    <td><c:out value="${event.comment}"/></td>
-                    <td><c:out value="${event.createDate}"/></td>
-                    <td><c:out value="${event.modifyDate}"/></td>
-                    <td><c:out value="${event.recordStatus}"/></td>
-                    <td><input hidden="true" name="userId" value="${user.id}">
-                    </td>
-                    <td><input hidden="true" name="eventId" value="${event.id}">
-                    </td>
-                    <td><input type="submit" value="Edit"></td>
-
-                </tr>
-        </form>
+        </tr>
     </c:forEach>
 </table>
 <br>

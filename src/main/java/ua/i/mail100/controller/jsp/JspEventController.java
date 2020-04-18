@@ -87,7 +87,7 @@ public class JspEventController {
         List<CountryDTO> countryDTOS = mapperCountryUtil.toDTOList(countries);
         model.addAttribute("countryList", countryDTOS);
 
-//        distancesMake(model, Integer.valueOf(eventId));
+        distancesMake(model, Integer.valueOf(eventId));
         return "event-edit";
     }
 
@@ -128,7 +128,7 @@ public class JspEventController {
                 null, null, null);
 
         Event savedEvent = eventService.save(event);
-        if (!eventCheckAndMake(model, savedEvent)) return "event-edit";
+        if (!eventCheckAndMake(model, savedEvent)) return "event-save";
         eventsMake(model);
         return "events";
     }

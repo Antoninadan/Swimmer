@@ -12,24 +12,6 @@
 </c:if>
 <br>
 <br>
-<form action="/event/delete" method="post">
-    <input hidden="true" name="userId" value="${user.id}">
-    <input hidden="true" name="eventId" value="${event.id}">
-    <form action="/Config?pg=FIBiller&amp;cmd=delete">
-        <input type="submit" value="PERMANENTLY delete this record"
-               onclick="return confirm('Are you sure you want to PERMANENTLY delete?')"/>
-    </form>
-</form>
-<form action="/event/soft-delete" method="post">
-    <input hidden="true" name="userId" value="${user.id}">
-    <input hidden="true" name="eventId" value="${event.id}">
-    <form action="/Config?pg=FIBiller&amp;cmd=delete">
-        <input type="submit" value="SOFT delete this record"
-               onclick="return confirm('Are you sure you want to SOFT delete?')"/>
-    </form>
-</form>
-<br>
-<br>
 <form action="/event/update" method="post">
     ID:  <c:out value="${event.id}"/>
     <br>
@@ -82,50 +64,6 @@
     <input type="submit" value="Update"/>
 </form>
 <br>
-<br>
-<!-- Table of distance  -->
-<!-- New distance -->
-<form action="/distance/open-for-save" method="get">
-    <input hidden="true" name="userId" value="${user.id}">
-    <input hidden="true" name="eventId" value="${event.id}">
-    <input type="submit" value="Add distance">
-</form>
-<table border="1">
-    <tr>
-        <th>id</th>
-        <th>distance type</th>
-        <th>age</th>
-        <th>length, m</th>
-        <th>date</th>
-        <th>comment</th>
-        <th>create date</th>
-        <th>modify date</th>
-        <th>record status</th>
-    </tr>
-    <c:forEach items="${distances}" var="distance">
-        <form action="/event/open-for-edit" method="get">
-
-            <tr>
-                <td><c:out value="${distance.id}"/></td>
-                <td><c:out value="${distance.distanceType}"/></td>
-                <td><c:out value="${distance.ageDistanceType}"/></td>
-                <td><c:out value="${distance.lengthInMeters}"/></td>
-                <td><c:out value="${distance.date}"/></td>
-                <td><c:out value="${distance.comment}"/></td>
-                <td><c:out value="${distance.createDate}"/></td>
-                <td><c:out value="${distance.modifyDate}"/></td>
-                <td><c:out value="${distance.recordStatus}"/></td>
-                <td><input hidden="true" name="userId" value="${user.id}">
-                </td>
-                <td><input hidden="true" name="distanceId" value="${distance.id}">
-                </td>
-                <td><input type="submit" value="Edit"></td>
-
-            </tr>
-        </form>
-    </c:forEach>
-</table>
-
 <br>
 <br>
 <!-- Back to events -->
