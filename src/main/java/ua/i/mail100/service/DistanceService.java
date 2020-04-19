@@ -55,6 +55,10 @@ public class DistanceService {
         distanceDAO.delete(distance);
     }
 
+    public void delete(Integer distanceId) {
+        distanceDAO.deleteById(distanceId);
+    }
+
     public List<Distance> getAll() {
         return distanceDAO.findAll();
     }
@@ -80,5 +84,17 @@ public class DistanceService {
         return now.after(distanceDate);
     }
 
+    public Distance softDelete(Distance distance) {
+        distance.setRecordStatus(RecordStatus.DELETED);
+        return update(distance);
+    }
+
+    public Distance softDelete(Integer distanceId) {
+        if (distanceId != null) {
+            Distance distance = distanceDAO.getOne(distanceId);
+            return softDelete(distance);
+        }
+        return null;
+    }
 
 }

@@ -49,6 +49,7 @@
     <input type="text" id="comment" size="30" name="comment" value="${distance.comment}"/>
 
     <input hidden="true" name="userId" value="${user.id}">
+    <input hidden="true" name="eventId" value="${eventId}">
     <input hidden="true" name="distanceId" value="${distance.id}">
     <br>
     <input type="submit" value="Update"/>

@@ -68,9 +68,10 @@ public class JspDistanceController {
     @GetMapping("open-for-edit")
     public String openForEdit(Model model,
                               @RequestParam(value = "userId") String userId,
+                              @RequestParam(value = "eventId") String eventId,
                               @RequestParam(value = "distanceId") String distanceId) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
-        if (!distanceCheckAndMake(model, distanceId)) return "events";
+        if (!distanceCheckAndMake(model, distanceId, eventId)) return "events";
 
         List distanceTypeList = Arrays.asList(DistanceType.values());
         model.addAttribute("distanceTypeList", distanceTypeList);
@@ -123,7 +124,7 @@ public class JspDistanceController {
                 null, null, null);
 
         Distance savedDistance = distanceService.save(distance);
-        if (!distanceCheckAndMake(model, savedDistance)) return "distance-save";
+        if (!distanceCheckAndMake(model, savedDistance, savedDistance.getEvent().getId())) return "distance-save";
         distancesMake(model, eventIdSaved);
         return "distances";
     }
@@ -143,6 +144,7 @@ public class JspDistanceController {
     @PostMapping("update")
     public String update(Model model,
                          @RequestParam(value = "userId") String userId,
+                         @RequestParam(value = "eventId") String eventId,
                          @RequestParam(value = "distanceId") String distanceId,
                          @RequestParam(value = "distanceType") String distanceType,
                          @RequestParam(value = "ageDistanceType") String ageDistanceType,
@@ -150,7 +152,7 @@ public class JspDistanceController {
                          @RequestParam(value = "date") String date,
                          @RequestParam(value = "comment") String comment) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
-        if (!distanceCheckAndMake(model, distanceId)) return "distances";
+        if (!distanceCheckAndMake(model, distanceId, eventId)) return "distances";
 
         Distance distance = distanceService.getById(Integer.valueOf(distanceId));
         DistanceType distanceTypeInputed = DistanceType.valueOf(distanceType);
@@ -165,62 +167,66 @@ public class JspDistanceController {
         distance.setComment(comment);
 
         Distance updatedDistance = distanceService.update(distance);
-        if (!distanceCheckAndMake(model, updatedDistance)) return "distance-edit";
+        if (!distanceCheckAndMake(model, updatedDistance, updatedDistance.getEvent().getId()))
+            return "distance-edit";
         distancesMake(model, updatedDistance.getEvent().getId());
         return "distances";
     }
 
-    //    @PostMapping("delete")
-//    public String delete(Model model,
-//                         @RequestParam(value = "userId") String userId,
-//                         @RequestParam(value = "eventId") String eventId) {
-//        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
-//        if (!eventCheckAndMake(model, eventId)) return "events";
-//
-//        try {
-//            eventService.delete(Integer.valueOf(eventId));
-//        } catch (Exception e) {
-//            model.addAttribute("message", "Record cannot be deleted!");
-//            e.printStackTrace();
-//            return "event-edit";
-//        }
-//        eventsMake(model);
-//        return "events";
-//    }
-//
-//    @PostMapping("soft-delete")
-//    public String softDelete(Model model,
-//                             @RequestParam(value = "userId") String userId,
-//                             @RequestParam(value = "eventId") String eventId) {
-//        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
-//        if (!eventCheckAndMake(model, eventId)) return "events";
-//
-//        Event softDeletedEvent = eventService.softDelete(Integer.valueOf(eventId));
-//        if (!eventCheckAndMake(model, softDeletedEvent)) return "events";
-//        eventsMake(model);
-//        return "events";
-//    }
-//
-    public boolean distanceCheckAndMake(Model model, Distance distance) {
+    @PostMapping("delete")
+    public String delete(Model model,
+                         @RequestParam(value = "userId") String userId,
+                         @RequestParam(value = "eventId") String eventId,
+                         @RequestParam(value = "distanceId") String distanceId) {
+        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
+        if (!distanceCheckAndMake(model, distanceId, eventId)) return "distances";
+
+        try {
+            distanceService.delete(Integer.valueOf(distanceId));
+        } catch (Exception e) {
+            model.addAttribute("message", "Record cannot be deleted!");
+            e.printStackTrace();
+            return "event-edit";
+        }
+        distancesMake(model, Integer.valueOf(eventId));
+        return "distances";
+    }
+
+    @PostMapping("soft-delete")
+    public String softDelete(Model model,
+                             @RequestParam(value = "userId") String userId,
+                             @RequestParam(value = "eventId") String eventId,
+                             @RequestParam(value = "distanceId") String distanceId) {
+        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
+        if (!distanceCheckAndMake(model, distanceId, eventId)) return "distances";
+
+        Distance softDeletedDistance = distanceService.softDelete(Integer.valueOf(distanceId));
+        if (!distanceCheckAndMake(model, softDeletedDistance, softDeletedDistance.getEvent().getId()))
+            return "distances";
+        distancesMake(model, getEventId(distanceId));
+        return "distances";
+    }
+
+
+    public boolean distanceCheckAndMake(Model model, Distance distance, Integer eventId) {
         if (distance != null) {
             DistanceDTO distanceDTO = mapperDistanceUtil.toDTO(distance);
             model.addAttribute("distance", distanceDTO);
             return true;
         } else {
-            // ?????????????
-            List<Event> events = eventService.getAllModifiedAfter(0L);
-            List<EventPresenter> eventPresenters = mapperEventUtil.toPresenterList(events);
-            model.addAttribute("events", eventPresenters);
+            List<Distance> distances = distanceService.getAllByEvent(eventId);
+            List<DistanceDTO> distanceDTOS = mapperDistanceUtil.toDTOList(distances);
+            model.addAttribute("distances", distanceDTOS);
 
             model.addAttribute("message", "Record are wrong!");
             return false;
         }
     }
 
-    public boolean distanceCheckAndMake(Model model, String distanceId) {
+    public boolean distanceCheckAndMake(Model model, String distanceId, String eventId) {
         Integer distanceIdSelected = Integer.valueOf(distanceId);
         Distance distance = distanceService.getById(distanceIdSelected);
-        return distanceCheckAndMake(model, distance);
+        return distanceCheckAndMake(model, distance, Integer.valueOf(eventId));
     }
 
 
