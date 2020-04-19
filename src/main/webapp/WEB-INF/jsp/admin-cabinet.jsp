@@ -26,7 +26,11 @@
     <input name="userId" value="${user.id}" hidden>
     <input type="submit" value="Open events">
 </form>
-
+<br>
+<form action="/result/open" method="get">
+    <input name="userId" value="${user.id}" hidden>
+    <input type="submit" value="Results">
+</form>
 
 </body>
 </html>
