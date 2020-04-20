@@ -13,7 +13,7 @@ import ua.i.mail100.dto.BaseEntityDTO;
 public class ResultPresenter extends BaseEntityDTO {
     private String event;
     private String distance;
-    private String timeInSecond;
+    private String timeInSeconds;
     private String comment;
 
     public ResultPresenter(Integer id, String event, String distance, String timeInSecond, String comment,
@@ -21,7 +21,7 @@ public class ResultPresenter extends BaseEntityDTO {
         super(id, createDate, modifyDate, recordStatus);
         this.event = event;
         this.distance = distance;
-        this.timeInSecond = timeInSecond;
+        this.timeInSeconds = timeInSecond;
         this.comment = comment;
     }
 }

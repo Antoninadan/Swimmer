@@ -4,8 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.i.mail100.dto.ResultDTO;
+import ua.i.mail100.model.Distance;
+import ua.i.mail100.model.Event;
 import ua.i.mail100.model.Result;
 import ua.i.mail100.presenter.ResultPresenter;
+import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.DistanceService;
 import ua.i.mail100.service.ResultService;
 import ua.i.mail100.service.UserService;
@@ -27,7 +30,12 @@ public class MapperResultUtil {
     UserService userService;
 
     @Autowired
+    DateService dateService;
+
+    @Autowired
     ObjectMapper objectMapper;
+
+    public static final String LINE_SEP = System.getProperty("line.separator");
 
     public Result toObject(ResultDTO resultDTO) {
         Result result = new Result();
@@ -90,17 +98,37 @@ public class MapperResultUtil {
     }
 
     public ResultPresenter toPresenter(Result result) {
-        ResultPresenter resultPresenter = new ResultDTO();
-        resultPresenter.setEvent(result.getId());
-        resultPresenter.setDistanceId(result.getDistance() != null ?
-        resultPresenteresult.getDistance().getId() : null);
-        resultPresenter.setUserId(result.getUser() != null ?
-        resultPresenteresult.getUser().getId() : null);
-        resultPresenter.setTimeInSeconds(result.getTimeInSeconds());
+        ResultPresenter resultPresenter = new ResultPresenter();
+        Distance distance = result.getDistance();
+        Event event = distance.getEvent();
+        String eventStr = "id=" + Integer.toString(event.getId()) +
+                (event.getFranchise() != null ? " " + event.getFranchise().getName() : "") +
+                (event.getName() != null ? " name=" + event.getName() : "");
+        String distanceStr = "id=" + Integer.toString(distance.getId()) +
+                (distance.getDistanceType() != null ? " " + distance.getDistanceType().toString() : "") +
+                (distance.getAgeDistanceType() != null ? " " + distance.getAgeDistanceType().toString() : "") +
+                (distance.getLengthInMeters() != null ? " L=" + Integer.toString(distance.getLengthInMeters()) + "m" : "") +
+                (distance.getDate() != null ? " date=" + dateService.toString(distance.getDate()) : "");
+        String timeInSecondsStr = Integer.toString(result.getTimeInSeconds());
+
+        resultPresenter.setId(result.getId());
+        resultPresenter.setEvent(eventStr);
+        resultPresenter.setDistance(distanceStr);
+        resultPresenter.setTimeInSeconds(timeInSecondsStr);
         resultPresenter.setComment(result.getComment());
         resultPresenter.setCreateDate(result.getCreateDate());
         resultPresenter.setModifyDate(result.getModifyDate());
         resultPresenter.setRecordStatus(result.getRecordStatus().toString());
-        return resultDTO;
+        return resultPresenter;
+    }
+
+    public List<ResultPresenter> toResultPresenterList(List<Result> results) {
+        Collections.sort(results);
+        List<ResultPresenter> resultPresenters = new ArrayList<>();
+        for (Result each : results) {
+            ResultPresenter resultPresenter = toPresenter(each);
+            resultPresenters.add(resultPresenter);
+        }
+        return resultPresenters;
     }
 }

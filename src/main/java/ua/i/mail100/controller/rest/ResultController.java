@@ -93,7 +93,7 @@ public class ResultController {
     public ResponseEntity getResult(@PathVariable Integer id) {
         Result result = resultService.getById(id);
         if (result == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("record not found", HttpStatus.NOT_FOUND);
         }
         ResultDTO resultDTO = mapperResultUtil.toDTO(result);
         return new ResponseEntity(resultDTO, HttpStatus.OK);

@@ -13,10 +13,11 @@
 
 <!-- Find user -->
 <form action="/result/get-swimmer" method="get">
-    <input type="number" name="swimmerId" min="1"/>
+    <input type="number" name="swimmerId" min="1" value="${swimmer.id}" required/>
     <input hidden="true" name="userId" value="${user.id}">
     <input type="submit" value="Find">
 </form>
+
 <br>
 Id: <c:out value="${swimmer.id}"/>
 <br>
@@ -30,7 +31,9 @@ Birth date: <c:out value="${swimmer.birthDate}"/>
 <br>
 <br>
 <br>
+
 <!-- Table of results  -->
+<h2>Table of results:</h2>
 <table border="1">
     <tr>
         <th>id</th>
@@ -42,54 +45,38 @@ Birth date: <c:out value="${swimmer.birthDate}"/>
         <th>modify date</th>
         <th>record status</th>
     </tr>
-    <c:forEach items="${events}" var="event">
+    <c:forEach items="${results}" var="result">
         <tr>
             <td><c:out value="${result.id}"/></td>
             <td><c:out value="${result.event}"/></td>
             <td><c:out value="${result.distance}"/></td>
-            <td><c:out value="${result.timeInSecond}"/></td>
+            <td><c:out value="${result.timeInSeconds}"/></td>
             <td><c:out value="${result.comment}"/></td>
             <td><c:out value="${result.createDate}"/></td>
             <td><c:out value="${result.modifyDate}"/></td>
             <td><c:out value="${result.recordStatus}"/></td>
-            <%--<td><input hidden="true" name="userId" value="${user.id}">--%>
-            <%--</td>--%>
-            <%--<td><input hidden="true" name="eventId" value="${event.id}">--%>
-            <%--</td>--%>
-            <%--<td>--%>
-                <%--<form action="/event/open-for-edit" method="get">--%>
-                    <%--<input hidden="true" name="userId" value="${user.id}">--%>
-                    <%--<input hidden="true" name="eventId" value="${event.id}">--%>
-                    <%--<input type="submit" value="Edit">--%>
-                <%--</form>--%>
-            <%--</td>--%>
-            <%--<td>--%>
-                <%--<form action="/event/delete" method="post">--%>
-                    <%--<input hidden="true" name="userId" value="${user.id}">--%>
-                    <%--<input hidden="true" name="eventId" value="${event.id}">--%>
-                    <%--<form action="/Config?pg=FIBiller&amp;cmd=delete">--%>
-                        <%--<input type="submit" value="Delete"--%>
-                               <%--onclick="return confirm('Are you sure you want to PERMANENTLY delete?')"/>--%>
-                    <%--</form>--%>
-                <%--</form>--%>
-            <%--</td>--%>
-            <%--<td>--%>
-                <%--<form action="/event/soft-delete" method="post">--%>
-                    <%--<input hidden="true" name="userId" value="${user.id}">--%>
-                    <%--<input hidden="true" name="eventId" value="${event.id}">--%>
-                    <%--<form action="/Config?pg=FIBiller&amp;cmd=delete">--%>
-                        <%--<input type="submit" value="SOFT delete"--%>
-                               <%--onclick="return confirm('Are you sure you want to SOFT delete?')"/>--%>
-                    <%--</form>--%>
-                <%--</form>--%>
-            <%--</td>--%>
-            <%--<td>--%>
-                <%--<form action="/distance/open-all" method="get">--%>
-                    <%--<input hidden="true" name="userId" value="${user.id}">--%>
-                    <%--<input hidden="true" name="eventId" value="${event.id}">--%>
-                    <%--<input type="submit" value="Distances">--%>
-                <%--</form>--%>
-            <%--</td>--%>
+        </tr>
+    </c:forEach>
+</table>
+<br>
+<br>
+<!-- Table of favorites  -->
+<h2>Table of favorite events:</h2>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>event</th>
+        <th>create date</th>
+        <th>modify date</th>
+        <th>record status</th>
+    </tr>
+    <c:forEach items="${favorites}" var="favorite">
+        <tr>
+            <td><c:out value="${favorite.id}"/></td>
+            <td><c:out value="${favorite.event}"/></td>
+            <td><c:out value="${favorite.createDate}"/></td>
+            <td><c:out value="${favorite.modifyDate}"/></td>
+            <td><c:out value="${favorite.recordStatus}"/></td>
         </tr>
     </c:forEach>
 </table>

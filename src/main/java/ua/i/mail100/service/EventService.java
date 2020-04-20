@@ -83,4 +83,11 @@ public class EventService {
         if (modifyDate == null) modifyDate = 0L;
         return eventDAO.getAllModifiedAfter(modifyDate);
     }
+
+    public boolean isEventAvailable(Event event) {
+        RecordStatus eventRecordStatus = event.getRecordStatus();
+        if (eventRecordStatus != RecordStatus.ACTIVE)
+            return false;
+        return true;
+    }
 }

@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Entity
 @Table(name = "favorite_events")
-public class FavoriteEvent extends BaseEntity{
+public class Favorite extends BaseEntity{
 
     @ManyToOne(targetEntity = Event.class)
     private Event event;
@@ -25,8 +25,8 @@ public class FavoriteEvent extends BaseEntity{
     @ManyToOne(targetEntity = User.class)
     private User user;
 
-    public FavoriteEvent(Integer id, Event event, User user,
-                         Long createDate, Long modifyDate, RecordStatus recordStatus) {
+    public Favorite(Integer id, Event event, User user,
+                    Long createDate, Long modifyDate, RecordStatus recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.event = event;
         this.user = user;

@@ -9,12 +9,12 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FavoriteEventDTO extends BaseEntityDTO {
+public class FavoriteDTO extends BaseEntityDTO {
     private Integer eventId;
     private Integer userId;
 
-    public FavoriteEventDTO(Integer id, Integer eventId, Integer userId,
-                            Long createDate, Long modifyDate, String recordStatus) {
+    public FavoriteDTO(Integer id, Integer eventId, Integer userId,
+                       Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.eventId = eventId;
         this.userId = userId;
