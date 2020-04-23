@@ -8,14 +8,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import ua.i.mail100.config.FileConfig;
+import ua.i.mail100.config.MailConfig;
 import ua.i.mail100.dto.FranchiseDTO;
 import ua.i.mail100.mapper.MapperFranchiseUtil;
 import ua.i.mail100.mapper.MapperUserUtil;
 import ua.i.mail100.model.Franchise;
+import ua.i.mail100.service.FileService;
 import ua.i.mail100.service.FranchiseService;
 import ua.i.mail100.service.DateService;
 import ua.i.mail100.service.UserService;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +30,7 @@ import java.util.List;
 @Profile("jsp")
 @RequestMapping("franchise")
 public class JspFranchiseController {
+
     @Autowired
     UserService userService;
 
@@ -34,6 +41,12 @@ public class JspFranchiseController {
     JspService jspService;
 
     @Autowired
+    FileService fileService;
+
+    @Autowired
+    FileConfig fileConfig;
+
+    @Autowired
     MapperUserUtil mapperUserUtil;
 
     @Autowired
@@ -42,9 +55,10 @@ public class JspFranchiseController {
     @Autowired
     DateService dateService;
 
+
     @GetMapping("open-all")
     public String openFranchises(Model model,
-                                @RequestParam(value = "userId") String userId) {
+                                 @RequestParam(value = "userId") String userId) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
         franchisesMake(model);
         return "franchises";
@@ -52,16 +66,6 @@ public class JspFranchiseController {
 
     @GetMapping("open-for-edit")
     public String openForEdit(Model model,
-                              @RequestParam(value = "userId") String userId,
-                              @RequestParam(value = "franchiseId") String franchiseId) {
-        if (!jspService.userCheckAndMake(model, userId)) return "authorization";
-        if (!franchiseCheckAndMake(model, franchiseId)) return "franchises";
-        return "franchise-edit";
-    }
-
-    // TODO logo functionality
-    @GetMapping("logo")
-    public String getLogo(Model model,
                               @RequestParam(value = "userId") String userId,
                               @RequestParam(value = "franchiseId") String franchiseId) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
@@ -82,7 +86,7 @@ public class JspFranchiseController {
                          @RequestParam(value = "userId") String userId,
                          @RequestParam(value = "franchiseId") String franchiseId,
                          @RequestParam(value = "name") String name,
-                         @RequestParam(value = "logo", required = false) String logo) {
+                         @RequestParam(value = "file") MultipartFile file) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
         if (!franchiseCheckAndMake(model, franchiseId)) return "franchises";
 
@@ -92,6 +96,15 @@ public class JspFranchiseController {
             model.addAttribute("franchise", franchise);
             model.addAttribute("message", "Name not unique!");
             return "franchise-edit";
+        }
+
+        if (!file.isEmpty()) {
+            String fileName = file.getOriginalFilename();
+            franchise.setPath(fileName);
+            if(!fileService.isUploadSucessful(fileConfig.FILE_ROOT_PATH, file)) {
+                model.addAttribute("message", "File not uploaded!");
+                return "franchise-edit";
+            }
         }
 
         Franchise updatedFranchise = franchiseService.update(franchise);
@@ -107,7 +120,7 @@ public class JspFranchiseController {
                        @RequestParam(value = "logo", required = false) String logo) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
 
-        Franchise franchise = new Franchise(null, name, null,
+        Franchise franchise = new Franchise(null, name, null, null,
                 null, null, null);
         if (!franchiseService.noFranchiseWithSameName(franchise)) {
             model.addAttribute("message", "Name not unique!");

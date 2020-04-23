@@ -21,6 +21,7 @@ public class MapperFranchiseUtil {
         franchise.setId(franchiseDTO.getId());
         franchise.setName(franchiseDTO.getName());
         franchise.setLogo(franchiseDTO.getLogo());
+        franchise.setPath(franchiseDTO.getPath());
         return franchise;
     }
 
@@ -38,6 +39,7 @@ public class MapperFranchiseUtil {
         franchiseDTO.setId(franchise.getId());
         franchiseDTO.setName(franchise.getName());
         franchiseDTO.setLogo(franchise.getLogo());
+        franchiseDTO.setPath(franchise.getPath());
         franchiseDTO.setCreateDate(franchise.getCreateDate());
         franchiseDTO.setModifyDate(franchise.getModifyDate());
         franchiseDTO.setRecordStatus(franchise.getRecordStatus().toString());

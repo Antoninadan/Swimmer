@@ -4,6 +4,13 @@
 <html>
 <head>
     <title>Results</title>
+    <script>
+        function checkNotEmptyUserId(form) {
+            if (form.swimmerId.value == "")
+                alert("Input user id!")
+        }
+    </script>
+
 </head>
 <body>
 <h1>Results:</h1>
@@ -13,9 +20,9 @@
 
 <!-- Find user -->
 <form action="/result/get-swimmer" method="get">
-    <input type="number" name="swimmerId" min="1" value="${swimmer.id}" required/>
-    <input hidden="true" name="userId" value="${user.id}">
-    <input type="submit" value="Find">
+    <input type="number" name="swimmerId" min="1" value="${swimmer.id}" />
+    <input hidden="true" name="userId" value="${user.id}" >
+    <input type="button" value="Find" onClick="checkNotEmptyUserId(this.form)">
 </form>
 
 <br>

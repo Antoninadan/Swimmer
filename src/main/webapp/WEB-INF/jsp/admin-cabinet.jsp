@@ -31,6 +31,10 @@
     <input name="userId" value="${user.id}" hidden>
     <input type="submit" value="Results">
 </form>
+<br>
+<form action="/file/open" method="get">
+    <input type="submit" value="File">
+</form>
 
 </body>
 </html>

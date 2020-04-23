@@ -12,12 +12,14 @@ import lombok.Setter;
 public class FranchiseDTO extends BaseEntityDTO {
     private String name;
     private Byte[] logo;
+    private String path;
 
-    public FranchiseDTO(Integer id, String name, Byte[] logo,
+    public FranchiseDTO(Integer id, String name, Byte[] logo, String path,
                         Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.name = name;
         this.logo = logo;
+        this.path = path;
     }
 }
 

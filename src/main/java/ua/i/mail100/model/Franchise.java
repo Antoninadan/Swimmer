@@ -23,12 +23,16 @@ public class Franchise extends BaseEntity {
     @Column(name = "logo")
     private Byte[] logo;
 
+    @Column(name = "path")
+    private String path;
+
     // https://stackoverflow.com/questions/9164103/show-image-from-db-using-spring-mvc
 
-    public Franchise(Integer id, String name, Byte[] logo,
+    public Franchise(Integer id, String name, Byte[] logo, String path,
                      Long createDate, Long modifyDate, RecordStatus recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.name = name;
         this.logo = logo;
+        this.path = path;
     }
 }

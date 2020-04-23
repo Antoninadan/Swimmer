@@ -26,8 +26,8 @@ public class FranchiseController {
 
     @PutMapping("save")
     public ResponseEntity save(@RequestBody Franchise franchise) {
-        Franchise savedCountry = franchiseService.save(franchise);
-        if (savedCountry == null) {
+        Franchise savedFranchise = franchiseService.save(franchise);
+        if (savedFranchise == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(franchise, HttpStatus.OK);
@@ -35,13 +35,12 @@ public class FranchiseController {
 
     @PostMapping("update")
     public ResponseEntity update(@RequestBody Franchise franchise) {
-        Franchise updatedUser = franchiseService.update(franchise);
-        if (updatedUser == null) {
+        Franchise updatedFranchise = franchiseService.update(franchise);
+        if (updatedFranchise == null) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(franchise, HttpStatus.OK);
     }
-
 
     @GetMapping("by-id/{id}")
     public ResponseEntity getFranchise(@PathVariable Integer id) {
@@ -58,7 +57,6 @@ public class FranchiseController {
         List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);
         return new ResponseEntity(franchiseDTOS, HttpStatus.OK);
     }
-
 
     @DeleteMapping("{id}")
     public ResponseEntity deleteById(@PathVariable Integer id) {

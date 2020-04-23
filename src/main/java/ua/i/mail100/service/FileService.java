@@ -1,10 +1,21 @@
 package ua.i.mail100.service;
 
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import ua.i.mail100.config.FileConfig;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Collection;
 
+@Service
 public class FileService {
+
+    @Autowired
+    FileConfig fileConfig;
+
     public static final String FILE_SEP = System.getProperty("file.separator");
     public static final String LINE_SEP = System.getProperty("line.separator");
 
@@ -134,5 +145,33 @@ public class FileService {
         return bytes;
     }
 
+    public boolean isUploadSucessful(String path, MultipartFile file) {
+        checkTargetDir(path);
+        String fileName = null;
+        try {
+            byte[] bytes = file.getBytes();
+            fileName = file.getOriginalFilename();
 
+            File uploadedFile = new File(path + File.separator + fileName);
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
+            stream.write(bytes);
+            stream.flush();
+            stream.close();
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isSameNameFile((String path, String name) {
+        File directory = new File("pathToDirectory");
+        String fileNameToFind = "someFile.name";
+        File foundFile = FileUtils.
+                .listFiles(directory, null, true)
+                .stream()
+                .filter(f -> f.getName().equals(fileNameToFind))
+                .findFirst()
+                .orElse(null);
+    }
 }

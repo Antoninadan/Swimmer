@@ -19,7 +19,7 @@
     <input type="submit" value="Add franchise">
 </form>
 
-<img src="${pageContext.request.contextPath}/images/oceanman.jpg"/>
+<%--<img src="${pageContext.request.contextPath}/images/oceanman.jpg"/>--%>
 
 <%--<script>--%>
 <%--var img = new Image();--%>
