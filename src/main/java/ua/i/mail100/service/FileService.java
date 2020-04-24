@@ -1,10 +1,12 @@
 package ua.i.mail100.service;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.i.mail100.config.FileConfig;
+import ua.i.mail100.util.RandomUtil;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -127,11 +129,10 @@ public class FileService {
         return object;
     }
 
-    public static byte[] toPrimitives(Byte[] oBytes)
-    {
+    public static byte[] toPrimitives(Byte[] oBytes) {
         byte[] bytes = new byte[oBytes.length];
 
-        for(int i = 0; i < oBytes.length; i++) {
+        for (int i = 0; i < oBytes.length; i++) {
             bytes[i] = oBytes[i];
         }
         return bytes;
@@ -145,33 +146,49 @@ public class FileService {
         return bytes;
     }
 
-    public boolean isUploadSucessful(String path, MultipartFile file) {
+    public File getFileUploadedName(String path, MultipartFile file) {
         checkTargetDir(path);
         String fileName = null;
         try {
             byte[] bytes = file.getBytes();
             fileName = file.getOriginalFilename();
+            fileName = getUniqueFileName(path, fileName);
 
             File uploadedFile = new File(path + File.separator + fileName);
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
             stream.write(bytes);
             stream.flush();
             stream.close();
-            return true;
+
+            return uploadedFile;
 
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 
-    public boolean isSameNameFile((String path, String name) {
-        File directory = new File("pathToDirectory");
-        String fileNameToFind = "someFile.name";
-        File foundFile = FileUtils.
+    public String getUniqueFileName(String path, String name) {
+        while (isExistSameNameFile(path, name)) {
+            String[] baseAndExtention = name.split("\\.(?=[^\\.]+$)");
+            String base = baseAndExtention[0];
+            String extention = baseAndExtention[1];
+            Integer randomDigit = RandomUtil.randomFixedLength(1);
+            name = base + (extention != null ? (randomDigit + "." + extention) : randomDigit);
+        }
+        return name;
+    }
+
+    public boolean isExistSameNameFile(String path, String name) {
+        File directory = new File(path);
+        File foundFile = FileUtils
                 .listFiles(directory, null, true)
                 .stream()
-                .filter(f -> f.getName().equals(fileNameToFind))
+                .filter(f -> f.getName().equals(name))
                 .findFirst()
                 .orElse(null);
+        if (foundFile != null) return true;
+        return false;
     }
+
+
 }

@@ -25,29 +25,6 @@
 </form>
 <br>
 
-<img id="output">
-<script>
-
-    function fetchImage(url) {
-        const formData = new FormData();
-        const fileField = document.querySelector('input[type="file"]');
-        formData.append('image', fileField.files[0]);
-
-        try {
-            const response = await
-            fetch(url, {
-                method: 'POST',
-                body: formData
-            });
-            const result = await
-            response.json();
-            console.log('Успех:', JSON.stringify(result));
-        } catch (error) {
-            console.error('Ошибка:', error);
-        }
-    }
-</script>
-
 
 <script>
     function prepareUrlAndView(fileList) {
@@ -62,53 +39,33 @@
         if (file !== null) {
             objectURL = URL.createObjectURL(file);
             output.src = objectURL;
-
-            return objectURL;
         }
     }
 </script>
+
 
 <br>
 <form action="/franchise/update" method="post" enctype="multipart/form-data">
     Name: <input type="text" size="30" name="name" required value="${franchise.name}"/>
     <br>
-    <%--Image: <input type="file"  accept="image/*" name="file"><br />--%>
-
-<input type="file" accept="image/*" id="file-input" name="file">
+    Path: <input type="text" size="30" name="path" readonly value="${franchise.path}"/>
+    <br>
+    <input type="file" accept="image/*" id="file-input" name="file" value="${logoFile}">
     <script>
         const fileInput = document.getElementById('file-input');
         fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
-        // fetchImage(objectURL);
+        fileInput.prepareUrlAndView("${logoFile}");
     </script>
-
-
+    <br>
+    <br>
+    <img id="output">
+    <br>
     <br>
     <input hidden="true" name="userId" value="${user.id}">
     <input hidden="true" name="franchiseId" value="${franchise.id}">
     <br>
     <input type="submit" value="Update"/>
 </form>
-
-
-<%--<div id="target">You can drag an image file here</div>--%>
-<%--<script>--%>
-<%--const target = document.getElementById('target');--%>
-
-<%--target.addEventListener('drop', (e) => {--%>
-<%--e.stopPropagation();--%>
-<%--e.preventDefault();--%>
-
-<%--doSomethingWithFiles(e.dataTransfer.files);--%>
-<%--});--%>
-
-<%--target.addEventListener('dragover', (e) => {--%>
-<%--e.stopPropagation();--%>
-<%--e.preventDefault();--%>
-
-<%--e.dataTransfer.dropEffect = 'copy';--%>
-<%--});--%>
-<%--</script>--%>
-
 
 <%--Delete--%>
 <br>

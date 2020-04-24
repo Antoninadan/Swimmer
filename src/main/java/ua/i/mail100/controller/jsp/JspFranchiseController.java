@@ -99,12 +99,16 @@ public class JspFranchiseController {
         }
 
         if (!file.isEmpty()) {
-            String fileName = file.getOriginalFilename();
-            franchise.setPath(fileName);
-            if(!fileService.isUploadSucessful(fileConfig.FILE_ROOT_PATH, file)) {
+            File savedFile = fileService.getFileUploadedName(fileConfig.FILE_ROOT_PATH, file);
+            if( savedFile == null) {
                 model.addAttribute("message", "File not uploaded!");
                 return "franchise-edit";
             }
+            franchise.setPath(savedFile.getName());
+            // TODO dont work
+            model.addAttribute("logoFile", savedFile);
+        } else {
+            franchise.setPath(null);
         }
 
         Franchise updatedFranchise = franchiseService.update(franchise);
@@ -116,8 +120,8 @@ public class JspFranchiseController {
     @PostMapping("save")
     public String save(Model model,
                        @RequestParam(value = "userId") String userId,
-                       @RequestParam(value = "name") String name,
-                       @RequestParam(value = "logo", required = false) String logo) {
+            @RequestParam(value = "name") String name,
+                       @RequestParam(value = "file") MultipartFile file) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
 
         Franchise franchise = new Franchise(null, name, null, null,
@@ -127,8 +131,21 @@ public class JspFranchiseController {
             return "franchise-save";
         }
 
+        if (!file.isEmpty()) {
+            File savedFile = fileService.getFileUploadedName(fileConfig.FILE_ROOT_PATH, file);
+            if( savedFile == null) {
+                model.addAttribute("message", "File not uploaded!");
+                return "franchise-save";
+            }
+            franchise.setPath(savedFile.getName());
+            // TODO dont work
+            model.addAttribute("logoFile", savedFile);
+        } else {
+            franchise.setPath(null);
+        }
+
         Franchise savedFranchise = franchiseService.save(franchise);
-        if (!franchiseCheckAndMake(model, savedFranchise)) return "franchise-edit";
+        if (!franchiseCheckAndMake(model, savedFranchise)) return "franchise-save";
         franchisesMake(model);
         return "franchises";
     }

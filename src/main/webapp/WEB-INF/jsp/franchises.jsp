@@ -19,11 +19,13 @@
     <input type="submit" value="Add franchise">
 </form>
 
-<%--<img src="${pageContext.request.contextPath}/images/oceanman.jpg"/>--%>
+<%--&lt;%&ndash;<img src="C:/path/oceanman.jpg"/>&ndash;%&gt;--%>
+<%--<img id="display"/>--%>
+
 
 <%--<script>--%>
 <%--var img = new Image();--%>
-<%--img.src = "/images/oceanman33.png";--%>
+<%--img.src = "C:/path/oceanman.jpg";--%>
 <%--document.getElementById('display').appendChild(img);--%>
 <%--</script>--%>
 
@@ -32,7 +34,7 @@
     <tr>
         <th>id</th>
         <th>name</th>
-        <th>logo</th>
+        <th>path</th>
         <th>create date</th>
         <th>modify date</th>
         <th>record status</th>
@@ -43,7 +45,7 @@
                 <tr>
                     <td><c:out value="${franchise.id}"/></td>
                     <td><c:out value="${franchise.name}"/></td>
-                    <td><c:out value="${franchise.logo}"/></td>
+                    <td><c:out value="${franchise.path}"/></td>
                     <td><c:out value="${franchise.createDate}"/></td>
                     <td><c:out value="${franchise.modifyDate}"/></td>
                     <td><c:out value="${franchise.recordStatus}"/></td>

@@ -11,15 +11,42 @@
     <h3 style="color:red;"> ${message} </h3>
 </c:if>
 <br>
+
+<script>
+    function prepareUrlAndView(fileList) {
+        let file = null;
+
+        for (let i = 0; i < fileList.length; i++) {
+            if (fileList[i].type.match(/^image\//)) {
+                file = fileList[i];
+                break;
+            }
+        }
+        if (file !== null) {
+            objectURL = URL.createObjectURL(file);
+            output.src = objectURL;
+        }
+    }
+</script>
+
 <br>
-<form action="/franchise/save" method="post">
-    <label for="name">Name:</label>
-    <input type="text" id="name" size="30" name="name" required value="${franchise.name}"/>
+<form action="/franchise/save" method="post" enctype="multipart/form-data">
+    Name: <input type="text" size="30" name="name" required value="${franchise.name}"/>
     <br>
-    <%--<label for="logo">Logo:</label>--%>
-    <%--<input type="text" id="logo" size="30" name="name" required value="${franchise.logo}"/>--%>
+    <input type="file" accept="image/*" id="file-input" name="file">
+    <script>
+        const fileInput = document.getElementById('file-input');
+        fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
+        fileInput.prepareUrlAndView("${logoFile}");
+    </script>
+    <br>
+    <br>
+    <img id="output">
+    <br>
+    <br>
     <input hidden="true" name="userId" value="${user.id}">
-    <input hidden="true" name="franchiseId" value="${franchise.id}">
+    <br>
+
     <input type="submit" value="Save"/>
 </form>
 

@@ -81,6 +81,7 @@ public class JspEventController {
 
         List<Franchise> franchises = franchiseService.getAll(0L);
         List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);
+        franchiseDTOS.add(null);
         model.addAttribute("franchiseList", franchiseDTOS);
 
         List<Country> countries = countryService.getAll(0L);
@@ -98,6 +99,7 @@ public class JspEventController {
 
         List<Franchise> franchises = franchiseService.getAll(0L);
         List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);
+        franchiseDTOS.add(null);
         model.addAttribute("franchiseList", franchiseDTOS);
 
         List<Country> countries = countryService.getAll(0L);
@@ -119,7 +121,7 @@ public class JspEventController {
                        @RequestParam(value = "url") String url,
                        @RequestParam(value = "comment") String comment) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
-        Franchise franchise = franchiseService.getById(Integer.valueOf(franchiseIdStr));
+        Franchise franchise = (franchiseIdStr != "") ? franchiseService.getById(Integer.valueOf(franchiseIdStr)) : null;
         Country country = countryService.getById(Integer.valueOf(countryIdStr));
         Date dateFrom = dateService.parse(dateFromStr);
         Date dateTo = dateService.parse(dateToStr);
@@ -150,7 +152,7 @@ public class JspEventController {
         if (!eventCheckAndMake(model, eventId)) return "events";
 
         Event event = eventService.getById(Integer.valueOf(eventId));
-        Franchise franchise = franchiseService.getById(Integer.valueOf(franchiseIdStr));
+        Franchise franchise = (franchiseIdStr != "") ? franchiseService.getById(Integer.valueOf(franchiseIdStr)) : null;
         Country country = countryService.getById(Integer.valueOf(countryIdStr));
         Date dateFrom = dateService.parse(dateFromStr);
         Date dateTo = dateService.parse(dateToStr);

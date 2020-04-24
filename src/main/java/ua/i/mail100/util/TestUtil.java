@@ -1,8 +1,10 @@
 package ua.i.mail100.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 import ua.i.mail100.config.MailConfig;
 import ua.i.mail100.controller.rest.*;
 import ua.i.mail100.model.*;
@@ -22,16 +24,18 @@ public class TestUtil {
 
 
     public static void main(String[] args) {
-        byte[] bytes = FileService.getBytesFromFile("D://", "oceanman.png");
-        String str = "[";
-        for (byte b : bytes) {
-            str += "\"" + b + "\",";
-        }
+//        byte[] bytes = FileService.getBytesFromFile("D://", "oceanman.png");
+//        String str = "[";
+//        for (byte b : bytes) {
+//            str += "\"" + b + "\",";
+//        }
+//        System.out.println("str = " + str);
 
-        System.out.println("str = " + str);
 
 
-        byte[] bytes1 = new byte[Integer.MAX_VALUE];
+
+
+
 
 
 //        <img src="${pageContext.request.contextPath}/images/1.jpg"/>
