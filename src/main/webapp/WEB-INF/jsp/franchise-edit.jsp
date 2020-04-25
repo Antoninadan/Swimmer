@@ -54,7 +54,7 @@
     <script>
         const fileInput = document.getElementById('file-input');
         fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
-        fileInput.prepareUrlAndView("${logoFile}");
+        <%--fileInput.prepareUrlAndView("${logoFile}");--%>
     </script>
     <br>
     <br>

@@ -31,31 +31,23 @@ public class TestUtil {
 //        }
 //        System.out.println("str = " + str);
 
+        File file = new File("D:/oceanman_xs.png");
+        FileService fileService = new FileService();
+        String base64 = null;
+        try {
+            base64 = fileService.convertFileToString(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        System.out.println("base64 = " + base64);
 
-
-
-
-
+        System.out.println(FileService.readTextFromFile("D:/", "oceanman_xs.png"));
 
 //        <img src="${pageContext.request.contextPath}/images/1.jpg"/>
 
 
-//        EnumComboboxModel sexs = new EnumComboboxModel();
-//
-//        Enum<Sex> sexEnum =  new Enum<Sex>() {
-//            @Override
-//            public String toString() {
-//                return super.toString();
-//            }
-//        }
 
-
-//        try {
-//            httpRequest();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
 
 
     }

@@ -12,6 +12,9 @@
     <h3 style="color:red;"> ${message} </h3>
 </c:if>
 <br>
+
+<img src="C:/path/oceanman.jpg">
+
 <br>
 <!-- New franchise -->
 <form action="/franchise/open-for-save" method="get">

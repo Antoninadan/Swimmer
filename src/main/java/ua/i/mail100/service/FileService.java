@@ -2,6 +2,7 @@ package ua.i.mail100.service;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
+import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -190,5 +191,10 @@ public class FileService {
         return false;
     }
 
+    //Convert file to a Base64 String
+    public String convertFileToString(File file) throws IOException{
+        byte[] bytes = Files.readAllBytes(file.toPath());
+        return new String(Base64.encode(bytes));
+    }
 
 }
