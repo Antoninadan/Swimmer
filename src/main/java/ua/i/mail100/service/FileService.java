@@ -1,9 +1,9 @@
 package ua.i.mail100.service;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.base64.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ua.i.mail100.config.FileConfig;
@@ -11,6 +11,8 @@ import ua.i.mail100.util.RandomUtil;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 
 @Service
@@ -147,7 +149,7 @@ public class FileService {
         return bytes;
     }
 
-    public File getFileUploadedName(String path, MultipartFile file) {
+    public File getFileUploaded(String path, MultipartFile file) {
         checkTargetDir(path);
         String fileName = null;
         try {
@@ -192,9 +194,23 @@ public class FileService {
     }
 
     //Convert file to a Base64 String
-    public String convertFileToString(File file) throws IOException{
+    public String convertFileToString(File file) throws IOException {
         byte[] bytes = Files.readAllBytes(file.toPath());
         return new String(Base64.encode(bytes));
+    }
+
+    public MultipartFile convertToMultipartFile(String path, String name) {
+        Path pathFile = Paths.get(path);
+        String nameFile = name;
+        String originalFileName = name;
+        String contentType = "text/plain";
+        byte[] content = null;
+        try {
+            content = Files.readAllBytes(pathFile);
+        } catch (final IOException e) {
+        }
+        return new MockMultipartFile(nameFile,
+                originalFileName, contentType, content);
     }
 
 }

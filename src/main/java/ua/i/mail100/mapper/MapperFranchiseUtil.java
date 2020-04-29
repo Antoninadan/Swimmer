@@ -3,8 +3,11 @@ package ua.i.mail100.mapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+import ua.i.mail100.config.FileConfig;
 import ua.i.mail100.dto.FranchiseDTO;
 import ua.i.mail100.model.Franchise;
+import ua.i.mail100.service.FileService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,11 +19,16 @@ public class MapperFranchiseUtil {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    FileService fileService;
+
+    @Autowired
+    FileConfig fileConfig;
+
     public Franchise toObject(FranchiseDTO franchiseDTO) {
         Franchise franchise = new Franchise();
         franchise.setId(franchiseDTO.getId());
         franchise.setName(franchiseDTO.getName());
-        franchise.setLogo(franchiseDTO.getLogo());
         franchise.setPath(franchiseDTO.getPath());
         return franchise;
     }
@@ -38,8 +46,12 @@ public class MapperFranchiseUtil {
         FranchiseDTO franchiseDTO = new FranchiseDTO();
         franchiseDTO.setId(franchise.getId());
         franchiseDTO.setName(franchise.getName());
-        franchiseDTO.setLogo(franchise.getLogo());
         franchiseDTO.setPath(franchise.getPath());
+        if(franchise.getPath() != null) {
+        MultipartFile multipartFile = fileService.convertToMultipartFile(
+                fileConfig.FILE_ROOT_PATH,
+                franchise.getPath());
+        franchiseDTO.setFile(multipartFile);}
         franchiseDTO.setCreateDate(franchise.getCreateDate());
         franchiseDTO.setModifyDate(franchise.getModifyDate());
         franchiseDTO.setRecordStatus(franchise.getRecordStatus().toString());

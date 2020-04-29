@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
@@ -11,15 +12,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class FranchiseDTO extends BaseEntityDTO {
     private String name;
-    private Byte[] logo;
     private String path;
+    private MultipartFile file;
 
-    public FranchiseDTO(Integer id, String name, Byte[] logo, String path,
+    public FranchiseDTO(Integer id, String name, String path, MultipartFile file,
                         Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.name = name;
-        this.logo = logo;
         this.path = path;
+        this.file = file;
     }
 }
 

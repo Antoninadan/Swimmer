@@ -13,7 +13,7 @@
 </c:if>
 <br>
 
-<img src="C:/path/oceanman.jpg">
+<img src="<c:out value="${logoFile}"/>"/>
 
 <br>
 <!-- New franchise -->
@@ -32,12 +32,15 @@
 <%--document.getElementById('display').appendChild(img);--%>
 <%--</script>--%>
 
+
+
 <!-- Table of franchises  -->
 <table border="1">
     <tr>
         <th>id</th>
         <th>name</th>
         <th>path</th>
+        <th>file</th>
         <th>create date</th>
         <th>modify date</th>
         <th>record status</th>
@@ -49,6 +52,7 @@
                     <td><c:out value="${franchise.id}"/></td>
                     <td><c:out value="${franchise.name}"/></td>
                     <td><c:out value="${franchise.path}"/></td>
+                    <td><img  height="30px" width="200px" src="<c:out value="${franchise.file}"/>"/></td>
                     <td><c:out value="${franchise.createDate}"/></td>
                     <td><c:out value="${franchise.modifyDate}"/></td>
                     <td><c:out value="${franchise.recordStatus}"/></td>
