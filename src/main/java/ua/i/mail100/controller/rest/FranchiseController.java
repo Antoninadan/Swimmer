@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.i.mail100.dto.FranchiseDTO;
@@ -51,7 +52,9 @@ public class FranchiseController {
         return new ResponseEntity(franchise, HttpStatus.OK);
     }
     
-    @GetMapping({"all/", "all/{modifyDate}"})
+    @GetMapping(path = {"all/", "all/{modifyDate}"},
+    produces = MediaType.APPLICATION_JSON_VALUE)
+//    consumes = MediaType.MULTIPART_FORM_DATA_VALUE*)
     public ResponseEntity getAll(@PathVariable(required = false) Long modifyDate) {
         List<Franchise> franchises = franchiseService.getAll(modifyDate);
         List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);
