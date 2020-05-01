@@ -52,9 +52,9 @@ public class FranchiseController {
         return new ResponseEntity(franchise, HttpStatus.OK);
     }
     
-    @GetMapping(path = {"all/", "all/{modifyDate}"},
-    produces = MediaType.APPLICATION_JSON_VALUE)
-//    consumes = MediaType.MULTIPART_FORM_DATA_VALUE*)
+    @GetMapping(path = {"all/", "all/{modifyDate}"})
+//    , produces = MediaType.APPLICATION_JSON_VALUE)
+//    , consumes = MediaType.MULTIPART_FORM_DATA_VALUE*)
     public ResponseEntity getAll(@PathVariable(required = false) Long modifyDate) {
         List<Franchise> franchises = franchiseService.getAll(modifyDate);
         List<FranchiseDTO> franchiseDTOS = mapperFranchiseUtil.toDTOList(franchises);

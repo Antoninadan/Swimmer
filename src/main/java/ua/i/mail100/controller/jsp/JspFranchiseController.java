@@ -69,7 +69,6 @@ public class JspFranchiseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return "franchises";
     }
 

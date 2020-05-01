@@ -4,11 +4,13 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 import ua.i.mail100.config.MailConfig;
 import ua.i.mail100.controller.rest.*;
 import ua.i.mail100.model.*;
 import ua.i.mail100.service.FileService;
+import ua.i.mail100.service.FileStorageService;
 import ua.i.mail100.service.MailService;
 import ua.i.mail100.service.UserService;
 
@@ -31,18 +33,20 @@ public class TestUtil {
 //        }
 //        System.out.println("str = " + str);
 
-        File file = new File("D:/oceanman_xs.png");
-        FileService fileService = new FileService();
-        String base64 = null;
-        try {
-            base64 = fileService.convertFileToString(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        File file = new File("D:/oceanman_xs.png");
+//        FileService fileService = new FileService();
+//        String base64 = null;
+//        try {
+//            base64 = fileService.convertFileToString(file);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("base64 = " + base64);
+//        System.out.println(FileService.readTextFromFile("D:/", "oceanman_xs.png"));
 
-        System.out.println("base64 = " + base64);
+        FileStorageService fileStorageService = new FileStorageService("C:/path/");
+        Resource resource = fileStorageService.loadFileAsResource("oceanman.jpg");
 
-        System.out.println(FileService.readTextFromFile("D:/", "oceanman_xs.png"));
 
 //        <img src="${pageContext.request.contextPath}/images/1.jpg"/>
 

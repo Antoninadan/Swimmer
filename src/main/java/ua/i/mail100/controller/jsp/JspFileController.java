@@ -1,59 +1,63 @@
 package ua.i.mail100.controller.jsp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ua.i.mail100.service.FileStorageService;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
+//  https://www.callicoder.com/spring-boot-file-upload-download-rest-api-example/
 
 @Controller
-@Profile("jsp")
+@Profile("rest")
 @RequestMapping("file")
 public class JspFileController {
+    private static final Logger logger = LoggerFactory.getLogger(JspFileController.class);
 
-    @GetMapping("open")
-    public String openFilePage() {
-        return "file";
-    }
+//    @Autowired
+//    private FileStorageService fileStorageService;
 
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    @ResponseBody
-    public String uploadFile(@RequestParam("file") MultipartFile file) {// имена параметров (тут - "file") - из формы JSP.
+//    @GetMapping("open")
+//    public String openFilePage() {
+//        return "file";
+//    }
 
-        String fileName = null;
 
-        if (!file.isEmpty()) {
-            try {
-                byte[] bytes = file.getBytes();
+    @GetMapping("/download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+        // Load file as Resource
+        FileStorageService fileStorageService = new FileStorageService("C:/path/");
+        ;
+        Resource resource = fileStorageService.loadFileAsResource(fileName);
 
-                fileName = file.getOriginalFilename();
-
-                String rootPath = "C:\\path\\";  //try also "C:\path\"
-                File dir = new File(rootPath + File.separator + "loadFiles");
-
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-
-                File uploadedFile = new File(dir.getAbsolutePath() + File.separator + fileName);
-
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(uploadedFile));
-                stream.write(bytes);
-                stream.flush();
-                stream.close();
-
-//                logger.info("uploaded: " + uploadedFile.getAbsolutePath());
-
-                return "You successfully uploaded file=" + fileName;
-
-            } catch (Exception e) {
-                return "You failed to upload " + fileName + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload " + fileName + " because the file was empty.";
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
         }
+
+        // Fallback to the default content type if type could not be determined
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
+
+
 }
