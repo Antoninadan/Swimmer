@@ -1,4 +1,4 @@
-package ua.i.mail100.service;
+package ua.i.mail100.service.file;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.core.io.Resource;
+import ua.i.mail100.config.FileConfig;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -14,26 +15,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-//@Service
+@Service
 public class FileStorageService {
     private final Path fileStorageLocation;
 
-//    @Autowired
-//    public FileStorageService(FileStorageProperties fileStorageProperties) {
-//        this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir())
-//                .toAbsolutePath().normalize();
-//
-//        try {
-//            Files.createDirectories(this.fileStorageLocation);
-//        } catch (Exception ex) {
-//            throw new FileStorageException("Could not create the directory where the uploaded files will be stored.", ex);
-//        }
-//    }
-
-
     @Autowired
-    public FileStorageService(String path) {
-        this.fileStorageLocation = Paths.get(path).toAbsolutePath().normalize();
+    public FileStorageService() {
+        FileConfig fileConfig = new FileConfig();
+        this.fileStorageLocation = Paths.get(fileConfig.FILE_ROOT_PATH).toAbsolutePath().normalize();
 
         try {
             Files.createDirectories(this.fileStorageLocation);

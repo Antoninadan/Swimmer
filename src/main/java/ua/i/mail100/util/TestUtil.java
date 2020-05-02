@@ -1,27 +1,17 @@
 package ua.i.mail100.util;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.tomcat.util.security.MD5Encoder;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.io.Resource;
-import org.springframework.web.multipart.MultipartFile;
-import ua.i.mail100.config.MailConfig;
-import ua.i.mail100.controller.rest.*;
+import ua.i.mail100.config.FileStorageConfig;
 import ua.i.mail100.model.*;
-import ua.i.mail100.service.FileService;
-import ua.i.mail100.service.FileStorageService;
-import ua.i.mail100.service.MailService;
-import ua.i.mail100.service.UserService;
+import ua.i.mail100.service.file.FileStorageService;
 
 import java.io.*;
 import java.net.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.*;
 
+@SpringBootApplication
+@EnableConfigurationProperties({FileStorageConfig.class})
 public class TestUtil {
 
 
@@ -44,14 +34,12 @@ public class TestUtil {
 //        System.out.println("base64 = " + base64);
 //        System.out.println(FileService.readTextFromFile("D:/", "oceanman_xs.png"));
 
-        FileStorageService fileStorageService = new FileStorageService("C:/path/");
-        Resource resource = fileStorageService.loadFileAsResource("oceanman.jpg");
 
+
+        TestClass testClass = new TestClass();
+        testClass.test1();
 
 //        <img src="${pageContext.request.contextPath}/images/1.jpg"/>
-
-
-
 
 
     }

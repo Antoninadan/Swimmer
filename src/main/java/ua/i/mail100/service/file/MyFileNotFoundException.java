@@ -1,4 +1,4 @@
-package ua.i.mail100.service;
+package ua.i.mail100.service.file;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
