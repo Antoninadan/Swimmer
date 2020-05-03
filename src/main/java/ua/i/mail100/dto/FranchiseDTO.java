@@ -13,14 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 public class FranchiseDTO extends BaseEntityDTO {
     private String name;
     private String path;
-    private MultipartFile file;
+//    private MultipartFile file;
 
-    public FranchiseDTO(Integer id, String name, String path, MultipartFile file,
+    public FranchiseDTO(Integer id, String name, String path, /*MultipartFile file,*/
                         Long createDate, Long modifyDate, String recordStatus) {
         super(id, createDate, modifyDate, recordStatus);
         this.name = name;
         this.path = path;
-        this.file = file;
+//        this.file = file;
     }
 }
 

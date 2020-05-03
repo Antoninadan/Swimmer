@@ -13,26 +13,12 @@
 </c:if>
 <br>
 
-<img src="<c:out value="${logoFile}"/>"/>
-
 <br>
 <!-- New franchise -->
 <form action="/franchise/open-for-save" method="get">
     <input hidden="true" name="userId" value="${user.id}">
     <input type="submit" value="Add franchise">
 </form>
-
-<%--&lt;%&ndash;<img src="C:/path/oceanman.jpg"/>&ndash;%&gt;--%>
-<%--<img id="display"/>--%>
-
-
-<%--<script>--%>
-<%--var img = new Image();--%>
-<%--img.src = "C:/path/oceanman.jpg";--%>
-<%--document.getElementById('display').appendChild(img);--%>
-<%--</script>--%>
-
-
 
 <!-- Table of franchises  -->
 <table border="1">
@@ -48,21 +34,26 @@
     <c:forEach items="${franchises}" var="franchise">
         <form action="/franchise/open-for-edit" method="get">
 
-                <tr>
-                    <td><c:out value="${franchise.id}"/></td>
-                    <td><c:out value="${franchise.name}"/></td>
-                    <td><c:out value="${franchise.path}"/></td>
-                    <td><img  height="30px" width="200px" src="<c:out value="${franchise.file}"/>"/></td>
-                    <td><c:out value="${franchise.createDate}"/></td>
-                    <td><c:out value="${franchise.modifyDate}"/></td>
-                    <td><c:out value="${franchise.recordStatus}"/></td>
-                    <td><input hidden="true" name="userId" value="${user.id}">
-                    </td>
-                    <td><input hidden="true" name="franchiseId" value="${franchise.id}">
-                    </td>
-                    <td><input type="submit" value="Edit"></td>
+            <tr>
+                <td><c:out value="${franchise.id}"/></td>
+                <td><c:out value="${franchise.name}"/></td>
+                <td><c:out value="${franchise.path}"/></td>
+                <td>
+                    <c:if test="${franchise.path != null}">
+                        <img height="60px" width="90"
+                             src="${pageContext.request.contextPath}/file/get/${franchise.path}"/>
+                    </c:if>
+                </td>
+                <td><c:out value="${franchise.createDate}"/></td>
+                <td><c:out value="${franchise.modifyDate}"/></td>
+                <td><c:out value="${franchise.recordStatus}"/></td>
+                <td><input hidden="true" name="userId" value="${user.id}">
+                </td>
+                <td><input hidden="true" name="franchiseId" value="${franchise.id}">
+                </td>
+                <td><input type="submit" value="Edit"></td>
 
-                </tr>
+            </tr>
         </form>
     </c:forEach>
 </table>

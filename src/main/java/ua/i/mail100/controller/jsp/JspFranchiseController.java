@@ -59,16 +59,6 @@ public class JspFranchiseController {
                                  @RequestParam(value = "userId") String userId) {
         if (!jspService.userCheckAndMake(model, userId)) return "authorization";
         franchisesMake(model);
-
-        MultipartFile multipartFile = fileService.convertToMultipartFile(
-                fileConfig.FILE_ROOT_PATH,
-                "oceanman.jpg");
-        try {
-            model.addAttribute("logoFile", multipartFile.getInputStream());
-//            getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return "franchises";
     }
 

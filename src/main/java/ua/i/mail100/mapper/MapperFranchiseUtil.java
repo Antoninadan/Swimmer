@@ -47,11 +47,11 @@ public class MapperFranchiseUtil {
         franchiseDTO.setId(franchise.getId());
         franchiseDTO.setName(franchise.getName());
         franchiseDTO.setPath(franchise.getPath());
-        if(franchise.getPath() != null) {
-        MultipartFile multipartFile = fileService.convertToMultipartFile(
-                fileConfig.FILE_ROOT_PATH,
-                franchise.getPath());
-        franchiseDTO.setFile(multipartFile);}
+//        if(franchise.getPath() != null) {
+//        MultipartFile multipartFile = fileService.convertToMultipartFile(
+//                fileConfig.FILE_ROOT_PATH,
+//                franchise.getPath());
+//        franchiseDTO.setFile(multipartFile);}
         franchiseDTO.setCreateDate(franchise.getCreateDate());
         franchiseDTO.setModifyDate(franchise.getModifyDate());
         franchiseDTO.setRecordStatus(franchise.getRecordStatus().toString());

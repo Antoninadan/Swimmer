@@ -50,7 +50,7 @@
     <br>
     Path: <input type="text" size="30" name="path" readonly value="${franchise.path}"/>
     <br>
-    <input type="file" accept="image/*" id="file-input" name="file" value="${logoFile}">
+    <input type="file" accept="image/*" id="file-input" name="file" >
     <script>
         const fileInput = document.getElementById('file-input');
         fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
@@ -58,7 +58,7 @@
     </script>
     <br>
     <br>
-    <img id="output">
+    <img id="output" src="${pageContext.request.contextPath}/file/get/oceanman.jpg">
     <br>
     <br>
     <input hidden="true" name="userId" value="${user.id}">

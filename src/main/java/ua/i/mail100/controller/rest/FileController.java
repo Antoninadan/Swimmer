@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 // TODO upload service
 
 @Controller
-@Profile("rest")
+@Profile("jsp")
 @RequestMapping("file")
 public class FileController {
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
