@@ -1,7 +1,6 @@
 package ua.i.mail100.controller.jsp;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +13,12 @@ import ua.i.mail100.mapper.MapperUserUtil;
 import ua.i.mail100.model.Country;
 import ua.i.mail100.service.CountryService;
 import ua.i.mail100.service.DateService;
+import ua.i.mail100.service.JspService;
 import ua.i.mail100.service.UserService;
 
 import java.util.List;
 
 @Controller
-@Profile("jsp")
 @RequestMapping("country")
 public class JspCountryController {
     @Autowired

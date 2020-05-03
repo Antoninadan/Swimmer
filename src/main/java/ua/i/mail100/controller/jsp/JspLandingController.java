@@ -11,14 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/registration")
-@Profile("jsp")
-public class Main2Controller {
+@RequestMapping("/")
+public class JspLandingController {
 
     @GetMapping()
     public String getLandingPage(Model model) {
-        List sexList = Arrays.asList(Sex.values());
-        model.addAttribute("sexList", sexList);
-        return "registration";
+        model.addAttribute("message", "Hello! This is landing page!");
+        return "authorization";
     }
 }

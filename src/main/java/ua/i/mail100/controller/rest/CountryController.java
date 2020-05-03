@@ -14,9 +14,8 @@ import ua.i.mail100.service.CountryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("country")
+@RequestMapping("direct-country")
 @Slf4j
-@Profile("rest")
 public class CountryController {
     @Autowired
     CountryService countryService;

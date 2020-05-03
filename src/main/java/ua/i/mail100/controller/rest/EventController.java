@@ -17,9 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("event")
+@RequestMapping("direct-event")
 @Slf4j
-@Profile("rest")
 public class EventController {
     @Autowired
     EventService eventService;

@@ -54,11 +54,10 @@
     <script>
         const fileInput = document.getElementById('file-input');
         fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
-        <%--fileInput.prepareUrlAndView("${logoFile}");--%>
     </script>
     <br>
     <br>
-    <img id="output" src="${pageContext.request.contextPath}/file/get/oceanman.jpg">
+    <img id="output" src="${pageContext.request.contextPath}/file/get/${franchise.path}">
     <br>
     <br>
     <input hidden="true" name="userId" value="${user.id}">

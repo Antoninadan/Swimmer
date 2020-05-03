@@ -1,7 +1,6 @@
 package ua.i.mail100.controller.jsp;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,17 +14,12 @@ import ua.i.mail100.dto.FranchiseDTO;
 import ua.i.mail100.mapper.MapperFranchiseUtil;
 import ua.i.mail100.mapper.MapperUserUtil;
 import ua.i.mail100.model.Franchise;
-import ua.i.mail100.service.FileService;
-import ua.i.mail100.service.FranchiseService;
-import ua.i.mail100.service.DateService;
-import ua.i.mail100.service.UserService;
+import ua.i.mail100.service.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @Controller
-@Profile("jsp")
 @RequestMapping("franchise")
 public class JspFranchiseController {
 

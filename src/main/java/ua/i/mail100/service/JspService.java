@@ -1,4 +1,4 @@
-package ua.i.mail100.controller.jsp;
+package ua.i.mail100.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

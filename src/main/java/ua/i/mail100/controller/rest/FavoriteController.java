@@ -23,7 +23,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("favorite")
 @Slf4j
-@Profile("rest")
 public class FavoriteController {
     @Autowired
     FavoriteService favoriteService;

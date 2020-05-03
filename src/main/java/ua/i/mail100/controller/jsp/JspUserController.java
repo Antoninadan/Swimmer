@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
-@Profile("jsp")
 @RequestMapping("user")
 public class JspUserController {
     @Autowired

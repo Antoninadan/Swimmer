@@ -15,9 +15,8 @@ import ua.i.mail100.service.FranchiseService;
 import java.util.List;
 
 @RestController
-@RequestMapping("franchise")
+@RequestMapping("direct-franchise")
 @Slf4j
-@Profile("rest")
 public class FranchiseController {
     @Autowired
     FranchiseService franchiseService;

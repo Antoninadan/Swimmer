@@ -18,9 +18,8 @@ import ua.i.mail100.service.UserService;
 import java.util.Map;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("direct-user")
 @Slf4j
-@Profile("rest")
 public class UserController {
     @Autowired
     UserService userService;

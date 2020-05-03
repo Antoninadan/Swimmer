@@ -19,9 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("distance")
+@RequestMapping("direct-distance")
 @Slf4j
-@Profile("rest")
 public class DistanceController {
     @Autowired
     DistanceService distanceService;

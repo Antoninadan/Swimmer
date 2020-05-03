@@ -18,9 +18,8 @@ import ua.i.mail100.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("result")
+@RequestMapping("direct-result")
 @Slf4j
-@Profile("rest")
 public class ResultController {
     @Autowired
     ResultService resultService;
