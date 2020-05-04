@@ -45,19 +45,40 @@
 
 
 <br>
-<form action="/franchise/update" method="post" enctype="multipart/form-data">
-    Name: <input type="text" size="30" name="name" required value="${franchise.name}"/>
+<form action="/franchise/update" id="form" method="post" enctype="multipart/form-data">
+    Name: <input type="text" id="name" size="30" name="name" required value="${franchise.name}"/>
     <br>
-    Path: <input type="text" size="30" name="path" readonly value="${franchise.path}"/>
+    <c:if test="${franchise.path != null}">
+        Path: <input type="text" size="30" name="path" readonly value="${franchise.path}"/>
+    </c:if>
     <br>
-    <input type="file" accept="image/*" id="file-input" name="file" >
-    <script>
-        const fileInput = document.getElementById('file-input');
-        fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
+    <c:if test="${franchise.path == null}">
+        <img id="output">
+        <input type="file" accept="image/*" id="file-input" name="file">
+        <script>
+            const fileInput = document.getElementById('file-input');
+            fileInput.addEventListener('change', (e) => prepareUrlAndView(e.target.files));
+        </script>
+    </c:if>
+    <br>
+    <c:if test="${(franchise.path != null)}">
+        <img id="logo" src="${pageContext.request.contextPath}/file/get/${franchise.path}">
+        <input type="button" id="change-image" size="30" value="Change" oncilck=CheckNotNull()/>
+    </c:if>
+
+
+    <script type="text/javascript">
+        function CheckNotNull()
+        {
+            if (document.getElementById('file-input').valueOf() != null)
+           {
+                alert('Not null file!');
+                return false;
+            } else {alert('null file!');}
+        }
     </script>
-    <br>
-    <br>
-    <img id="output" src="${pageContext.request.contextPath}/file/get/${franchise.path}">
+
+
     <br>
     <br>
     <input hidden="true" name="userId" value="${user.id}">

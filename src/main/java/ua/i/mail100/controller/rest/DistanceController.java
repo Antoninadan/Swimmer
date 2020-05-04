@@ -79,9 +79,9 @@ public class DistanceController {
         return new ResponseEntity(resultDTO, HttpStatus.OK);
     }
 
-    @GetMapping("all")
-    public ResponseEntity getAll(@PathVariable Long modifyDate) {
-        List<Distance> distances = distanceService.getAll();
+    @GetMapping("all-by-event/{eventId}")
+    public ResponseEntity getAllByEvent(@PathVariable Integer eventId) {
+        List<Distance> distances = distanceService.getAllByEvent(eventId);
         List<DistanceDTO> distanceDTOS = mapperDistanceUtil.toDTOList(distances);
         return new ResponseEntity(distanceDTOS, HttpStatus.OK);
     }
