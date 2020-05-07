@@ -15,7 +15,6 @@
 <form action="/distance/update" method="post">
     ID: <c:out value="${distance.id}"/>
     <br>
-    <c:out
     <br>
     <br>
     <label for="distance_type">Distance type:</label>
