@@ -1,17 +1,40 @@
-* {
+:root {
+    --font-size: 15px;
     box-sizing: border-box;
+    font-size: var(--font-size);
 }
 
-html {
-    height: 100%;
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
 }
 
 body {
     margin: 0px;
-    height: inherit;
+
 }
-main{
-    display: grid;
-    justify-content: center;
-    align-content: center;
+
+.form-auth{
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
+    padding: 30px 30px;
+    border: 1px solid black;
+}
+
+.form-registration{
+    max-width: 400px;
+    max-height: 800px;
+    margin: 0 auto;
+    padding: 30px 30px;
+    border: 1px solid black;
+}
+
+.input-label {
+    width: 338px;
+}
+
+.input-content {
+    width: 338px;
 }
